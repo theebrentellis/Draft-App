@@ -1,0 +1,15 @@
+{
+  "name": "DraftApp",
+  "main": "server.js",
+  "description": "Fantasy football draft app",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.5.8"
+  },
+  "repository": {
+      "type": "git"
+  },
+  "license": "UNLICENSED"
+}

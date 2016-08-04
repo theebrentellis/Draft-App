@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="DraftApp">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Draft App</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="/static/js/player.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Fantasy Football Draft App</h1>
+        </div>
+        <div id="player_api_query">
+            <select id="positions">
+                <option value="QB">QB</option>
+                <option value="WR">WR</option>
+                <option value="RB">RB</option>
+                <option value="TE">TE</option>
+                <option value="K">K</option>
+                <option value="DEF">DEF</option>
+            </select>
+            <button id="get_all" type="submit" class="btn btn-primary">Get All Players</button>
+        </div>
+
+        <div id="player_return">
+        </div>
+
+        <div>
+            
+        </div>
+
+        <div>
+            <table>
+                <th>Jammin</th>
+               <th>Bryan</th>
+               <th>Brent</th>
+               <th>Andy</th>
+               <th>Stahnke</th>
+               <th>Spook</th>
+               <th>Matt</th>
+               <th>CMac</th>
+               <th>Aaron</th>
+               <th>Pollock</th>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
