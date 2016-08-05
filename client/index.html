@@ -14,11 +14,13 @@
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
+    <script type="text/javascript" src="/static/js/app.js"></script>
     <script type="text/javascript" src="/static/js/player.js"></script>
-
+    <script type="text/javascript" src="/static/js/controllers/PlayerController.js"></script>
+    <script type="text/javascript" src="/static/js/factories/DraftFactory.js"></script>
 </head>
 
-<body>
+<body ng-controller="PlayerController">
     <div class="container">
         <div class="jumbotron text-center">
             <h1>Fantasy Football Draft App</h1>
@@ -35,26 +37,40 @@
             <button id="get_all" type="submit" class="btn btn-primary">Get All Players</button>
         </div>
 
-        <div id="player_return">
+        <div class="form-group" >
+            <form id="player_return" role="form" class="col-sm-4" ng-controller="PlayerController">
+              
+            </form>
+            <h1>{{checkboxModel1.name}}</h1>  
+
+            <br>
+            <form name="to_draft">
+                <label><input type="checkbox" ng-true-value="'Buck Nasty'" ng-model="checkboxModel.name">Buck Nasty</label>'
+            </form>
+            <button type="submit" ng-click="draft()">Another Button</button>
+            {{checkboxModel.name}}
         </div>
 
-        <div>
+        <div id="the_list" class="row">
             
-        </div>
+            <div class="col-sm-4 col-sm-offset-4">
+                <div ng-repeat="player in drafted_players">
+                    {{player.player_name}}{{player.player_position}}{{player.draft_team}}
+                </div>
+            </div>
 
-        <div>
-            <table>
+            <!--<table>
                 <th>Jammin</th>
-               <th>Bryan</th>
-               <th>Brent</th>
-               <th>Andy</th>
-               <th>Stahnke</th>
-               <th>Spook</th>
-               <th>Matt</th>
-               <th>CMac</th>
-               <th>Aaron</th>
-               <th>Pollock</th>
-            </table>
+                <th>Bryan</th>
+                <th>Brent</th>
+                <th>Andy</th>
+                <th>Stahnke</th>
+                <th>Spook</th>
+                <th>Matt</th>
+                <th>CMac</th>
+                <th>Aaron</th>
+                <th>Pollock</th>
+            </table>-->
         </div>
     </div>
 </body>

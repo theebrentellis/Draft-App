@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "./client")));
 
 require("./server/config/mongoose.js");
 
-require("./server/config/routes.js");
+require("./server/config/routes.js")(app);
 
 app.listen(1234, function(){
     console.log("Your Mom Goes To College!");
