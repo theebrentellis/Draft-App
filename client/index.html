@@ -26,7 +26,8 @@
             <h1>Fantasy Football Draft App</h1>
         </div>
         <div id="player_api_query">
-            <select id="positions">
+            <form>
+            <select id="position_select" ng-model="data.position_select">
                 <option value="QB">QB</option>
                 <option value="WR">WR</option>
                 <option value="RB">RB</option>
@@ -34,21 +35,17 @@
                 <option value="K">K</option>
                 <option value="DEF">DEF</option>
             </select>
-            <button id="get_all" type="submit" class="btn btn-primary">Get All Players</button>
+            <button id="get_all" type="submit" class="btn btn-primary" ng-click="getPlayers()">Get All Players</button>
+            </form>
         </div>
 
         <div class="form-group" >
-            <form id="player_return" role="form" class="col-sm-4" ng-controller="PlayerController">
-              
-            </form>
-            <h1>{{checkboxModel1.name}}</h1>  
-
-            <br>
-            <form name="to_draft">
-                <label><input type="checkbox" ng-true-value="'Buck Nasty'" ng-model="checkboxModel.name">Buck Nasty</label>'
-            </form>
-            <button type="submit" ng-click="draft()">Another Button</button>
-            {{checkboxModel.name}}
+            <div ng-repeat="player in get_players_api.Players">
+                <form role="form" class="col-sm-4">
+                {{player.displayName}} {{player.position}}
+                </form>
+            </div>
+            
         </div>
 
         <div id="the_list" class="row">
