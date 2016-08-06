@@ -3,17 +3,15 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
 
     var drafted = [];
 
-    factory.getAll = function(callback){
-        $http.get("/getAll").success(function(output){
-            list = output;
-            callback(list);
-        });
+    factory.getAll = function(data){
+        console.log(data);
+        $http.post("/getAll", data);
     };
 
-    factory.draft = function(info, callback){
-        $http.post("/draft").success(function(output){
-            callback();
-        });
-    };
+    // factory.draft = function(info, callback){
+    //     $http.post("/draft").success(function(output){
+    //         callback();
+    //     });
+    // };
     return factory;
 });

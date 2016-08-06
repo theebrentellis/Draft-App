@@ -1,9 +1,10 @@
 var mongoose = require("mongoose");
 
 var DraftSchema = new mongoose.Schema({
-    player_name: String,
-    player_position: String,
-    draft_team: String
+    displayName: String,
+    position: String,
+    drafted: Boolean,
+    drafted_by: String
 
 });
 

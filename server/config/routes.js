@@ -1,7 +1,8 @@
 var Player = require("./../controllers/PlayerController.js");
 
 module.exports = function(app){
-    app.get("/getAll", function(req, res){
+    app.post("/getAll", function(req, res){
+        //console.log(req);
         Player.getAll(req, res);
     });
 

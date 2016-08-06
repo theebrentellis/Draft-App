@@ -25,6 +25,11 @@
         <div class="jumbotron text-center">
             <h1>Fantasy Football Draft App</h1>
         </div>
+        <div>
+            <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button>
+        </div>
+        <br>
+
         <div id="player_api_query">
             <form>
             <select id="position_select" ng-model="data.position_select">
@@ -35,27 +40,20 @@
                 <option value="K">K</option>
                 <option value="DEF">DEF</option>
             </select>
-            <button id="get_all" type="submit" class="btn btn-primary" ng-click="getPlayers()">Get All Players</button>
+            <button id="get_all" type="submit" class="btn btn-info" ng-click="getPlayers()">All Available Players</button>
             </form>
         </div>
 
         <div class="form-group" >
             <div ng-repeat="player in get_players_api.Players">
-                <form role="form" class="col-sm-4">
-                {{player.displayName}} {{player.position}}
-                </form>
-            </div>
-            
+                <!--<form role="form" class="col-sm-4">-->
+                    <label><input type="checkbox" ng-click="draft(player.displayName)">{{player.displayName}} {{player.position}}</label>
+                <!--</form>-->
+            </div> 
         </div>
 
-        <div id="the_list" class="row">
-            
-            <div class="col-sm-4 col-sm-offset-4">
-                <div ng-repeat="player in drafted_players">
-                    {{player.player_name}}{{player.player_position}}{{player.draft_team}}
-                </div>
-            </div>
-
+        <div id="drafted_list" ng-repeat="player in drafted_players">
+            {{player.name}}
             <!--<table>
                 <th>Jammin</th>
                 <th>Bryan</th>
