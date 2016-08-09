@@ -15,16 +15,15 @@ angular.module('PlayerController', []).controller('PlayerController', function (
         });
     }
   };
-  
 
   $scope.getPlayers = function (position) {
-    //   console.log(position);
-    //   console.log($scope.players);
     DraftFactory.getPlayers($scope.players, function(data){
         $scope.available_players = data;
+        $scope.getPlayers();
         getDraftedPlayers();
     });
   };
+
   $scope.draftPlayer = function(id){
       DraftFactory.draftPlayer(id, function(data){
           getDraftedPlayers();
