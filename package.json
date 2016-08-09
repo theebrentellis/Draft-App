@@ -11,5 +11,8 @@
   "repository": {
       "type": "git"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "permissions": [
+    "http://www.fantasyfootballnerd.com/"
+  ]
 }

@@ -6,8 +6,8 @@ module.exports = (function(){
     return{
         getAll: function(req, res){
             console.log("In Player Controller");
-            for(x in req.body.Players){
-                var player = new Draft({displayName: req.body.Players[x].displayName, position: req.body.Players[x].position, drafted: "False"} );
+            for(var x in req.body.Players){
+                var player = new Draft({displayName: req.body.Players[x].displayName, position: req.body.Players[x].position, drafted: false} );
                 player.save(function(err, results){
                     if(err){
                         console.log(err);
@@ -16,29 +16,56 @@ module.exports = (function(){
                         console.log(results);
                         // res.json(results);
                     }
-                })
+                });
             }
-            console.log(req.body.Players[0].displayName);
-            // var player = new Draft(req.Player);
-            // console.log(player);
         },
 
-        draft: function(req, res){
-            var drafted = new Draft(data);
-            console.log(drafted);
+        getPlayers: function(req, res){
             console.log("In Server Controller");
-            // drafted.save(function(err, results){
-            //     if(err){
-            //         console.log(err);
-            //     }
-            //     else{
-            //         res.json(results);
-            //     }
-            // });
+            //console.log(req.body.position_select);
+            Draft.find({drafted: false, position:"DEF"}, function(err, results){
+                if(err){
+                    console.log("Error: "+err);
+                }
+                else{
+                    res.json(results);
+                    // res.json(results);
+                }
+            });
         },
 
-        undraft: function(req, res){
+        draftPlayer: function(req, res){
+            Draft.update({_id: req.params.id},{drafted:true}, function(err, results){
+                if(err){
+                    console.log("Error: "+err);
+                }
+                else{
+                    console.log(results);
+                }
+            });
+        },
 
+        getDraftedPlayers: function(req, res){
+            Draft.find({drafted: true}, function(err, results){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.json(results);
+                }
+            });
+        },
+
+        newDraft: function(req, res){
+            console.log("In Server Controller");
+            Draft.remove({}, function(err, results){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(results);
+                }
+            });
         },
     };
 })();

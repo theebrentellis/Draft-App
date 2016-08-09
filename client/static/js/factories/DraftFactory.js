@@ -4,14 +4,29 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
     var drafted = [];
 
     factory.getAll = function(data){
-        console.log(data);
         $http.post("/getAll", data);
     };
 
-    // factory.draft = function(info, callback){
-    //     $http.post("/draft").success(function(output){
-    //         callback();
-    //     });
-    // };
+    factory.getPlayers = function(position, callback){
+        $http.get("/getPlayers", position).success(function(output){
+            callback(output);
+        });
+    };
+
+    factory.draftPlayer = function(id, callback){
+        $http.patch("/draftPlayer/"+id).success(function(output){
+            callback();
+        });
+    };
+
+    factory.getDraftedPlayers = function(callback){
+        $http.get("/getDraftedPlayers", function(output){
+            callback(output);
+        });
+    };
+
+    factory.newDraft = function(){
+        $http.post("/newDraft");
+    };
     return factory;
 });

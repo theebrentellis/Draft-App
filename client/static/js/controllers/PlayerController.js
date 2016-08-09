@@ -1,22 +1,16 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, DraftFactory) {
-  $scope.drafted_players = [];
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $routeParams, $location, DraftFactory) {
+  $scope.available_players = [];
 
-  $scope.get_players_api = [];
+  //$scope.get_players_api = [];
+
+  $scope.allDraftedPlayers = [];
 
   $scope.getAll = function () {
       
-    var position = ["DEF"];
-    for(x in position){
+    var position = ["QB", "RB", "WR", "TE", "K", "DEF"];
+    for(var x in position){
         $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function(data){
-            console.log(data);
-            console.log(data.Players[0].displayName);
             DraftFactory.getAll(data);
-            // var players = angular.fromJson(data);
-            // for(y in players.Players){
-            //     var displayName = players.Players[y].displayName;
-            //     var position = players.Players[y].position;
-            //     DraftFactory.getAll(displayName, position);
-            // }
         })
         .error(function(data){
             console.log("Error: "+data);
@@ -25,23 +19,30 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   };
   
 
-  $scope.getPlayers = function () {
-    var position = $scope.data.position_select;
-    console.log(position);
-    // $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position)
-    //   .success(function (data) {
-    //     $scope.get_players_api = angular.fromJson(data);
-    //   })
-    //   .error(function (data) {
-    //     console.log('Error: ' + data);
-    //   });
+  $scope.getPlayers = function (position) {
+      //console.log($routeParams);
+      //console.log(req.body);
+    DraftFactory.getPlayers($scope.data.position_select, function(data){
+        $scope.available_players = data;
+        console.log($scope.available_players);
+    });
+  };
+  $scope.draftPlayer = function(id){
+      DraftFactory.draftPlayer(id, function(data){
+          console.log(data);
+          getDraftedPlayers();
+      });
   };
 
-//   $scope.draft = function (name) {
-//     console.log('In Client Controller Draft');
-//     console.log(name);
-//     DraftFactory.draft($scope.drafted_player, function () {
-//       getAll()
-//     })
-//   }
+  var getDraftedPlayers = function(){
+      DraftFactory.getDraftedPlayers(function(data){
+          console.log(data);
+          $scope.allDraftedPlayers = data;
+      });
+  };
+
+  $scope.newDraft = function () {
+    DraftFactory.newDraft(function () {
+    });
+  };
 });
