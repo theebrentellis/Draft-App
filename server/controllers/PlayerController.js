@@ -10,24 +10,25 @@ module.exports = (function(){
                 var player = new Draft({displayName: req.body.Players[x].displayName, position: req.body.Players[x].position, drafted: false} );
                 player.save(function(err, results){
                     if(err){
-                        console.log(err);
+                        console.log("Error: "+err);
                     }
                     else{
                         console.log(results);
                         // res.json(results);
                     }
                 });
-            }
+            };
         },
 
         getPlayers: function(req, res){
             console.log("In Server Controller getPlayers");
-            console.log(req.body.position_select);
-            Draft.find({drafted: false, position:"DEF"}, function(err, results){
+            console.log(req.query.position_select);
+            Draft.find({drafted: false, position: req.query.position_select}, function(err, results){
                 if(err){
                     console.log("Error: "+err);
                 }
                 else{
+                    console.log(results);
                     res.json(results);
                 }
             });
@@ -51,7 +52,6 @@ module.exports = (function(){
                     console.log("Error: "+err);
                 }
                 else{
-                    console.log("In Server"+results);
                     res.json(results);
                 }
             });

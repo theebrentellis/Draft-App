@@ -18,9 +18,9 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   
 
   $scope.getPlayers = function (position) {
-      //console.log($routeParams);
-      //console.log(req.body);
-    DraftFactory.getPlayers($scope.data.position_select, function(data){
+    //   console.log(position);
+    //   console.log($scope.players);
+    DraftFactory.getPlayers($scope.players, function(data){
         $scope.available_players = data;
         getDraftedPlayers();
     });

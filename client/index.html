@@ -28,17 +28,18 @@
         </div>
         <br>
 
-        <div id="player_api_query">
-            <form>
-                <select id="position_select" ng-model="data.position_select">
-                <option value="QB">QB</option>
-                <option value="WR">WR</option>
-                <option value="RB">RB</option>
-                <option value="TE">TE</option>
-                <option value="K">K</option>
-                <option value="DEF">DEF</option>
-            </select>
-                <button id="get_all" type="submit" class="btn btn-success btn-md" ng-click="getPlayers(position_select)">All Available Players</button>
+        <div>
+            <form name="position_selector">
+                <select name="position_select" id="singleSelect" ng-model="players.position_select">
+                    <option value="">---Please Select---</option>
+                    <option value="QB" ng-value="option.value">QB</option>
+                    <option value="WR" ng-value="option.value">WR</option>
+                    <option value="RB" ng-value="option.value">RB</option>
+                    <option value="TE" ng-value="option.value">TE</option>
+                    <option value="K" ng-value="option.value">K</option>
+                    <option value="DEF" ng-value="option.value">DEF</option>
+                </select>
+                <button id="get_all" type="submit" class="btn btn-success btn-md" ng-click="getPlayers(players.position_select)">All Available Players</button>
             </form>
         </div>
 
@@ -70,7 +71,7 @@
         </div>
 
         <div>
-            
+
         </div>
     </div>
 </body>

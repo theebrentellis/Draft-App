@@ -8,7 +8,8 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
     };
 
     factory.getPlayers = function(position, callback){
-        $http.get("/getPlayers", position).success(function(output){
+        console.log(position);
+        $http.get("/getPlayers/", {params: position}).success(function(output){
             callback(output);
         });
     };
@@ -28,5 +29,6 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
     factory.newDraft = function(){
         $http.post("/newDraft");
     };
+
     return factory;
 });
