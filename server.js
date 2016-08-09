@@ -4,7 +4,13 @@ var path = require("path");
 var mongodb = require("mongodb");
 var app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+    limit: "50mb"
+}));
+
+// app.use(bodyParser.urlencoded({
+//     limit: "50mb"
+// }));
 
 app.use(express.static(path.join(__dirname, "./client")));
 
