@@ -21,36 +21,37 @@ module.exports = (function(){
         },
 
         getPlayers: function(req, res){
-            console.log("In Server Controller");
-            //console.log(req.body.position_select);
+            console.log("In Server Controller getPlayers");
+            console.log(req.body.position_select);
             Draft.find({drafted: false, position:"DEF"}, function(err, results){
                 if(err){
                     console.log("Error: "+err);
                 }
                 else{
                     res.json(results);
-                    // res.json(results);
                 }
             });
         },
 
         draftPlayer: function(req, res){
-            Draft.update({_id: req.params.id},{drafted:true}, function(err, results){
+            Draft.update({"_id": req.params._id},{$set:{drafted:true}}, function(err, results){
                 if(err){
                     console.log("Error: "+err);
                 }
                 else{
-                    console.log(results);
+                    res.json(results);
                 }
             });
         },
 
         getDraftedPlayers: function(req, res){
+            console.log("In Server Controller getDraftedPlayers");
             Draft.find({drafted: true}, function(err, results){
                 if(err){
-                    console.log(err);
+                    console.log("Error: "+err);
                 }
                 else{
+                    console.log("In Server"+results);
                     res.json(results);
                 }
             });
@@ -60,7 +61,7 @@ module.exports = (function(){
             console.log("In Server Controller");
             Draft.remove({}, function(err, results){
                 if(err){
-                    console.log(err);
+                    console.log("Error: "+err);
                 }
                 else{
                     console.log(results);

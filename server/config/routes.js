@@ -6,11 +6,6 @@ module.exports = function(app){
         Player.getAll(req, res);
     });
 
-    // app.get("/getPlayers", function(req, res){
-    //     console.log(req.params);
-    //     Player.getPlayers(req, res);
-    // });
-
     app.get("/getPlayers", function(req, res){
         Player.getPlayers(req, res);
     });

@@ -15,12 +15,12 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
 
     factory.draftPlayer = function(id, callback){
         $http.patch("/draftPlayer/"+id).success(function(output){
-            callback();
+            callback(output);
         });
     };
 
     factory.getDraftedPlayers = function(callback){
-        $http.get("/getDraftedPlayers", function(output){
+        $http.get("/getDraftedPlayers").success(function(output){
             callback(output);
         });
     };

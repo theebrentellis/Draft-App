@@ -1,8 +1,6 @@
 angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $routeParams, $location, DraftFactory) {
   $scope.available_players = [];
 
-  //$scope.get_players_api = [];
-
   $scope.allDraftedPlayers = [];
 
   $scope.getAll = function () {
@@ -24,22 +22,22 @@ angular.module('PlayerController', []).controller('PlayerController', function (
       //console.log(req.body);
     DraftFactory.getPlayers($scope.data.position_select, function(data){
         $scope.available_players = data;
-        console.log($scope.available_players);
+        getDraftedPlayers();
     });
   };
   $scope.draftPlayer = function(id){
       DraftFactory.draftPlayer(id, function(data){
-          console.log(data);
           getDraftedPlayers();
       });
   };
 
   var getDraftedPlayers = function(){
       DraftFactory.getDraftedPlayers(function(data){
-          console.log(data);
           $scope.allDraftedPlayers = data;
       });
   };
+  getDraftedPlayers();
+
 
   $scope.newDraft = function () {
     DraftFactory.newDraft(function () {
