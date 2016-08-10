@@ -1,10 +1,9 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $routeParams, $location, DraftFactory) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, DraftFactory) {
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
 
-  $scope.getAll = function () {
-      
+  $scope.getAll = function () {      
     var position = ["QB", "RB", "WR", "TE", "K", "DEF"];
     for(var x in position){
         $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function(data){
