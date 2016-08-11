@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $route, $routeParams, $location, DraftFactory) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, $route, $routeParams, $controller) {
     $scope.greeting = "Welcome!";
 
     $scope.viewChange = function(view){

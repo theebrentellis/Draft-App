@@ -17,7 +17,7 @@ module.exports = (function(){
                         // res.json(results);
                     }
                 });
-            };
+            }
         },
 
         getPlayers: function(req, res){

@@ -5,12 +5,13 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <!--<base href="/">-->
+    <base href="/">
 
     <title>Draft App</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"></script>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -22,21 +23,14 @@
 </head>
 
 <body ng-app="DraftApp">
-    <div class="container" ng-controller="AppController">
+    <div class="container">
 
-        <div class="jumbotron text-center">
-            <h1>Fantasy Football Draft App</h1> {{greeting}}
-        </div>
-
-        <div>
-            <button type="submit" class="btn btn-warning" ng-click="viewChange('/commish')">Commish Tools</button> <button type="submit" class="btn btn-success" ng-click="viewChange('/availablePlayers')">Available Players</button> <button type="submit"
-                class="btn btn-primary" ng-click="viewChange('/draftBoard')">Draft Board</button>
-        </div>
+        <div ui-view="header"></div>
         <br>
-        <!--<div ng-view onload="onViewLoad()">
-
-        </div>-->
+        <div ui-view="content"></div>
     </div>
+
+
 </body>
 
 </html>

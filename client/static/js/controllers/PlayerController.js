@@ -1,4 +1,5 @@
 angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, DraftFactory) {
+
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
