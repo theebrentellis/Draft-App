@@ -16,8 +16,8 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
         console.log("In Factory");
         $http.post("/clearAll").success(function(data){
             callback(data);
-        })
-    }
+        });
+    };
 
     return factory;
 });

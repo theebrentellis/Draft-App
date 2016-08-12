@@ -18,7 +18,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         console.log("In Controller");
         LeagueFactory.clearAll(function(data){
             console.log(data);
-        })
-    }
+        });
+    };
 
 });
