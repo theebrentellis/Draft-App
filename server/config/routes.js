@@ -1,6 +1,9 @@
 var Player = require("./../controllers/PlayerController.js");
+var League = require("./../controllers/LeagueController.js");
 
 module.exports = function(app){
+
+    //Player Calls
     app.post("/getAll", function(req, res){
         Player.getAll(req, res);
     });
@@ -19,5 +22,16 @@ module.exports = function(app){
 
     app.post("/newDraft", function(req, res){
         Player.newDraft(req, res);
+    });
+
+    //League Calls
+    app.post("/createLeague", function(req, res){
+        League.createLeague(req, res);
+    });
+    app.get("/getLeague", function(req, res){
+        League.getLeague(req, res);
+    });
+    app.post("/clearAll", function(req, res){
+        League.clearAll(req, res);
     });
 };

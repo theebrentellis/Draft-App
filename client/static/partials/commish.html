@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<div ng-controller="PlayerController">
-    <div>
-        <form class="form-horizontal" role="form">
-            <input type="text" name="" value="" placeholder="League Name" class="form-control" ng-model="newTeam.leagueName">
+<div>
+    <div ng-controller="LeagueController">
+        <form class="form-horizontal" role="form" name="createLeague">
+            <input type="text" name="" value="" placeholder="League Name" class="form-control" ng-model="newLeague.leagueName" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 1" class="form-control" ng-model="newTeam.teamName1">
+            <input type="text" name="" value="" placeholder="Team 1" class="form-control" ng-model="newLeague.teamName1" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 2" class="form-control" ng-model="newTeam.teamName2">
+            <input type="text" name="" value="" placeholder="Team 2" class="form-control" ng-model="newLeague.teamName2" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 3" class="form-control" ng-model="newTeam.teamName3">
+            <input type="text" name="" value="" placeholder="Team 3" class="form-control" ng-model="newLeague.teamName3" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 4" class="form-control" ng-model="newTeam.teamName4">
+            <input type="text" name="" value="" placeholder="Team 4" class="form-control" ng-model="newLeague.teamName4" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 5" class="form-control" ng-model="newTeam.teamName5">
+            <input type="text" name="" value="" placeholder="Team 5" class="form-control" ng-model="newLeague.teamName5" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 6" class="form-control" ng-model="newTeam.teamName6">
+            <input type="text" name="" value="" placeholder="Team 6" class="form-control" ng-model="newLeague.teamName6" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 7" class="form-control" ng-model="newTeam.teamName7">
+            <input type="text" name="" value="" placeholder="Team 7" class="form-control" ng-model="newLeague.teamName7" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 8" class="form-control" ng-model="newTeam.teamName8">
+            <input type="text" name="" value="" placeholder="Team 8" class="form-control" ng-model="newLeague.teamName8" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 9" class="form-control" ng-model="newTeam.teamName9">
+            <input type="text" name="" value="" placeholder="Team 9" class="form-control" ng-model="newLeague.teamName9" required>
             <br>
-            <input type="text" name="" value="" placeholder="Team 10" class="form-control" ng-model="newTeam.teamName10">
+            <input type="text" name="" value="" placeholder="Team 10" class="form-control" ng-model="newLeague.teamName10" required>
             <br>
-            <button type="submit" ng-click="submitTeams()" class="btn btn-default">Submit League Teams</button>
+            <button type="submit" ng-click="createNewLeague()" class="btn btn-default">Submit League</button>
+            <!--<div ng-messages="createLeague.leagueName.$error">
+                <p ng-message="required">Please Fill In All Fields!</p>
+                
+            </div>-->
         </form>
     </div>
     <br>
-    <div>
-        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button> <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">New Draft</button>
+    <div ng-controller="LeagueController">
+        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button> <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">Clear Player DB</button> <button type="submit" ng-click="leaguesClearAll()" class="btn btn-danger">Clear All Leagues</button>
         <br>
         <!--<div ng-repeat="message in commishMessages"><p>{{message}}</p></div>-->
     </div>
