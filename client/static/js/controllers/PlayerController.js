@@ -1,4 +1,4 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, $controller, DraftFactory) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, $controller, $confirm, DraftFactory) {
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
@@ -24,9 +24,14 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   };
 
   $scope.draftPlayer = function (id) {
-    DraftFactory.draftPlayer(id, function (data) {
-      $scope.getPlayers();
-    });
+    console.log("Fired!");
+    // $confirm({text: "Are you sure you want to draft?"})
+    //   .then(function(){
+    //     console.log("Working!");
+    // DraftFactory.draftPlayer(id, function (data) {
+    //   $scope.getPlayers();
+    // });
+    // });
   };
 
   var getDraftedPlayers = function () {

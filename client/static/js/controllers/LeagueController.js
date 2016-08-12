@@ -1,4 +1,4 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($scope, $route, $routeParams, $controller, LeagueFactory) {
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $route, $routeParams, $controller, $confirm, LeagueFactory) {
     $scope.league = [];
 
     $scope.createNewLeague = function(){

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div>
-    <div data-ng-controller="LeagueController" data-ng-inti="getLeague()">
+    <div data-ng-controller="LeagueController" data-ng-init="getLeague()">
         <div ng-repeat="league in league">
             <h3>{{league.leagueName}}</h3>
             <p>{{league.team1}}</p>
@@ -38,7 +38,7 @@
     <div class="form-group">
         <div ng-repeat="player in available_players | filter: playerFilter">
             <form role="form" class="col-sm-4">
-                <label><input type="checkbox" ng-click="draftPlayer(player._id)"> {{player.displayName}} {{player.position}}</label>
+                <label><input type="checkbox" ng-click="draftPlayer(player._id)" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
             </form>
         </div>
     </div>

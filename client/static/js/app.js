@@ -1,4 +1,4 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "AppController", "PlayerController", "DraftFactory", "ui.router", "LeagueController", "LeagueFactory"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "PlayerController", "DraftFactory", "ui.router","ui.bootstrap", "angular-confirm", "LeagueController", "LeagueFactory"]);
 
 DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider){
     
