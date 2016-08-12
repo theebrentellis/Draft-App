@@ -1,21 +1,5 @@
 <!DOCTYPE html>
 <div>
-    <div data-ng-controller="LeagueController" data-ng-init="getLeague()">
-        <div ng-repeat="league in league">
-            <h3>{{league.leagueName}}</h3>
-            <p>{{league.team1}}</p>
-            <p>{{league.team2}}</p>
-            <p>{{league.team3}}</p>
-            <p>{{league.team4}}</p>
-            <p>{{league.team5}}</p>
-            <p>{{league.team6}}</p>
-            <p>{{league.team7}}</p>
-            <p>{{league.team8}}</p>
-            <p>{{league.team9}}</p>
-            <p>{{league.team10}}</p>
-        </div>   
-    </div>
-    <br>
     <div>
         <input type="text" placeholder="Filter Available Players" ng-model="playerFilter" class="form-control">
     </div>

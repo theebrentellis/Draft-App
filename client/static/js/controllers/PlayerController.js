@@ -24,14 +24,9 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   };
 
   $scope.draftPlayer = function (id) {
-    console.log("Fired!");
-    // $confirm({text: "Are you sure you want to draft?"})
-    //   .then(function(){
-    //     console.log("Working!");
-    // DraftFactory.draftPlayer(id, function (data) {
-    //   $scope.getPlayers();
-    // });
-    // });
+    DraftFactory.draftPlayer(id, function (data) {
+      $scope.getPlayers();
+    });
   };
 
   var getDraftedPlayers = function () {

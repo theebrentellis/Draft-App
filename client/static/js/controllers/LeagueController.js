@@ -8,14 +8,12 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     };
     var getLeague = function(){
         LeagueFactory.getLeague(function(data){
-            console.log(data);
             $scope.league = data;
         });
     };
     getLeague();
 
     $scope.leaguesClearAll = function(){
-        console.log("In Controller");
         LeagueFactory.clearAll(function(data){
             console.log(data);
         });

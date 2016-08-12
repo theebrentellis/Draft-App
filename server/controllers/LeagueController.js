@@ -24,14 +24,12 @@ module.exports = (function () {
                 console.log("Error: "+ err);
             }
             else{
-                console.log("Server Controller!!!!"+results);
                 res.json(results);
             }
         });
     },
 
     clearAll: function(req, res){
-        console.log("In server controller");
         League.remove({}, function(err, results){
             if(err){
                 console.log("Error: "+ err);
