@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <div ng-controller="PlayerController">
     <div>
-        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button>
-
+        <form class="form-horizontal" role="form">
+            <input type="text" name="" value="" placeholder="League Name" class="form-control" ng-model="newTeam.leagueName">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 1" class="form-control" ng-model="newTeam.teamName1">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 2" class="form-control" ng-model="newTeam.teamName2">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 3" class="form-control" ng-model="newTeam.teamName3">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 4" class="form-control" ng-model="newTeam.teamName4">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 5" class="form-control" ng-model="newTeam.teamName5">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 6" class="form-control" ng-model="newTeam.teamName6">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 7" class="form-control" ng-model="newTeam.teamName7">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 8" class="form-control" ng-model="newTeam.teamName8">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 9" class="form-control" ng-model="newTeam.teamName9">
+            <br>
+            <input type="text" name="" value="" placeholder="Team 10" class="form-control" ng-model="newTeam.teamName10">
+            <br>
+            <button type="submit" ng-click="submitTeams()" class="btn btn-default">Submit League Teams</button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button> <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">New Draft</button>
         <br>
-        <br>
-
-        <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">New Draft</button>
+        <!--<div ng-repeat="message in commishMessages"><p>{{message}}</p></div>-->
     </div>
 </div>

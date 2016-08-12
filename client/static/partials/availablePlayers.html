@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<div ng-controller="PlayerController">
+<div>
+    <div>
+        <input type="text" placeholder="Filter Available Players" ng-model="playerFilter" class="form-control">
+    </div>
+    <br>
     <div>
         <form name="position_selector">
             <select name="position_select" id="singleSelect" ng-model="players.position_select">
@@ -14,9 +18,9 @@
             <button id="get_all" type="submit" class="btn btn-success btn-md" ng-click="getPlayers(players.position_select)">All Available Players</button>
         </form>
     </div>
-
+    <br>
     <div class="form-group">
-        <div ng-repeat="player in available_players">
+        <div ng-repeat="player in available_players | filter: playerFilter">
             <form role="form" class="col-sm-4">
                 <label><input type="checkbox" ng-click="draftPlayer(player._id)"> {{player.displayName}} {{player.position}}</label>
             </form>

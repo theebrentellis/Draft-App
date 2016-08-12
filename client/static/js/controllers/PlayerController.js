@@ -1,4 +1,4 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, DraftFactory) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, $controller, DraftFactory) {
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
@@ -8,6 +8,8 @@ angular.module('PlayerController', []).controller('PlayerController', function (
     for (var x in position) {
       $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
         DraftFactory.getAll(data);
+      }).success(function(){
+          console.log("Success!!");
       })
         .error(function (data) {
           console.log('Error: ' + data);
@@ -18,14 +20,12 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   $scope.getPlayers = function (position) {
     DraftFactory.getPlayers($scope.players, function (data) {
       $scope.available_players = data;
-      $scope.getPlayers();
-      getDraftedPlayers();
     });
   };
 
   $scope.draftPlayer = function (id) {
     DraftFactory.draftPlayer(id, function (data) {
-      getDraftedPlayers();
+      $scope.getPlayers();
     });
   };
 
@@ -37,6 +37,8 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   getDraftedPlayers();
 
   $scope.newDraft = function () {
-    DraftFactory.newDraft(function () {});
+    DraftFactory.newDraft(function (data) {
+      console.log("Draft Results Cleared");
+    });
   };
 });
