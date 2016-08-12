@@ -28,4 +28,10 @@ module.exports = function(app){
     app.post("/createLeague", function(req, res){
         League.createLeague(req, res);
     });
+    app.get("/getLeague", function(req, res){
+        League.getLeague(req, res);
+    });
+    app.post("/clearAll", function(req, res){
+        League.clearAll(req, res);
+    });
 };

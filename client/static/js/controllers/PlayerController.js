@@ -41,4 +41,6 @@ angular.module('PlayerController', []).controller('PlayerController', function (
       console.log("Draft Results Cleared");
     });
   };
+
+
 });

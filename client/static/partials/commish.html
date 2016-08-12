@@ -32,8 +32,8 @@
         </form>
     </div>
     <br>
-    <div>
-        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button> <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">Clear Player DB</button> <button type="submit" ng-click="leaguesClearAll" class="btn btn-danger">Clear All Leagues</button>
+    <div ng-controller="LeagueController">
+        <button type="submit" class="btn btn-info" ng-click="getAll()">Download Players</button> <button type="submit" ng-click="newDraft()" class="btn btn-danger btn-md">Clear Player DB</button> <button type="submit" ng-click="leaguesClearAll()" class="btn btn-danger">Clear All Leagues</button>
         <br>
         <!--<div ng-repeat="message in commishMessages"><p>{{message}}</p></div>-->
     </div>
