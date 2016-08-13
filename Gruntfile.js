@@ -11,11 +11,17 @@ module.exports = function(grunt) {
         src: 'src/<%= pkg.name %>.js',
         dest: 'build/<%= pkg.name %>.min.js'
       }
+    },
+    nodemon: {
+        dev: {
+            script: "server.js"
+        }
     }
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-nodemon');
 
   // Default task(s).
   grunt.registerTask('default', ['uglify']);
