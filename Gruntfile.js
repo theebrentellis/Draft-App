@@ -24,6 +24,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
 
   // Default task(s).
-//   grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['nodemon']);
 
 };
