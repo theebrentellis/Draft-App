@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var fs = require("fs");
 var path = require("path");
 
-mongoose.connect("mongodb://localhost/DraftApp");
+mongoose.connect("mongodb://brentellis:DraftApp1!@ds153785.mlab.com:53785/draftapp");
 
 var models_path = __dirname + "/../models";
 
