@@ -9,10 +9,16 @@
     "mongoose": "^4.5.8"
   },
   "repository": {
-      "type": "git"
+    "type": "git"
   },
   "license": "UNLICENSED",
   "permissions": [
     "http://www.fantasyfootballnerd.com/"
-  ]
+  ],
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0"
+  }
 }
