@@ -1,0 +1,148 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'grunt',
+1 verbose cli   'grunt-contrib-ugligy',
+1 verbose cli   '--save-dev' ]
+2 info using npm@3.10.6
+3 info using node@v4.4.7
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData grunt@^0.4.5
+8 silly fetchPackageMetaData grunt-contrib-ugligy
+9 silly fetchNamedPackageData grunt
+10 silly mapToRegistry name grunt
+11 silly mapToRegistry using default registry
+12 silly mapToRegistry registry https://registry.npmjs.org/
+13 silly mapToRegistry data Result {
+13 silly mapToRegistry   raw: 'grunt',
+13 silly mapToRegistry   scope: null,
+13 silly mapToRegistry   escapedName: 'grunt',
+13 silly mapToRegistry   name: 'grunt',
+13 silly mapToRegistry   rawSpec: '',
+13 silly mapToRegistry   spec: 'latest',
+13 silly mapToRegistry   type: 'tag' }
+14 silly mapToRegistry uri https://registry.npmjs.org/grunt
+15 silly fetchNamedPackageData grunt-contrib-ugligy
+16 silly mapToRegistry name grunt-contrib-ugligy
+17 silly mapToRegistry using default registry
+18 silly mapToRegistry registry https://registry.npmjs.org/
+19 silly mapToRegistry data Result {
+19 silly mapToRegistry   raw: 'grunt-contrib-ugligy',
+19 silly mapToRegistry   scope: null,
+19 silly mapToRegistry   escapedName: 'grunt-contrib-ugligy',
+19 silly mapToRegistry   name: 'grunt-contrib-ugligy',
+19 silly mapToRegistry   rawSpec: '',
+19 silly mapToRegistry   spec: 'latest',
+19 silly mapToRegistry   type: 'tag' }
+20 silly mapToRegistry uri https://registry.npmjs.org/grunt-contrib-ugligy
+21 verbose request uri https://registry.npmjs.org/grunt-contrib-ugligy
+22 verbose request no auth needed
+23 info attempt registry request try #1 at 10:06:19 AM
+24 verbose request id 5455a0d26fd8a7ae
+25 http request GET https://registry.npmjs.org/grunt-contrib-ugligy
+26 verbose request uri https://registry.npmjs.org/grunt
+27 verbose request no auth needed
+28 info attempt registry request try #1 at 10:06:19 AM
+29 verbose etag "YJ039MW0RSUDQPBIMTA6UJR5"
+30 http request GET https://registry.npmjs.org/grunt
+31 http 304 https://registry.npmjs.org/grunt
+32 verbose headers { date: 'Sat, 13 Aug 2016 17:06:20 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   'cache-control': 'max-age=300',
+32 verbose headers   etag: '"YJ039MW0RSUDQPBIMTA6UJR5"',
+32 verbose headers   age: '166',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-sjc3643-SJC',
+32 verbose headers   'x-cache': 'HIT',
+32 verbose headers   'x-cache-hits': '1',
+32 verbose headers   'x-timer': 'S1471107980.418579,VS0,VE0',
+32 verbose headers   vary: 'Accept-Encoding' }
+33 silly get cb [ 304,
+33 silly get   { date: 'Sat, 13 Aug 2016 17:06:20 GMT',
+33 silly get     via: '1.1 varnish',
+33 silly get     'cache-control': 'max-age=300',
+33 silly get     etag: '"YJ039MW0RSUDQPBIMTA6UJR5"',
+33 silly get     age: '166',
+33 silly get     connection: 'keep-alive',
+33 silly get     'x-served-by': 'cache-sjc3643-SJC',
+33 silly get     'x-cache': 'HIT',
+33 silly get     'x-cache-hits': '1',
+33 silly get     'x-timer': 'S1471107980.418579,VS0,VE0',
+33 silly get     vary: 'Accept-Encoding' } ]
+34 verbose etag https://registry.npmjs.org/grunt from cache
+35 verbose get saving grunt to /Users/BrentEllis/.npm/registry.npmjs.org/grunt/.cache.json
+36 verbose correctMkdir /Users/BrentEllis/.npm correctMkdir not in flight; initializing
+37 http 404 https://registry.npmjs.org/grunt-contrib-ugligy
+38 verbose headers { 'content-type': 'application/json',
+38 verbose headers   'cache-control': 'max-age=0',
+38 verbose headers   'content-length': '2',
+38 verbose headers   'accept-ranges': 'bytes',
+38 verbose headers   date: 'Sat, 13 Aug 2016 17:06:20 GMT',
+38 verbose headers   via: '1.1 varnish',
+38 verbose headers   age: '0',
+38 verbose headers   connection: 'keep-alive',
+38 verbose headers   'x-served-by': 'cache-sjc3120-SJC',
+38 verbose headers   'x-cache': 'MISS',
+38 verbose headers   'x-cache-hits': '0',
+38 verbose headers   'x-timer': 'S1471107980.418467,VS0,VE133',
+38 verbose headers   vary: 'Accept-Encoding' }
+39 silly get cb [ 404,
+39 silly get   { 'content-type': 'application/json',
+39 silly get     'cache-control': 'max-age=0',
+39 silly get     'content-length': '2',
+39 silly get     'accept-ranges': 'bytes',
+39 silly get     date: 'Sat, 13 Aug 2016 17:06:20 GMT',
+39 silly get     via: '1.1 varnish',
+39 silly get     age: '0',
+39 silly get     connection: 'keep-alive',
+39 silly get     'x-served-by': 'cache-sjc3120-SJC',
+39 silly get     'x-cache': 'MISS',
+39 silly get     'x-cache-hits': '0',
+39 silly get     'x-timer': 'S1471107980.418467,VS0,VE133',
+39 silly get     vary: 'Accept-Encoding' } ]
+40 silly fetchPackageMetaData Error: Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-ugligy
+40 silly fetchPackageMetaData     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+40 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
+40 silly fetchPackageMetaData     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+40 silly fetchPackageMetaData     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:200:22)
+40 silly fetchPackageMetaData     at emitTwo (events.js:87:13)
+40 silly fetchPackageMetaData     at Request.emit (events.js:172:7)
+40 silly fetchPackageMetaData     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+40 silly fetchPackageMetaData     at emitOne (events.js:82:20)
+40 silly fetchPackageMetaData     at Request.emit (events.js:169:7)
+40 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:988:12)
+40 silly fetchPackageMetaData  error for grunt-contrib-ugligy { [Error: Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-ugligy] pkgid: 'grunt-contrib-ugligy', statusCode: 404, code: 'E404' }
+41 silly rollbackFailedOptional Starting
+42 silly rollbackFailedOptional Finishing
+43 silly runTopLevelLifecycles Starting
+44 silly runTopLevelLifecycles Finishing
+45 silly install printInstalled
+46 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-ugligy
+46 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+46 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
+46 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+46 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:200:22)
+46 verbose stack     at emitTwo (events.js:87:13)
+46 verbose stack     at Request.emit (events.js:172:7)
+46 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+46 verbose stack     at emitOne (events.js:82:20)
+46 verbose stack     at Request.emit (events.js:169:7)
+46 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:988:12)
+47 verbose statusCode 404
+48 verbose pkgid grunt-contrib-ugligy
+49 verbose cwd /Users/BrentEllis/Desktop/Draft App
+50 error Darwin 15.6.0
+51 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "grunt" "grunt-contrib-ugligy" "--save-dev"
+52 error node v4.4.7
+53 error npm  v3.10.6
+54 error code E404
+55 error 404 Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-ugligy
+56 error 404
+57 error 404 'grunt-contrib-ugligy' is not in the npm registry.
+58 error 404 You should bug the author to publish it (or use the name yourself!)
+59 error 404 Note that you can also install from a
+60 error 404 tarball, folder, http url, or git url.
+61 verbose exit [ 1, true ]
