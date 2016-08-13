@@ -1,6 +1,9 @@
 {
   "name": "DraftApp",
   "main": "server.js",
+  "scripts":{
+    "star": "grunt"
+  },
   "description": "Fantasy football draft app",
   "version": "1.0.0",
   "dependencies": {
