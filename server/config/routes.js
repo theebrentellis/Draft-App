@@ -1,12 +1,6 @@
 var Player = require("./../controllers/PlayerController.js");
 var League = require("./../controllers/LeagueController.js");
-var Authenticate = require("./../controllers/AuthticationController.js");
-
-var jwt = require("express-jwt");
-var auth = jwt({
-    secret: "MY-SECRET",
-    userProperty: "payload"
-});
+var Authenticate = require("./../controllers/AuthenticationController.js");
 
 module.exports = function(app){
 

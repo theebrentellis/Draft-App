@@ -7,9 +7,11 @@
   "description": "Fantasy football draft app",
   "version": "1.0.0",
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-jwt": "^5.0.0",
+    "express-sessions": "^1.0.6",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.8",
     "passport": "^0.3.2",

@@ -1,9 +1,10 @@
 var express = require("express");
 var app = express();
 var path = require("path");
-var session = require("express-session");
+var session = require("express-sessions");
 var bodyParser = require("body-parser");
 var expressJwt = require("express-jwt");
+var SECRET = "MY_SECRET";
 
 var mongodb = require("mongodb");
 
