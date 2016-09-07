@@ -1,10 +1,27 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "PlayerController", "DraftFactory", "ui.router","ui.bootstrap", "angular-confirm", "LeagueController", "LeagueFactory"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "PlayerController", "DraftFactory", "ui.router","ui.bootstrap", "angular-confirm", "LeagueController", "LeagueFactory", "LoginController", "LoginFactory"]);
 
 DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider){
     
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/login");
 
     $stateProvider
+        .state("login", {
+            url:"/login",
+            views: {
+                "header":{
+                    templateUrl: "/static/partials/app.html",
+                    controller: "AppController",
+                    controllerAs: "vm",
+                    data: {
+                        activeTab: "home"
+                    }
+                },
+                "content":{
+                    templateUrl: "/static/partials/login.html",
+                    controller: "LoginController"
+                },
+            }
+        })
         .state("home", {
             url: "/",
             views: {
@@ -53,6 +70,22 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
                 }
             }
         });
+
+    function run($http, $rootScope, $window){
+        $http.defaults.headers.common["Authorization"] = "Bearer " + $window.jwtToken;
+
+        $root.Scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
+            $rootScope.activeTab = toState.data.activeTab;
+        });
+    }
+
+    $(function(){
+        $.get("token", function(token){
+            window.jwtToken = token;
+
+            angular.bootstrap(document, ["DraftApp"]);
+        });
+    });
     // $routeProvider
     // .when("/", {
     //     templateUrl: "/client/index.html",
@@ -76,3 +109,13 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
 
     // $locationProvider.html5Mode(true);
 });
+
+// DraftApp.run(function($rootScope){
+//     $rootScope.$on("$stateChangeStart", function(event, next){
+//         var requiredLogin = toState.data.requireLogin;
+
+//         if(requireLogin && typeof $rootScope.currentUser === "undefined"){
+//             event.preventDefault();
+//         }
+//     });
+// });

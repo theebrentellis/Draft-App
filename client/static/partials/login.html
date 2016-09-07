@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<div class="row">
+    <div class="col-lg-6">
+        <div ng-show="error" class="alert alert-danger">{{error}}</div>
+        <div>
+            <form role="form" ng-hide="loginForm">
+                <div class="form-group">
+                    <h5>Please Enter Your Username and Password</h5>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" ng-model="login.username" required>
+                    <br>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" ng-model="login.password" required>
+                    <br>
+                    <button type="submit" ng-click="login(login)" class="btn btn-primary" formnovalidate>Login</button>
+                </div>
+                <h6>Not A Member? Register Now!</h6>
+                <button type="submit" class="btn btn-default" ng-click="registerView()">Register</button>
+            </form>
+            
+            <form role="form" ng-hide="registrationForm">
+                <h5>New Team Registration:</h5>
+                <input type="text" class="form-control" placeholder="Username" ng-model="register.username" required>
+                <br>
+                <input type="password" class="form-control" name="" value="" placeholder="Password" ng-model="register.password" required>
+                <br>
+                <button type="submit" ng-click="registerNew()" class="btn btn-primary">Register New Team</button>
+            </form>
+        </div>
+    </div>
+</div>

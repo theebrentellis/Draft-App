@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<div class="jumbotron text-center">
-    <h1>Fantasy Football Draft App</h1> {{greeting}}
-</div>
+<div ng-controller="AppController">
+    <div class="jumbotron text-center">
+        <h1>Fantasy Football Draft App</h1> 
+        <p ng-if="currentUser">Welcome, {{vm.user.name}}</p>
+    </div>
 
-<div>
-    <button type="submit" class="btn btn-warning" ng-click="viewChange('/commish')">Commish Tools</button> <button type="submit" class="btn btn-success" ng-click="viewChange('/availablePlayers')">Available Players</button> <button type="submit" class="btn btn-primary"
-        ng-click="viewChange('/draftBoard')">Draft Board</button>
+    <div>
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <li ><a >Available Players</a></li>
+                <li ><a >Draft Board</a></li>
+                <li ><a >Chat</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dev Tools<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a ng-click></a>New League</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a ng-click="">Download Players</a></li>
+                    <li><a ng-click="">Reset Player DB</a></li>
+                    <li><a ng-click="">Reset League DB</a></li>
+                </ul>
+                </li>
+                <li></li>
+            </ul>
+        </nav>
+        <div class="flash-message" ng-if="flash">
+            <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message">
+                
+            </div>
+            
+        </div>
+        <!--<button type="submit" class="btn btn-warning" ng-click="viewChange('/commish')">Commish Tools</button> <button type="submit" class="btn btn-success" ng-click="viewChange('/availablePlayers')">Available Players</button> <button type="submit" class="btn btn-primary"
+            ng-click="viewChange('/draftBoard')">Draft Board</button>-->
+    </div>
 </div>

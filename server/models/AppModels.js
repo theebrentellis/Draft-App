@@ -24,3 +24,17 @@ var LeagueSchema = new mongoose.Schema({
 });
 mongoose.model("League", LeagueSchema);
 
+var UserSchema = new mongoose.Schema({
+    userName: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    hash: String,
+    salt: String
+});
+mongoose.model("User", UserSchema);
