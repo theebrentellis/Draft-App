@@ -1,8 +1,8 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "PlayerController", "DraftFactory", "ui.router","ui.bootstrap", "angular-confirm", "LeagueController", "LeagueFactory", "LoginController", "LoginFactory"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "LeagueController", "UserController", "PlayerController", "DraftFactory", "FlashFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
 
-DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider){
+DraftApp.config(function($stateProvider, $urlRouterProvider){
     
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
         .state("login", {
@@ -12,13 +12,11 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
                     templateUrl: "/static/partials/app.html",
                     controller: "AppController",
                     controllerAs: "vm",
-                    data: {
-                        activeTab: "home"
-                    }
                 },
                 "content":{
                     templateUrl: "/static/partials/login.html",
-                    controller: "LoginController"
+                    controller: "UserController",
+                    controllerAs: "vm"
                 },
             }
         })
@@ -49,11 +47,13 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
             views: {
                 "header":{
                     templateUrl: "/static/partials/app.html",
-                    controller: "AppController"
+                    controller: "AppController",
+                    controllerAs: "vm",
                 },
                 "content": {
                     templateUrl: "/static/partials/availablePlayers.html",
-                    controller: "PlayerController"
+                    controller: "PlayerController",
+                    controllerAs: "vm"
                 }
             }
         })
@@ -70,22 +70,37 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
                 }
             }
         });
+});
 
-    function run($http, $rootScope, $window){
-        $http.defaults.headers.common["Authorization"] = "Bearer " + $window.jwtToken;
-
-        $root.Scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
-            $rootScope.activeTab = toState.data.activeTab;
-        });
-    }
-
-    $(function(){
-        $.get("token", function(token){
-            window.jwtToken = token;
-
-            angular.bootstrap(document, ["DraftApp"]);
-        });
+DraftApp.run(function($rootScope, $location, $route, AuthenticationService){
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute){
+        if($location.path() === "/availablePlayers" && !AuthenticationService.isLoggedIn()){
+            $location.path("/");
+        }
     });
+    // run();
+    // getToken();
+    // function run(){
+    //     $http.defaults.headers.common["Authorization"] = "Bearer " + $window.jwtToken;
+
+    //     $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
+    //         $rootScope.activeTab = toState.data.activeTab;
+    //     });
+    // }
+    //  function getToken(){
+    //     $http.get("/token", function(token){
+    //         window.jwtToken = token;
+
+    //         angular.bootstrap(document, ["DraftApp"]);
+    //     });
+    // };
+});
+    
+
+   
+
+
+
     // $routeProvider
     // .when("/", {
     //     templateUrl: "/client/index.html",
@@ -108,7 +123,7 @@ DraftApp.config(function($routeProvider, $locationProvider, $stateProvider, $url
 	// });
 
     // $locationProvider.html5Mode(true);
-});
+
 
 // DraftApp.run(function($rootScope){
 //     $rootScope.$on("$stateChangeStart", function(event, next){

@@ -1,17 +1,11 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, $route, $routeParams, LoginFactory) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService) {
     $scope.greeting = "Welcome!";
 
     var vm = this;
 
-    vm.user = null;
+    vm.isLoggedIn = AuthenticationService.isLoggedIn();
 
-    initController();
-
-    function initController(){
-      LoginFactory.getCurrent(function(user){
-        vm.user = user;
-      });
-    }
+    vm.currentUser = AuthenticationService.currentUser();
 
 
     $scope.viewChange = function(view){

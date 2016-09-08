@@ -41,4 +41,4 @@ angular.module("FlashFactory", []).factory("FlashFactory", function($rootScope){
             keepAfterLocationChange: keepAfterLocationChange
         };
     }
-})();
+});

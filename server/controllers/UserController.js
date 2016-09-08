@@ -1,144 +1,70 @@
+var passport = require("passport");
 var mongoose = require('mongoose');
-var _ = require('lodash');
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var Q = require('q');
+var jwt = require('express-jwt');
 
 var User = mongoose.model('User');
 
+var sendJSONresponse = function(res, status, content){
+  res.status(status);
+  res.json(content);
+};
+
 module.exports = (function () {
   return {
-    authenticate: function (userName, password) {
-      var deferred = Q.defer();
 
-      User.findOne({userName: userName}, function (err, user) {
-        if (err) {
-          deferred.reject(err.name + ': ' + err.message)
-        }
-        if (user && bcrypt.compareSync(password, user.hash)) {
-          deferred.resolve(jwt.sign({sub: user._id}, SECRET));
-        }else {
-          deferred.resolve();
-        }
-      });
+    register: function(req, res){
+      var user = new User()
 
-      return deferred.promise;
-    },
+      user.userName = req.body.userNmae;
+      user.firstName = req.body.firstName;
+      
+      user.setPassword(req.body.password);
 
-    getById: function (_id) {
-      var deferred = Q.defer();
-
-      User.findById(_id, function (err, user) {
-        if (err) {
-          deferred.reject(err.name + ': ' + err.message)
-        }
-        if (user) {
-          deferred.resolve(_.omit(user, 'hash'))
-        }else {
-          deferred.resolve();
-        }
-      });
-
-      return deferred.promise;
-    },
-
-    create: function (userParam) {
-      var deferred = Q.defer();
-
-      User.findOne({userName: userParam.userName}, function (err, user) {
-        if (err) {
-          deferred.reject(err.name + ': ' + err.message);
-        }
-        if (user) {
-          deferred.reject("Username '" + userParam.userName + "' is already taken");
-        }else {
-          createUser();
-        }
-      });
-      function createUser () {
-        var user = _.omit(userParam, 'password');
-
-        user.hash = bcrypt.hashSync(userParam.password, 10);
-
-        User.insert(user, function (err, doc) {
-          if (err) {
-            deferred.reject(err.name + ': ' + err.message);
-            deferred.resolve();
-          }
+      user.save(function(err){
+        var token;
+        token = user.generateJwt();
+        res.status(200);
+        res.json({
+          "token": token
         });
-      }
-      return deferred.promise;
+      });
     },
 
-    update: function (_id, userParam) {
-      var deferred = Q.defer();
+    login: function(req, res){
+      passport.authenticate("local", function(err, user, info){
+        var token;
 
-      User.findById(_id, function (err, user) {
-        if (err) {
-          deferred.reject(err.name + ': ' + err.message);
+        if(err){
+          res.status(404).json(err);
+          return;
         }
-        if (User.userName != userParam.userName) {
-          User.findOne({userName: userParam.userName}, function (err, user) {
-            if (err) {
-              deferred.reject(err.name + ': ' + err.message);
-            }
-            if (usr) {
-              deferred.reject("Username '" + req.body.userName + "' is already taken!");
-            }else {
-              updateUser();
-            }
+        if(user){
+          token = user.generateJwt()
+          res.status(200);
+          res.json({
+            "token": token
           });
-        }else {
-          updateUser();
         }
-      });
-
-      function updateUser () {
-        var set = {
-          firstName: userParam.firstName,
-          userName: userParam.userName
-        };
-
-        if (userParam.password) {
-          set.hash = bcrypt.hashSync(userParam.password, 10);
+        else{
+          res.status(401).json(info);
         }
-        User.update({_id: mongo.helper.toObject(_id)}, {$set: set}, function (err, doc) {
-          if (err) {
-            deferred.reject(err.name + ': ' + err.message);
-            deferred.resolve();
-          }
-        });
-      }
-      return deferred.promise;
+      })(req, res);
     },
 
-    remove: function(_id){
-        var deferred = Q.defer();
-
-        User.remove({_id: mongo.helper.toObjectId(_id)}, function(err){
-            if(err){
-                deferred.reject(err.name + ": " + err.message);
-                deferred.resolve();
-            }
+    profileRead: function(req, res){
+      if(!req.payload._id){
+        res.status(401).json({
+          "message": "UnathorizedError: private profile"
         });
-        return deferred.promise;
+      }
+      else{
+        User.findById(req.payload._id).exec(function(err, user){
+          res.status(200).json(user);
+        });
+      }
     }
-    // login: function(req, res){
-
-    // },
-
-  // registerNew: function(req, res){
-  //     console.log(req.body)
-  //     var user = new User({userName: req.body.username, password: req.body.password})
-  //     console.log(user)
-  //     // user.save(function(err, results){
-  //     //     if(err){
-  //     //         console.log("Error: "+err)
-  //     //     }
-  //     //     else{
-  //     //         res.json(results)
-  //     //     }
-  //     // })
-  // },
+    
   };
 })();
+
+
