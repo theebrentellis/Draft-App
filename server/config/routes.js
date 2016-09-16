@@ -17,7 +17,8 @@ module.exports = function(app){
     });
 
     app.post("/login", function(req, res){
-        User.login(req, res);
+        console.log(req.body);
+        // User.login(req, res);
     });
 
     // //Login Calls

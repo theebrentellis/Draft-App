@@ -10,7 +10,7 @@ angular.module('AppController', []).controller('AppController', function ($scope
 
     $scope.viewChange = function(view){
       $location.path(view);
-  };
+    };
 
   
 });

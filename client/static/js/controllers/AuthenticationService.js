@@ -41,15 +41,20 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         }
     };
 
-    service.register = function(user){
-        UserFactory.register(function(data){
+    service.register = function(user, callback){
+        UserFactory.register(user, function(data){
             saveToken(data.token);
+            callback(data.token);
+            console.log("Done!!");
         });
+        // .success(function(data){
+        //     saveToken(data.token);
+        // });
 
     };
 
     service.login = function(user){
-        UserFactory.login(function(data){
+        UserFactory.login(user).success(function(data){
             saveToken(data.token);
         });
     };

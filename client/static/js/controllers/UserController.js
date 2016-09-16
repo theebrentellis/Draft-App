@@ -1,5 +1,27 @@
-angular.module('UserController', []).controller('UserController', function($location, AuthenticationService, UserFactory){
+angular.module('UserController', []).controller('UserController', function($scope, $location, AuthenticationService, UserFactory){
     var vm = this;
+
+    $scope.loginView = true;
+    $scope.registerView = false;
+
+    $scope.userViewChange = function(view){
+        function registerViewChange(){
+            $scope.loginView = false;
+            $scope.registerView = true;
+        }
+        function loginViewChange(){
+            $scope.loginView = true;
+            $scope.registerView = false;
+        }
+        if(view == true){
+            registerViewChange();
+        }
+        else{
+            loginViewChange();
+        }
+        // $scope.loginView = false;
+        // $scope.registerView = true;
+    }
 
     vm.registerInfo = {
         userName: "",
@@ -13,15 +35,19 @@ angular.module('UserController', []).controller('UserController', function($loca
     };
 
     vm.registerNew = function(){
-        AuthenticationService.register(vm.registerInfo).error(function(err){
-            alert(err);
-        })
-        .then(function(){
-            $location.path("availablePlayers");
+        AuthenticationService.register(vm.registerInfo, function(token){
+            $location.path("/availablePlayers");
         });
+        // .error(function(err){
+        //     alert(err);
+        // })
+        // .then(function(){
+        //     $location.path("availablePlayers");
+        // });
     };
 
     vm.login = function(){
+        console.log(vm.loginInfo);
         AuthenticationService.login(vm.loginInfo).error(function(err){
             alert(err);
         })
@@ -29,40 +55,5 @@ angular.module('UserController', []).controller('UserController', function($loca
             $location.path("availablePlayers")
         });
     };
-
-    
-    // vm.saveUser = saveUser;
-    // vm.deleteUser = deleteUser;
-
-    // getCurrentUser();
-
-    // function getCurrentUser(){
-    //   LoginFactory.getCurrentUser(function(user){
-    //       console.log(user);
-    //       vm.user = user;
-    //   });
-    //   .success(function(user){
-    //     vm.user = user;
-    //   });
-    // }
-
-    // function saveUser(){
-    //     LoginFactory.update(vm.user)
-    //         .then(function(){
-    //             FlashFactory.Success("User Updated");
-    //         })
-    //         .catch(function(err){
-    //             FlashFactory.Error(err);
-    //         });
-    // }
-
-    // function deleteUser(){
-    //     LoginFactory.deleteUser(vm.user._id).success(function(){
-    //         $window.location = "/login";
-    //     })
-    //     .error(function(err){
-    //         FlashFactory.Error(err);
-    //     });   
-    // }
 });
 
