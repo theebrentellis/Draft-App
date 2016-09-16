@@ -47,10 +47,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
             callback(data.token);
             console.log("Done!!");
         });
-        // .success(function(data){
-        //     saveToken(data.token);
-        // });
-
     };
 
     service.login = function(user){
@@ -64,10 +60,4 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     };
 
 return service;
-
-    // return {
-    //     saveToken: saveToken,
-    //     getToken: getToken,
-    //     logout: logout
-    // };
 });

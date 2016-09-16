@@ -8,9 +8,12 @@ angular.module('AppController', []).controller('AppController', function ($scope
     vm.currentUser = AuthenticationService.currentUser();
 
 
-    $scope.viewChange = function(view){
+    $scope.appViewChange = function(view){
+      console.log(view);
       $location.path(view);
     };
+    console.log(vm.isLoggedIn);
+    console.log(vm.currentUser);
 
   
 });

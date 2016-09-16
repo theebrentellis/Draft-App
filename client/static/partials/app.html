@@ -8,9 +8,9 @@
     <div>
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
-                <li ><a >Available Players</a></li>
-                <li ><a >Draft Board</a></li>
-                <li ><a >Chat</a></li>
+                <li ng-click="appViewChange('/availablePlayers')"><a >Available Players</a></li>
+                <li ng-click="appViewChange('/draftBoard')"><a >Draft Board</a></li>
+                <li ng-click="appViewChange('/chat')"><a >Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dev Tools<span class="caret"></span></a>
@@ -25,6 +25,7 @@
                 <li></li>
             </ul>
         </nav>
+        <p>{{vm.user.firstName}}</p>
         <div class="flash-message" ng-if="flash">
             <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message">
                 

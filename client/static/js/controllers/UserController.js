@@ -13,15 +13,13 @@ angular.module('UserController', []).controller('UserController', function($scop
             $scope.loginView = true;
             $scope.registerView = false;
         }
-        if(view == true){
+        if(view === true){
             registerViewChange();
         }
         else{
             loginViewChange();
         }
-        // $scope.loginView = false;
-        // $scope.registerView = true;
-    }
+    };
 
     vm.registerInfo = {
         userName: "",
@@ -38,21 +36,12 @@ angular.module('UserController', []).controller('UserController', function($scop
         AuthenticationService.register(vm.registerInfo, function(token){
             $location.path("/availablePlayers");
         });
-        // .error(function(err){
-        //     alert(err);
-        // })
-        // .then(function(){
-        //     $location.path("availablePlayers");
-        // });
     };
 
     vm.login = function(){
         console.log(vm.loginInfo);
-        AuthenticationService.login(vm.loginInfo).error(function(err){
-            alert(err);
-        })
-        .then(function(){
-            $location.path("availablePlayers")
+        AuthenticationService.login(vm.loginInfo, function(token){
+            $location.path("/availablePlayers");
         });
     };
 });
