@@ -1,6 +1,8 @@
 var Player = require("./../controllers/PlayerController.js");
 var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
+var passport = require("./../config/passport.js");
+// var passport = require("passport");
 // var Authenticate = require("./../controllers/AuthenticationController.js");
 
 var jwt = require("express-jwt");
@@ -17,8 +19,11 @@ module.exports = function(app){
     });
 
     app.post("/login", function(req, res){
-        console.log(req.body);
-        // User.login(req, res);
+        // console.log("Start");
+        // passport.authenticate("login", function(){
+        //     console.log("finished!");
+        // });
+        User.login(req, res);
     });
 
     // //Login Calls

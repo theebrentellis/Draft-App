@@ -62,11 +62,13 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
             views: {
                 "header":{
                     templateUrl: "/static/partials/app.html",
-                    controller: "AppController"
+                    controller: "AppController",
+                    controllerAs: "vm"
                 },
                 "content": {
                     templateUrl: "/static/partials/draftBoard.html",
-                    controller: "PlayerController"
+                    controller: "PlayerController",
+                    controllerAs: "vm"
                 }
             }
         });
@@ -95,42 +97,3 @@ DraftApp.run(function($rootScope, $location, $route, AuthenticationService){
     //     });
     // };
 });
-    
-
-   
-
-
-
-    // $routeProvider
-    // .when("/", {
-    //     templateUrl: "/client/index.html",
-    //     controller: "AppController"
-    // })
-    // .when("/commish", {
-    //     templateUrl: "/static/partials/commish.html",
-    //     controller: "PlayerController"
-    // })
-    // .when("/availablePlayers", {
-    //     templateUrl: "/static/partials/availablePlayers.html",
-    //     controller: "PlayerController"
-    // })
-    // .when("/draftBoard", {
-    //     templateUrl: "/static/partials/draftBoard.html",
-    //     controller: "PlayerController"
-    // })
-    // .otherwise({
-	// 	redirectTo: '/'
-	// });
-
-    // $locationProvider.html5Mode(true);
-
-
-// DraftApp.run(function($rootScope){
-//     $rootScope.$on("$stateChangeStart", function(event, next){
-//         var requiredLogin = toState.data.requireLogin;
-
-//         if(requireLogin && typeof $rootScope.currentUser === "undefined"){
-//             event.preventDefault();
-//         }
-//     });
-// });

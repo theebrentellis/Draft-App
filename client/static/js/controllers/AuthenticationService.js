@@ -49,13 +49,15 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         });
     };
 
-    service.login = function(user){
-        UserFactory.login(user).success(function(data){
+    service.login = function(user, callback){
+        UserFactory.login(user, function(data){
             saveToken(data.token);
+            callback(data.token);
+            console.log("Done!");
         });
     };
 
-    service.logout = function(){
+    service.currentUserLogOut = function(){
         $window.localStorage.removeItem("draft-token");
     };
 

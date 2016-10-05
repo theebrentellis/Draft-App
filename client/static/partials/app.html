@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <div ng-controller="AppController">
     <div class="jumbotron text-center">
-        <h1>Fantasy Football Draft App</h1> 
-        <p ng-if="currentUser">Welcome, {{vm.user.name}}</p>
+        <h1>Fantasy Football Draft App</h1>
+        <p ng-if="vm.isLoggedIn">Welcome, {{vm.currentUser.firstName}}!</p>
     </div>
 
     <div>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default" role="navigation">
             <ul class="nav navbar-nav">
-                <li ng-click="appViewChange('/availablePlayers')"><a >Available Players</a></li>
-                <li ng-click="appViewChange('/draftBoard')"><a >Draft Board</a></li>
-                <li ng-click="appViewChange('/chat')"><a >Chat</a></li>
+                <li><a ng-click="appViewChange('/availablePlayers')">Available Players</a></li>
+                <li ng-click="appViewChange('/draftBoard')"><a>Draft Board</a></li>
+                <li ng-click="appViewChange('/chat')"><a>Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dev Tools<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a ng-click></a>New League</li>
+                <li ng-if="vm.isLoggedIn" uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Welcome, {{vm.currentUser.firstName}}</a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="currentUserLogOut()">Logout</a></li>
+                    </ul>
+                </li>
+                <li uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Dev Tools</a>
+                    <ul class="dropdown-menu">
+                    <li><a ng-click="newDraft">New League</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a ng-click="">Download Players</a></li>
+                    <li><a ng-click="getAll()">Download Players</a></li>
                     <li><a ng-click="">Reset Player DB</a></li>
                     <li><a ng-click="">Reset League DB</a></li>
+                    <li role="seperator" class="divider"></li>
+                    <li><a ng-click="">Logout</a></li>
                 </ul>
                 </li>
-                <li></li>
+                
             </ul>
         </nav>
-        <p>{{vm.user.firstName}}</p>
-        <div class="flash-message" ng-if="flash">
-            <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message">
-                
-            </div>
-            
-        </div>
-        <!--<button type="submit" class="btn btn-warning" ng-click="viewChange('/commish')">Commish Tools</button> <button type="submit" class="btn btn-success" ng-click="viewChange('/availablePlayers')">Available Players</button> <button type="submit" class="btn btn-primary"
-            ng-click="viewChange('/draftBoard')">Draft Board</button>-->
     </div>
 </div>

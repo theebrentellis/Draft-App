@@ -9,11 +9,17 @@ angular.module('AppController', []).controller('AppController', function ($scope
 
 
     $scope.appViewChange = function(view){
-      console.log(view);
-      $location.path(view);
+      if(vm.isLoggedIn === true){
+          $location.path(view);
+      }
+      else{
+        $location.path("/login");
+      }
+      
     };
-    console.log(vm.isLoggedIn);
-    console.log(vm.currentUser);
 
-  
+    $scope.currentUserLogOut = function(){
+      console.log("Fired!");
+      AuthenticationService.currentUserLogOut();
+    };
 });

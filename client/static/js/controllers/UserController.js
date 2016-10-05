@@ -39,7 +39,6 @@ angular.module('UserController', []).controller('UserController', function($scop
     };
 
     vm.login = function(){
-        console.log(vm.loginInfo);
         AuthenticationService.login(vm.loginInfo, function(token){
             $location.path("/availablePlayers");
         });
