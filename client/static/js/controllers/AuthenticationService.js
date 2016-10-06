@@ -43,9 +43,19 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
 
     service.register = function(user, callback){
         UserFactory.register(user, function(data){
-            saveToken(data.token);
-            callback(data.token);
-            console.log("Done!!");
+            if(data.token){
+                saveToken(data.token);
+                callback("Success");
+            }
+            if(data.message){
+                callback(data.message);
+            }
+            else{
+                callback("Unknown Error!");
+            }
+            // saveToken(data.token);
+            // callback(data.token);
+            // console.log("Done!!");
         });
     };
 

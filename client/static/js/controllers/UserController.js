@@ -35,8 +35,14 @@ angular.module('UserController', []).controller('UserController', function($scop
     };
 
     vm.registerNew = function(){
-        AuthenticationService.register(vm.registerInfo, function(token){
-            $location.path("/availablePlayers");
+        AuthenticationService.register(vm.registerInfo, function(data){
+            if(data === "Success"){
+                $location.path("/availablePlayers");
+            }
+            else{
+                vm.message = data;
+            }
+            
         });
     };
 
