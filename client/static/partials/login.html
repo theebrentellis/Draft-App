@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div class="row">
     <div class="col-lg-6">
-        <div ng-show="error" class="alert alert-danger">{{error}}</div>
+        <div ng-if="vm.message" class="alert alert-danger">{{vm.message}}</div>
         <div>
             <form role="form" ng-show="loginView">
                 <div class="form-group" >

@@ -15,10 +15,12 @@ module.exports = (function () {
 
       var user = new User();
       
-      user.userName = req.body.userName;
+      user.userName = req.body.userName.toLowerCase();
       user.firstName = req.body.firstName;
       user.setPassword(req.body.password);
-      user.save(function(err){
+      user.save(function(err, user){
+        console.log(err);
+        console.log(user);
         var token;
         token = user.generateJwt();
         res.json({
@@ -28,9 +30,12 @@ module.exports = (function () {
     },
 
     login: function(req, res){
-      User.findOne({userName: req.body.userName}, function(user){
+      User.findOne({userName: req.body.userName.toLowerCase()}, function(err, user){
         if(user === null){
           console.log("Incorrect Username!");
+          return res.json({
+            message: "Incorrect Username!"
+          });
         }
         if(user){
           if(user.validPassword(req.body.password) === true){
@@ -42,8 +47,23 @@ module.exports = (function () {
           }
           else{
             console.log("Incorrect Password!");
+            res.json({
+              message: "Incorrect Password!"
+            });
           }
         }      
+      });
+    },
+
+    deleteAllUsers: function(req, res){
+      console.log("deleteAllUsers");
+      User.remove({}, function(err, results){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(results);
+        }
       });
     }
 

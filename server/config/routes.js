@@ -14,40 +14,17 @@ var auth = jwt({
 
 module.exports = function(app){
 
+    //User Calls
     app.post("/register", function(req, res){
         User.register(req, res);
     });
 
     app.post("/login", function(req, res){
-        // console.log("Start");
-        // passport.authenticate("login", function(){
-        //     console.log("finished!");
-        // });
         User.login(req, res);
     });
-
-    // //Login Calls
-    // app.get("/loginGetCurrentUser", function(req, res){
-    //     Authenticate.getCurrentUser(req, res);
-    // });
-    // app.get("/loginGetAll", function(req, res){
-    //     User.registerNew(req, res);
-    // });
-    // app.get("loginGetByID", function(req, res){
-    //     Authenticate.getById(req, res);
-    // });
-    // // app.get("/loginGetByUserName/", function(req, res){
-    // //     Authenticate.(req, res);
-    // // });
-    // app.post("/loginCreate", function(req, res){
-    //     Authenticate.registerUser(req, res);
-    // });
-    // app.put("/loginUpdate/", function(req, res){
-    //     Authenticate.updateUser(req, res);
-    // });
-    // app.post("/loginDeleteUser", function(req, res){
-    //     Authenticate.deleteUser(req, res);
-    // });
+    app.post("/deleteAllUsers", function(req, res){
+        User.deleteAllUsers(req, res);
+    });
 
     //Player Calls
     app.post("/getAll", function(req, res){

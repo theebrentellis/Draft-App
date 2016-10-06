@@ -10,7 +10,13 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http) {
 
   factory.login = function(loginInfo, callback){
     $http.post("/login", loginInfo).success(function(data){
-      console.log("In User Factory");
+      callback(data);
+    });
+  };
+
+  factory.deleteAllUsers = function(callback){
+    $http.post("/deleteAllUsers").success(function(data){
+      console.log(data);
       callback(data);
     });
   };

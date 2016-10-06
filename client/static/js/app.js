@@ -2,7 +2,7 @@ var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/login");
 
     $stateProvider
         .state("login", {
@@ -25,23 +25,24 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
             views: {
                 "header":{
                     templateUrl: "/static/partials/app.html",
-                    controller: "AppController"
+                    controller: "AppController",
+                    controllerAs: "vm"
                 }
             }
         })
-        .state("commish", {
-            url: "/commish",
-            views: {
-                "header":{
-                    templateUrl: "/static/partials/app.html",
-                    controller: "AppController"
-                },
-                "content":{
-                    templateUrl: "/static/partials/commish.html",
-                    controller: "PlayerController"
-                }
-            }
-        })
+        // .state("commish", {
+        //     url: "/commish",
+        //     views: {
+        //         "header":{
+        //             templateUrl: "/static/partials/app.html",
+        //             controller: "AppController"
+        //         },
+        //         "content":{
+        //             templateUrl: "/static/partials/commish.html",
+        //             controller: "PlayerController"
+        //         }
+        //     }
+        // })
         .state("availablePlayers", {
             url: "/availablePlayers",
             views: {
@@ -53,7 +54,8 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 "content": {
                     templateUrl: "/static/partials/availablePlayers.html",
                     controller: "PlayerController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
+                    authenticate: true,
                 }
             }
         })
@@ -68,16 +70,17 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 "content": {
                     templateUrl: "/static/partials/draftBoard.html",
                     controller: "PlayerController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
+                    authenticate: true
                 }
             }
         });
 });
 
-DraftApp.run(function($rootScope, $location, $route, AuthenticationService){
-    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute){
-        if($location.path() === "/availablePlayers" && !AuthenticationService.isLoggedIn()){
-            $location.path("/");
+DraftApp.run(function($rootScope, $state, AuthenticationService){
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+        if(toState.authenticate && !AuthenticationService.isLoggedIn()){
+            $location.path("/login");
         }
     });
     // run();

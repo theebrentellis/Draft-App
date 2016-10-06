@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService, UserFactory) {
     $scope.greeting = "Welcome!";
 
     var vm = this;
@@ -19,7 +19,14 @@ angular.module('AppController', []).controller('AppController', function ($scope
     };
 
     $scope.currentUserLogOut = function(){
-      console.log("Fired!");
       AuthenticationService.currentUserLogOut();
+      if(!AuthenticationService.isLoggedIn()){
+        $location.path("/login");
+      }
+    };
+
+    $scope.deleteAllUsers = function(){
+      UserFactory.deleteAllUsers();
+      $location.path("/login");
     };
 });

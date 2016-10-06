@@ -8,29 +8,30 @@
     <div>
         <nav class="navbar navbar-default" role="navigation">
             <ul class="nav navbar-nav">
+                <li ng-if="vm.isLoggedIn" uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Welcome, {{vm.currentUser.firstName}}!</a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="currentUserLogOut()">Logout</a></li>
+                    </ul>
+                </li>
                 <li><a ng-click="appViewChange('/availablePlayers')">Available Players</a></li>
                 <li ng-click="appViewChange('/draftBoard')"><a>Draft Board</a></li>
                 <li ng-click="appViewChange('/chat')"><a>Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-if="vm.isLoggedIn" uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Welcome, {{vm.currentUser.firstName}}</a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="currentUserLogOut()">Logout</a></li>
-                    </ul>
-                </li>
                 <li uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Dev Tools</a>
                     <ul class="dropdown-menu">
                     <li><a ng-click="newDraft">New League</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a ng-click="getAll()">Download Players</a></li>
                     <li><a ng-click="">Reset Player DB</a></li>
-                    <li><a ng-click="">Reset League DB</a></li>
+                    <li><a ng-click="leaguesClearAll()">Reset League DB</a></li>
+                    <li><a ng-click="deleteAllUsers()">Reset User DB</a></li>
                     <li role="seperator" class="divider"></li>
-                    <li><a ng-click="">Logout</a></li>
+                    <li><a ng-click="currentUserLogOut()">Logout</a></li>
                 </ul>
                 </li>
-                
             </ul>
         </nav>
     </div>
+    <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
 </div>
