@@ -1,4 +1,4 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "LeagueController", "UserController", "PlayerController", "DraftFactory", "FlashFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "ChatController", "LeagueController", "UserController", "PlayerController", "ChatFactory", "DraftFactory", "FlashFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
@@ -74,6 +74,22 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                     authenticate: true
                 }
             }
+        })
+        .state("chatroom", {
+            url: "/chat",
+            views: {
+                "header":{
+                    templateUrl: "/static/partials/app.html",
+                    controller: "AppController",
+                    controllerAs: "vm"
+                },
+                "content": {
+                    templateUrl: "/static/partials/chat.html",
+                    controller: "ChatController",
+                    controllerAs: "vm",
+                    authenticate: true
+                }
+            }
         });
 });
 
@@ -83,20 +99,4 @@ DraftApp.run(function($rootScope, $state, AuthenticationService){
             $location.path("/login");
         }
     });
-    // run();
-    // getToken();
-    // function run(){
-    //     $http.defaults.headers.common["Authorization"] = "Bearer " + $window.jwtToken;
-
-    //     $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
-    //         $rootScope.activeTab = toState.data.activeTab;
-    //     });
-    // }
-    //  function getToken(){
-    //     $http.get("/token", function(token){
-    //         window.jwtToken = token;
-
-    //         angular.bootstrap(document, ["DraftApp"]);
-    //     });
-    // };
 });

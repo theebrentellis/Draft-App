@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService, UserFactory) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService, UserFactory, ChatFactory) {
     $scope.greeting = "Welcome!";
 
     var vm = this;
@@ -28,5 +28,9 @@ angular.module('AppController', []).controller('AppController', function ($scope
     $scope.deleteAllUsers = function(){
       UserFactory.deleteAllUsers();
       $location.path("/login");
+    };
+
+    $scope.deleteAllChat = function(){
+      ChatFactory.deleteAllChat();
     };
 });
