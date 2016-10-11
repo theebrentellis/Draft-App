@@ -1,9 +1,10 @@
 var Player = require("./../controllers/PlayerController.js");
 var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
-var passport = require("./../config/passport.js");
+var Chat = require("./../controllers/ChatController");
+
+// var passport = require("./../config/passport.js");
 // var passport = require("passport");
-// var Authenticate = require("./../controllers/AuthenticationController.js");
 
 var jwt = require("express-jwt");
 
@@ -54,4 +55,12 @@ module.exports = function(app){
         League.clearAll(req, res);
     });
 
+    //Chat Calls
+    app.post("/message", function(req, res){
+        Chat.postMessage(req, res);
+    });
+    app.post("/deleteAllChat", function(req, res){
+        Chat.deleteAllChat(req, res);
+    });
 };
+

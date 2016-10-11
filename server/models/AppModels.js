@@ -2,6 +2,8 @@ var mongoose = require("mongoose");
 var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
 
+
+//Draft Schema
 var DraftSchema = new mongoose.Schema({
     displayName: String,
     position: String,
@@ -11,6 +13,8 @@ var DraftSchema = new mongoose.Schema({
 });
 mongoose.model("Draft", DraftSchema);
 
+
+//League Schema
 var LeagueSchema = new mongoose.Schema({
     leagueName: String,
     team1: String,
@@ -26,6 +30,8 @@ var LeagueSchema = new mongoose.Schema({
 });
 mongoose.model("League", LeagueSchema);
 
+
+//User Schema
 var userSchema = new mongoose.Schema({
     userName: {
         type: String,
@@ -39,17 +45,14 @@ var userSchema = new mongoose.Schema({
     hash: String,
     salt: String
 });
-
 userSchema.methods.setPassword = function(password){
     this.salt = crypto.randomBytes(16).toString("hex");
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString("hex");
 };
-
 userSchema.methods.validPassword = function(password){
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString("hex");
     return this.hash === hash;
 };
-
 userSchema.methods.generateJwt = function(){
   var expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
@@ -62,3 +65,12 @@ userSchema.methods.generateJwt = function(){
   }, "Draft_Secret");
 };
 mongoose.model("User", userSchema);
+
+
+//Chat Schema
+var chatSchema = new mongoose.Schema({
+    message: String,
+    userName: String,
+    // _leagueId: Schema.Types.ObjectId
+});
+mongoose.model("Chat", chatSchema);
