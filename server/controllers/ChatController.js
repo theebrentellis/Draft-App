@@ -7,9 +7,6 @@ var io = require("socket.io");
 module.exports = (function(){
     return {
         postMessage: function(req, res){
-            console.log("Post Message");
-            // console.log(req.body.message);
-            // console.log(req.body.userName);
             var chat = new Chat();
             chat.message = req.body.message;
             chat.userName = req.body.userName;
@@ -20,8 +17,10 @@ module.exports = (function(){
                         message: "Error Saving to Database"
                     });
                 }
-                // io.emit("receiveMessage", results);
-                res.json(results);
+                else{
+                    res.json(results);
+                }
+                
                 
             });
         },

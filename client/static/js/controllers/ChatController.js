@@ -37,7 +37,7 @@ angular.module('ChatController', []).controller('ChatController', function ($sco
 
     $scope.sendMessage = function () {
         var chatMessage = {
-            "userName": vm.currentUser.userName,
+            "userName": vm.currentUser.firstName,
             "message": $scope.message
         };
         ChatFactory.postMessage(chatMessage, function (result, err) {

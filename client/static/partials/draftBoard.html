@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <div>
-    <div data-ng-controller="LeagueController" data-ng-init="getLeague()">
-        <div ng-repeat="league in league">
-            <h3>{{league.leagueName}}</h3>
-            <p>{{league.team1}}</p>
-            <p>{{league.team2}}</p>
-            <p>{{league.team3}}</p>
-            <p>{{league.team4}}</p>
-            <p>{{league.team5}}</p>
-            <p>{{league.team6}}</p>
-            <p>{{league.team7}}</p>
-            <p>{{league.team8}}</p>
-            <p>{{league.team9}}</p>
-            <p>{{league.team10}}</p>
-        </div>   
-    </div>
-    <br>
-    <div>
-        <input type="text" ng-model="playerFilter.$" placeholder="Filter Drafted Players By Name" class="form-control">
-        <br>
-        <select name="position_select" id="singleSelect" ng-model="playerFilter.position">
+	<div data-ng-controller="LeagueController" data-ng-init="getLeague()">
+		<div ng-repeat="league in league">
+			<!--<h3>{{league.leagueName}}</h3>-->
+			<div class="row">
+                <div class="col-md-1">
+					<p><b>{{league.leagueName}} League</b></p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team1}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team2}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team3}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team4}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team5}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team6}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team7}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team8}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team9}}</p>
+				</div>
+				<div class="col-md-1">
+					<p>{{league.team10}}</p>
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-md-1">
+                    <p>Round 1</p>
+                </div>
+            </div>
+		</div>
+	</div>
+	<br>
+	<div>
+		<input type="text" ng-model="playerFilter.$" placeholder="Filter Drafted Players By Name" class="form-control">
+		<br>
+		<select name="position_select" id="singleSelect" ng-model="playerFilter.position">
                     <option value="">---Filter By Position---</option>
                     <option value="QB" ng-value="option.value">QB</option>
                     <option value="WR" ng-value="option.value">WR</option>
@@ -28,14 +58,14 @@
                     <option value="K" ng-value="option.value">K</option>
                     <option value="DEF" ng-value="option.value">DEF</option>
                 </select>
-    </div>
-    <br>
-    <div id="drafted_list">
-        <h2>Drafted Players</h2>
-        <div ng-repeat="player in allDraftedPlayers | filter: playerFilter">
-            {{player.displayName}} {{player.position}} {{player.draftedBy}}
-        </div>
-        <!--<table>
+	</div>
+	<br>
+	<div id="drafted_list">
+		<h2>Drafted Players</h2>
+		<div ng-repeat="player in allDraftedPlayers | filter: playerFilter">
+			{{player.displayName}} {{player.position}} {{player.draftedBy}}
+		</div>
+		<!--<table>
                 <th>Jammin</th>
                 <th>Bryan</th>
                 <th>Brent</th>
@@ -47,6 +77,6 @@
                 <th>Aaron</th>
                 <th>Pollock</th>
             </table>-->
-    </div>
+	</div>
 
 </div>
