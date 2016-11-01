@@ -1,4 +1,4 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, $controller, $confirm, DraftFactory, AuthenticationService, DraftService) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, DraftFactory, AuthenticationService, DraftService) {
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
@@ -21,13 +21,13 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   //   }
   // };
 
-  $scope.getPlayers = function (position) {
+  vm.getPlayers = function (position) {
     DraftFactory.getPlayers($scope.players, function (data) {
       $scope.available_players = data;
     });
   };
 
-  $scope.draftPlayer = function (id) {
+  vm.draftPlayer = function (id) {
     DraftFactory.draftPlayer(id, function (data) {
       $scope.getPlayers();
     });
@@ -40,11 +40,11 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   };
   getDraftedPlayers();
 
-  $scope.newDraft = function () {
-    DraftFactory.newDraft(function (data) {
-      console.log("Draft Results Cleared");
-    });
-  };
+  // $scope.newDraft = function () {
+  //   DraftFactory.newDraft(function (data) {
+  //     console.log("Draft Results Cleared");
+  //   });
+  // };
 
 
 

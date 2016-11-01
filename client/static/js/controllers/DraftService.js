@@ -67,9 +67,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         }
         if(currentLeagueId() === false){
             console.log("In service.getLeague false statement");
-            return ({
-                error: "Please Create A League"
-            });
         }
         else{
             console.log("Error in service.getleague");
@@ -134,6 +131,10 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
 
     service.leaguesClearAll = function () {
         LeagueFactory.leaguesClearAll();
+    };
+
+    service.deleteAllChat = function(){
+        ChatFactory.deleteAllChat();
     };
 
     service.deleteAllPlayers = function(){

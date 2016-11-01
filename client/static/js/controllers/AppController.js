@@ -1,5 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, AuthenticationService, DraftService, UserFactory, ChatFactory) {
-    $scope.greeting = "Welcome!";
+angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService, UserFactory, ChatFactory) {
 
     var vm = this;
 
@@ -13,11 +12,10 @@ angular.module('AppController', []).controller('AppController', function ($scope
       DraftService.setCurrentLeagueId(leagueId);
     };
 
-    console.log(vm.currentLeague);
-
-    $scope.appViewChange = function(view){
+    vm.appViewChange = function(view){
       if(vm.isLoggedIn === true){
         if(view == "/availablePlayers" | view == "/draftBoard" | "/chat"){
+          console.log(view);
           DraftService.getLeague();
           $location.path(view);
         }
@@ -31,33 +29,33 @@ angular.module('AppController', []).controller('AppController', function ($scope
       
     };
 
-    $scope.downloadPlayers = function(){
+    vm.downloadPlayers = function(){
       DraftService.downloadPlayers(function(data){
         console.log(data);
       });
     };
 
-    $scope.deleteAllPlayers = function(){
+    vm.deleteAllPlayers = function(){
       DraftService.deleteAllPlayers();
     };
 
-    $scope.currentUserLogOut = function(){
+    vm.currentUserLogOut = function(){
       AuthenticationService.currentUserLogOut();
-      if(!AuthenticationService.isLoggedIn()){
-        $location.path("/login");
-      }
-    };
-
-    $scope.deleteAllUsers = function(){
-      UserFactory.deleteAllUsers();
       $location.path("/login");
     };
 
-    $scope.deleteAllChat = function(){
-      ChatFactory.deleteAllChat();
+    vm.deleteAllUsers = function(){
+      AuthenticationService.deleteAllUsers();
+      $location.path("/login");
     };
 
-    $scope.leaguesClearAll = function(){
+    vm.deleteAllChat = function(){
+      DraftService.deleteAllChat();
+    };
+
+    vm.leaguesClearAll = function(){
       DraftService.leaguesClearAll();
     };
+
+
 });

@@ -9,37 +9,39 @@
             <ul class="nav navbar-nav">
                 <li ng-if="vm.isLoggedIn" uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Welcome, {{vm.currentUser.firstName}}!</a>
                     <ul class="dropdown-menu">
-                        <li><a ng-click="currentUserLogOut()">Logout</a></li>
+                        <li><a ng-click="vm.currentUserLogOut()">Logout</a></li>
                     </ul>
                 </li>
                 <li ng-if="vm.currentUser.leagues" uib-dropdown on-toggle="toggle(open)"><a href="" uib-dropdown-toggle>League</a>
                     <ul class="dropdown-menu" >
-                        <li ng-repeat="league in vm.currentUser.leagues"><a href="" ng-click="vm.setCurrentLeague(league._id)"><b ng-if="league._id === vm.currentLeague._id">{{league.leagueName}}</b></a></li>
+                        <li ng-repeat="league in vm.currentUser.leagues"><a href="" ng-click="vm.setCurrentLeague(league._id)">{{league.leagueName}}</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="" ng-click="appViewChange('/commish')">Create New League</a></li>
-                        <li><a href="" ng-click="appViewChange('/commish')">Join League</a></li>
+                        <li><a href="" ng-click="vm.appViewChange('/commish')">Create New League</a></li>
+                        <li><a href="" ng-click="vm.appViewChange('/commish')">Join League</a></li>
                     </ul>
                 </li>
-                <li><a href="" ng-click="appViewChange('/availablePlayers')">Available Players</a></li>
-                <li><a href="" ng-click="appViewChange('/draftBoard')">Draft Board</a></li>
-                <li><a href="" ng-click="appViewChange('/chat')">Chat</a></li>
+                <li><a href="" ng-click="vm.appViewChange('/availablePlayers')">Available Players</a></li>
+                <li><a href="" ng-click="vm.appViewChange('/draftBoard')">Draft Board</a></li>
+                <li><a href="" ng-click="vm.appViewChange('/chat')">Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Dev Tools</a>
                     <ul class="dropdown-menu">
-                        <li><a href="" ng-click="newDraft()">New League</a></li>
+                        <li><a href="" ng-click="vm.newDraft()">New League</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="" ng-click="downloadPlayers()">Download Players</a></li>
-                        <li><a href="" ng-click="deleteAllPlayers()">Reset Player DB</a></li>
-                        <li><a href="" ng-click="leaguesClearAll()">Reset League DB</a></li>
-                        <li><a href="" ng-click="deleteAllUsers()">Reset User DB</a></li>
-                        <li><a href="" ng-click="deleteAllChat()">Reset Chat DB</a></li>
+                        <li><a href="" ng-click="vm.downloadPlayers()">Download Players</a></li>
+                        <li><a href="" ng-click="vm.deleteAllPlayers()">Reset Player DB</a></li>
+                        <li><a href="" ng-click="vm.leaguesClearAll()">Reset League DB</a></li>
+                        <li><a href="" ng-click="vm.deleteAllUsers()">Reset User DB</a></li>
+                        <li><a href="" ng-click="vm.deleteAllChat()">Reset Chat DB</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="" ng-click="currentUserLogOut()">Logout</a></li>
+                        <li><a href="" ng-click="vm.currentUserLogOut()">Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </div>
     <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+    {{vm.currentUser.leagues}}
+    <!--<b ng-if="league._id === vm.currentLeague._id"></b>-->
 </div>

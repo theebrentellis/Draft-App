@@ -35,6 +35,11 @@ LeagueSchema.methods.populateUsers = function(leagueId, callback){
             model: "User",
             select: "firstName"
         })
+        .populate({
+            path: "commish",
+            model: "User",
+            select: "_id"
+        })
         .exec(function(err, league){
             if(league){
                 console.log(league);

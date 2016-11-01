@@ -1,4 +1,4 @@
-angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, UserFactory) {
+angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $location, UserFactory) {
 
     var service = {};
 
@@ -56,7 +56,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         UserFactory.register(user, function(data){
             if(data.token){
                 saveToken(data.token);
-                $state.reload();
                 callback("Success");
             }
             if(data.message){
@@ -72,7 +71,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         UserFactory.login(user, function(data){
             if(data.token){
                 saveToken(data.token);
-                $state.reload();
                 callback("Success");
             }
             if(data.message){
@@ -86,8 +84,10 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
 
     service.currentUserLogOut = function(){
         $window.localStorage.clear();
-        $state.reload();
-        console.log($window.localStorage);
+    };
+
+    service.deleteAllUsers = function(){
+        UserFactory.deleteAllUsers();
     };
 
 return service;

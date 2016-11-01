@@ -1,12 +1,14 @@
-angular.module('UserController', []).controller('UserController', function($scope, $location, AuthenticationService, UserFactory){
+angular.module('UserController', []).controller('UserController', function($scope, $q, $location, $state, AuthenticationService, DraftService){
     var vm = this;
+
+    vm.currentUser = AuthenticationService.currentUser();
 
     vm.message = "";
 
-    $scope.loginView = true;
-    $scope.registerView = false;
+    vm.loginView = true;
+    vm.registerView = false;
 
-    $scope.userViewChange = function(view){
+    vm.userViewChange = function(view){
         function registerViewChange(){
             $scope.loginView = false;
             $scope.registerView = true;
@@ -50,18 +52,24 @@ angular.module('UserController', []).controller('UserController', function($scop
         AuthenticationService.login(vm.loginInfo, function(data){
             if(data == "Success"){
                 $location.path("/availablePlayers");
+                // console.log(vm.currentUser);
             }
             else{
                 vm.message = data;
             }
-            // if(AuthenticationService.isLoggedIn()){
-            //     $location.path("/availablePlayers");
-            // }
-            // else{
-            //     $location.path("/login");
-            // }
-            
         });
+        // AuthenticationService.login(vm.loginInfo)
+        //     .then(function(data){
+        //         if(data === "Success"){
+        //             $location.path("/availablePlayers");
+        //             console.log(vm.currentUser);
+        //         }
+        //         else{
+        //             console.log("Else Error!");
+        //         }
+        //     }, function(error){
+        //         console.log("Error!");
+        //     });
     };
 });
 

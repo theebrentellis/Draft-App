@@ -16,7 +16,7 @@
                     <option value="K" ng-value="option.value">K</option>
                     <option value="DEF" ng-value="option.value">DEF</option>
                 </select>
-            <button id="get_all" type="submit" class="btn btn-success btn-md" ng-click="getPlayers(players.position_select)">Available Players</button>
+            <button id="get_all" type="submit" class="btn btn-success btn-md" ng-click="vm.getPlayers(players.position_select)">Available Players</button>
         </form>
     </div>
     <br>
@@ -26,7 +26,7 @@
         <div ng-repeat="player in available_players | filter: playerFilter">
             
             <form role="form" class="col-sm-4">
-                <label><input type="checkbox" ng-click="draftPlayer(player._id)" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
+                <label><input type="checkbox" ng-click="vm.draftPlayer(player._id)" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
             </form>
         </div>
     </div>

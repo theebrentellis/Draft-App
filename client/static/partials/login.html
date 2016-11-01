@@ -3,7 +3,7 @@
     <div class="col-lg-6">
         <div ng-if="vm.message" class="alert alert-danger">{{vm.message}}</div>
         <div>
-            <form role="form" ng-show="loginView">
+            <form role="form" ng-show="vm.loginView">
                 <div class="form-group" >
                     <h5>Please Enter Your Username and Password</h5>
                     <input type="text" class="form-control" name="username" id="username" placeholder="Username" ng-model="vm.loginInfo.userName">
@@ -16,7 +16,7 @@
                 <button type="submit" class="btn btn-default" ng-click="userViewChange(true)">Register</button>
             </form>
             
-            <form role="form" ng-show="registerView">
+            <form role="form" ng-show="vm.registerView">
                 <h5>New Team Registration:</h5>
                 <input type="text" class="form-control" placeholder="Username" ng-model="vm.registerInfo.userName" required>
                 <br>
@@ -27,7 +27,7 @@
                 <button type="submit" ng-click="vm.registerNew()" class="btn btn-primary">Register New Team</button>
                 <br>
                 <br>
-                <button type="submit" ng-click="userViewChange()" class="btn btn-outline-info">Back</button>
+                <button type="submit" ng-click="vm.userViewChange()" class="btn btn-outline-info">Back</button>
             </form>
         </div>
     </div>
