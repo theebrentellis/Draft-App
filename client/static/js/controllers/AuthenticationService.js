@@ -1,13 +1,13 @@
-angular.module('AuthenticationService', []).service('AuthenticationService', function ($http, $window, UserFactory) {
+angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, UserFactory) {
 
     var service = {};
 
     var saveToken = function(token){
-        $window.localStorage["draft-token"] = token;
+        $window.localStorage["user-token"] = token;
     };
 
     var getToken = function(){
-        return $window.localStorage["draft-token"];
+        return $window.localStorage["user-token"];
     };
 
     service.isLoggedIn = function(){
@@ -33,18 +33,30 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
 
             payload = $window.atob(payload);
             payload = JSON.parse(payload);
-
+           
             return {
+                _id: payload._id,
                 userName: payload.userName,
-                firstName: payload.firstName
+                firstName: payload.firstName,
+                leagues: payload.leagues,         
             };
         }
+    };
+
+    service.updateToken = function(token){
+        $window.localStorage.removeItem("user-token");
+        saveToken(token.token);
+        service.isLoggedIn();
+        $state.reload();
+        return "Success!";
+        
     };
 
     service.register = function(user, callback){
         UserFactory.register(user, function(data){
             if(data.token){
                 saveToken(data.token);
+                $state.reload();
                 callback("Success");
             }
             if(data.message){
@@ -53,9 +65,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
             else{
                 callback("Unknown Error!");
             }
-            // saveToken(data.token);
-            // callback(data.token);
-            // console.log("Done!!");
         });
     };
 
@@ -63,6 +72,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         UserFactory.login(user, function(data){
             if(data.token){
                 saveToken(data.token);
+                $state.reload();
                 callback("Success");
             }
             if(data.message){
@@ -75,7 +85,9 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     };
 
     service.currentUserLogOut = function(){
-        $window.localStorage.removeItem("draft-token");
+        $window.localStorage.clear();
+        $state.reload();
+        console.log($window.localStorage);
     };
 
 return service;

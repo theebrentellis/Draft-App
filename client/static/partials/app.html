@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <div ng-controller="AppController">
     <div class="jumbotron text-center">
-        <h1>Fantasy Football Draft App</h1>
+        <h1>A MEAN Fantasy Football Draft App</h1>
         <p ng-if="vm.isLoggedIn">Welcome, {{vm.currentUser.firstName}}!</p>
     </div>
-
     <div>
         <nav class="navbar navbar-default" role="navigation">
             <ul class="nav navbar-nav">
@@ -13,23 +12,31 @@
                         <li><a ng-click="currentUserLogOut()">Logout</a></li>
                     </ul>
                 </li>
-                <li><a ng-click="appViewChange('/availablePlayers')">Available Players</a></li>
-                <li ng-click="appViewChange('/draftBoard')"><a>Draft Board</a></li>
-                <li ng-click="appViewChange('/chat')"><a>Chat</a></li>
+                <li ng-if="vm.currentUser.leagues" uib-dropdown on-toggle="toggle(open)"><a href="" uib-dropdown-toggle>League</a>
+                    <ul class="dropdown-menu" >
+                        <li ng-repeat="league in vm.currentUser.leagues"><a href="" ng-click="vm.setCurrentLeague(league._id)"><b ng-if="league._id === vm.currentLeague._id">{{league.leagueName}}</b></a></li>
+                        <li role="seperator" class="divider"></li>
+                        <li><a href="" ng-click="appViewChange('/commish')">Create New League</a></li>
+                        <li><a href="" ng-click="appViewChange('/commish')">Join League</a></li>
+                    </ul>
+                </li>
+                <li><a href="" ng-click="appViewChange('/availablePlayers')">Available Players</a></li>
+                <li><a href="" ng-click="appViewChange('/draftBoard')">Draft Board</a></li>
+                <li><a href="" ng-click="appViewChange('/chat')">Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Dev Tools</a>
                     <ul class="dropdown-menu">
-                    <li><a ng-click="newDraft">New League</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a ng-click="getAll()">Download Players</a></li>
-                    <li><a ng-click="">Reset Player DB</a></li>
-                    <li><a ng-click="leaguesClearAll()">Reset League DB</a></li>
-                    <li><a ng-click="deleteAllUsers()">Reset User DB</a></li>
-                    <li><a ng-click="deleteAllChat()">Reset Chat DB</a></li>
-                    <li role="seperator" class="divider"></li>
-                    <li><a ng-click="currentUserLogOut()">Logout</a></li>
-                </ul>
+                        <li><a href="" ng-click="newDraft()">New League</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="" ng-click="downloadPlayers()">Download Players</a></li>
+                        <li><a href="" ng-click="deleteAllPlayers()">Reset Player DB</a></li>
+                        <li><a href="" ng-click="leaguesClearAll()">Reset League DB</a></li>
+                        <li><a href="" ng-click="deleteAllUsers()">Reset User DB</a></li>
+                        <li><a href="" ng-click="deleteAllChat()">Reset Chat DB</a></li>
+                        <li role="seperator" class="divider"></li>
+                        <li><a href="" ng-click="currentUserLogOut()">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>

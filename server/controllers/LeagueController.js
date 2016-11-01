@@ -1,43 +1,136 @@
 var mongoose = require('mongoose');
 
 var League = mongoose.model('League');
+var User = mongoose.model("User");
 
 module.exports = (function () {
   return {
     createLeague: function (req, res) {
-      // console.log("In server LeagueController")
-      // console.log(req.body)
-      var league = new League({leagueName: req.body.leagueName, team1: req.body.teamName1, team2: req.body.teamName2, team3: req.body.teamName3, team4: req.body.teamName4, team5: req.body.teamName5, team6: req.body.teamName6, team7: req.body.teamName7, team8: req.body.teamName8, team9: req.body.teamName9, team10: req.body.teamName10});
-      league.save(function (err, results) {
+
+      var userId = req.body.userId;
+
+      var league = new League({
+        leagueName: req.body.leagueName,
+        draftOrder: userId,
+        commish: userId
+      });
+
+      league.save(function (err, league) {
         if (err) {
           console.log('Error: ' + err);
-        }else {
-          console.log(results);
-          console.log('New League Created!');
+        }
+        if (league) {
+          console.log(league._id);
+        }
+      });
+      if (league._id) {
+        User.findByIdAndUpdate(userId, {
+          $push: {
+            leagues: league._id
+          }
+        }, {
+          new: true
+        }, function (err, user) {
+          if (user) {
+            user.populateUserLeagues(userId, function (user) {
+              var token;
+              token = user.generateJwt();
+              res.json({
+                "token": token,
+                message: "Created New League!"
+              });
+            });
+          }
+          if (err) {
+            console.log("Error: " + err);
+            res.json({
+              message: "Error Updating User With New League"
+            });
+          }
+        });
+      }
+    },
+
+    getLeague: function (req, res) {
+      League.findById(req.query._id, function (err, league) {
+        if (err) {
+          console.log('Error: ' + err);
+        }
+        if(league){
+          league.populateUsers(req.query._id, function(league){
+            res.json(league);
+          });
+        }
+        else {
+          console.log("getLeague Error!");
         }
       });
     },
 
-    getLeague: function(req, res){
-        League.find({}, function(err, results){
-            if(err){
-                console.log("Error: "+ err);
-            }
-            else{
-                res.json(results);
-            }
-        });
+    getAllLeagues: function (req, res) {
+      League.find({}, function (err, leagues) {
+        if (err) {
+          console.log("Error: " + err);
+        }
+        if (leagues) {
+          res.json(leagues);
+        }
+      });
     },
 
-    clearAll: function(req, res){
-        League.remove({}, function(err, results){
-            if(err){
-                console.log("Error: "+ err);
-            }
-            else{
-                res.json(results);
-            }
+    joinLeague: function (req, res) {
+      console.log(req.body.userId);
+      League.findByIdAndUpdate(req.body.leagueId, {
+        $push: {
+          draftOrder: req.body.userId
+        }
+      }, {
+        new: true
+      }, function(err, league){
+        if(league){
+          User.findByIdAndUpdate(req.body.userId, {
+          $push: {
+            leagues: req.body.leagueId
+          }
+        }, {
+          new: true
+        }, function (err, user) {
+          if (user) {
+            console.log(user);
+            user.populateUserLeagues(req.body.userId, function (user) {
+              console.log(user);
+              var token;
+              token = user.generateJwt();
+              res.json({
+                "token": token,
+              });
+            });
+          }
+          if (err) {
+            console.log("Error: " + err);
+            res.json({
+              message: "Error Updating User With New League"
+            });
+          }
         });
+        }
+        if(err){
+          console.log("Error: " + err);
+        }
+      });
+
+      
+    },
+
+    leaguesClearAll: function (req, res) {
+      League.remove({}, function (err, results) {
+        if (err) {
+          console.log('Error: ' + err);
+        } else {
+          console.log("All Leagues Cleared!");
+          res.json(results);
+        }
+      });
     },
 
   };

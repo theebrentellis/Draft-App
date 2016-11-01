@@ -1,4 +1,4 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "ChatController", "LeagueController", "UserController", "PlayerController", "ChatFactory", "DraftFactory", "FlashFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "ChatController", "DraftService", "LeagueController", "UserController", "PlayerController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
@@ -30,19 +30,22 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
-        // .state("commish", {
-        //     url: "/commish",
-        //     views: {
-        //         "header":{
-        //             templateUrl: "/static/partials/app.html",
-        //             controller: "AppController"
-        //         },
-        //         "content":{
-        //             templateUrl: "/static/partials/commish.html",
-        //             controller: "PlayerController"
-        //         }
-        //     }
-        // })
+        .state("commish", {
+            url: "/commish",
+            views: {
+                "header":{
+                    templateUrl: "/static/partials/app.html",
+                    controller: "AppController",
+                    controllerAs: "vm"
+                },
+                "content":{
+                    templateUrl: "/static/partials/commish.html",
+                    controller: "LeagueController",
+                    controllerAs: "vm",
+                    authenticate: true,
+                }
+            }
+        })
         .state("availablePlayers", {
             url: "/availablePlayers",
             views: {

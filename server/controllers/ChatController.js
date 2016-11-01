@@ -19,9 +19,7 @@ module.exports = (function(){
                 }
                 else{
                     res.json(results);
-                }
-                
-                
+                }         
             });
         },
 
@@ -46,7 +44,7 @@ module.exports = (function(){
                     console.log(err);
                 }
                 else{
-                    console.log(results);
+                    console.log("Chat Log Cleared!");
                 }
             });
         },

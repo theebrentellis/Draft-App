@@ -1,48 +1,23 @@
 <!DOCTYPE html>
 <div>
-	<div data-ng-controller="LeagueController" data-ng-init="getLeague()">
-		<div ng-repeat="league in league">
-			<!--<h3>{{league.leagueName}}</h3>-->
+	<!--<div>
+		<h2>{{vm.currentLeague.leagueName}}</h2>
+        <p ng-repeat="team in vm.currentLeague.draftOrder">{{team.firstName}}</p>
+	</div>-->
+	<div>
+		<div>
+			<!--<h3>{{vm.currentLeague.leagueName}}</h3>-->
 			<div class="row">
-                <div class="col-md-1">
-					<p><b>{{league.leagueName}} League</b></p>
-				</div>
 				<div class="col-md-1">
-					<p>{{league.team1}}</p>
+					<p><b>{{vm.currentLeague.leagueName}} League</b></p>
+					<p>Round 1</p>
+					<p>Round 2</p>
 				</div>
-				<div class="col-md-1">
-					<p>{{league.team2}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team3}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team4}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team5}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team6}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team7}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team8}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team9}}</p>
-				</div>
-				<div class="col-md-1">
-					<p>{{league.team10}}</p>
+				<div class="col-md-1" ng-repeat="team in vm.currentLeague.draftOrder">
+					<p class="{{team._id}}">{{team.firstName}}</p>
 				</div>
 			</div>
-            <div class="row">
-                <div class="col-md-1">
-                    <p>Round 1</p>
-                </div>
-            </div>
+
 		</div>
 	</div>
 	<br>
@@ -65,18 +40,7 @@
 		<div ng-repeat="player in allDraftedPlayers | filter: playerFilter">
 			{{player.displayName}} {{player.position}} {{player.draftedBy}}
 		</div>
-		<!--<table>
-                <th>Jammin</th>
-                <th>Bryan</th>
-                <th>Brent</th>
-                <th>Andy</th>
-                <th>Stahnke</th>
-                <th>Spook</th>
-                <th>Matt</th>
-                <th>CMac</th>
-                <th>Aaron</th>
-                <th>Pollock</th>
-            </table>-->
+
 	</div>
 
 </div>

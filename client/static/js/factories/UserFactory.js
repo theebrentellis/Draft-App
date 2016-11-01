@@ -21,5 +21,11 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http) {
     });
   };
 
+  factory.getUserLeague = function(callback){
+    $http.get("/getUserLeagues").success(function(data){
+      callback(data);
+    });
+  };
+
   return factory;
 });

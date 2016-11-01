@@ -51,11 +51,19 @@ module.exports = (function () {
         }
         if (user) {
           if (user.validPassword(req.body.password) === true) {
-            var token;
-            token = user.generateJwt();
-            res.json({
-              "token": token
+            
+            user.populateUserLeagues(user._id, function(user){
+              var token;
+              token = user.generateJwt();
+              res.json({
+                "token": token
+              });
             });
+            // var token;
+            // token = user.generateJwt();
+            // res.json({
+            //   "token": token
+            // });
           } else {
             console.log("Incorrect Password!");
             res.json({
@@ -67,15 +75,55 @@ module.exports = (function () {
     },
 
     deleteAllUsers: function (req, res) {
-      console.log("deleteAllUsers");
       User.remove({}, function (err, results) {
         if (err) {
           console.log(err);
         } else {
-          console.log(results);
+          console.log("All Users Cleared");
         }
       });
-    }
+    },
+
+    userPopulateLeague: function(req, res){
+      theUser = req.params.userID;
+      User.findById(id, function(err, user){
+        if(user){
+          user.populateUserLeague(function(data){
+            console.log(data);
+            res.json(data);
+          });
+        }
+      });
+
+    },
+
+    updateUserLeague: function(req, res){
+      console.log("updateUserLeague");
+      // User.findById(id, function(err, user){
+      //   if (err){
+      //     return res.json({
+      //       message: "Error Finding User"
+      //     });
+      //   }
+      //   else{
+      //     user._leagueId = "";
+      //     user.save(function(err, user){
+      //       if(err){
+      //         return res.json({
+      //           message: "Error Updating User"
+      //         });
+      //       }
+      //       else{
+      //         var token;
+      //         token = user.generateJwt();
+      //         res.json({
+      //           "token": token
+      //         });
+      //       }
+      //     });
+      //   }
+      // });
+    },
 
     // profileRead: function(req, res){
     //   if(!req.payload._id){

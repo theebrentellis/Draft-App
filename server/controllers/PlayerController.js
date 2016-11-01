@@ -65,5 +65,18 @@ module.exports = (function(){
                 }
             });
         },
+        deleteAllPlayers: function(req, res){
+            Draft.remove({}, function(err, results){
+                if(err){
+                    console.log("Error: "+err);
+                    res.json({
+                        message: "Error Deleting All Players"
+                    });
+                }
+                else{
+                    res.json(results);
+                }
+            });
+        }
     };
 })();

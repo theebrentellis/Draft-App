@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <div>
     <div>
-        <input ng-if="players" type="text" placeholder="Filter Available Players" ng-model="playerFilter" class="form-control">
+        <h2>{{vm.currentLeague.leagueName}}</h2>
+        <p ng-repeat="team in vm.currentLeague.draftOrder">{{team.firstName}}</p>
     </div>
     <br>
     <div>
@@ -20,7 +21,10 @@
     </div>
     <br>
     <div class="form-group">
+        <input type="text" class="form-control" ng-if="available_players" placeholder="Filter Available Players" ng-model="playerFilter" >
+        <br>
         <div ng-repeat="player in available_players | filter: playerFilter">
+            
             <form role="form" class="col-sm-4">
                 <label><input type="checkbox" ng-click="draftPlayer(player._id)" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
             </form>

@@ -13,6 +13,12 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
         });
     };
 
+    factory.deleteAllPlayers = function(callback){
+        $http.post("/deleteAllPlayers").success(function(data){
+            callback(data);
+        });
+    };
+
     factory.draftPlayer = function(id, callback){
         $http.patch("/draftPlayer/"+id).success(function(output){
             callback(output);

@@ -2,13 +2,15 @@ var mongoose = require("mongoose");
 var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
 
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
 //Draft Schema
 var DraftSchema = new mongoose.Schema({
     displayName: String,
     position: String,
     drafted: Boolean,
-    drafted_by: String
+    draftedBy: String
 
 });
 mongoose.model("Draft", DraftSchema);
@@ -16,18 +18,30 @@ mongoose.model("Draft", DraftSchema);
 
 //League Schema
 var LeagueSchema = new mongoose.Schema({
-    leagueName: String,
-    team1: String,
-    team2: String,
-    team3: String,
-    team4: String,
-    team5: String,
-    team6: String,
-    team7: String,
-    team8: String,
-    team9: String,
-    team10: String
+    leagueName: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    draftOrder: [ObjectId],
+    commish: [ObjectId],
+    onClock: ObjectId
+    // chat: chatSchema,
 });
+LeagueSchema.methods.populateUsers = function(leagueId, callback){
+    this.model("League").findOne({_id: leagueId})
+        .populate({
+            path: "draftOrder",
+            model: "User",
+            select: "firstName"
+        })
+        .exec(function(err, league){
+            if(league){
+                console.log(league);
+                callback(league);
+            }
+        });
+};
 mongoose.model("League", LeagueSchema);
 
 
@@ -42,6 +56,7 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    leagues: [ObjectId],
     hash: String,
     salt: String
 });
@@ -61,8 +76,26 @@ userSchema.methods.generateJwt = function(){
     _id: this.id,
     userName: this.userName,
     firstName: this.firstName,
+    commish: this.commish,
+    leagues: this.leagues,
     exp: parseInt(expiry.getTime() / 1000),
   }, "Draft_Secret");
+};
+userSchema.methods.populateUserLeagues = function(userId, callback){
+    this.model("User").findOne({_id: userId})
+    .populate({
+        path: "leagues",
+        model: "League",
+        populate: {
+            path: "commish",
+            model: "League"
+        },
+    })
+    .exec(function(err, user){
+        if(user){
+            callback(user);
+        }
+    });
 };
 mongoose.model("User", userSchema);
 
@@ -71,6 +104,6 @@ mongoose.model("User", userSchema);
 var chatSchema = new mongoose.Schema({
     message: String,
     userName: String,
-    // _leagueId: Schema.Types.ObjectId
+    leagueId: ObjectId
 });
 mongoose.model("Chat", chatSchema);
