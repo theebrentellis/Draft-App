@@ -13,7 +13,7 @@ var Chat = require("./../controllers/ChatController.js");
 //     userProperty: "payload"
 // });
 
-module.exports = function(app){
+module.exports = function(app, passport){
 
     //User Calls
     app.post("/register", function(req, res){

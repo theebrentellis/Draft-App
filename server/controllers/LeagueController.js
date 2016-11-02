@@ -12,7 +12,8 @@ module.exports = (function () {
       var league = new League({
         leagueName: req.body.leagueName,
         draftOrder: userId,
-        commish: userId
+        commish: userId,
+        onClock: userId
       });
 
       league.save(function (err, league) {

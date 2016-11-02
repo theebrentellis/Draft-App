@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, "./client")));
 
 require("./server/config/mongoose.js");
-require("./server/config/passport.js");
+require("./server/config/passport.js")(passport);
 require("./server/config/routes.js")(app);
 
 // app.listen(1234, function(){

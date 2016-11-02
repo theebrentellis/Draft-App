@@ -4,6 +4,7 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
     var vm = this;
 
     vm.currentUser = AuthenticationService.currentUser();
+    vm.isLoggedIn = AuthenticationService.isLoggedIn();
 
     var saveCurrentLeagueId = function(leagueId){
         $window.localStorage["current-league-id"] = leagueId;
@@ -15,8 +16,7 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         }
         else{
             return false;
-        }
-        
+        }  
     };
 
     var saveCurrentLeague = function(league){
@@ -28,7 +28,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         else{
             $window.localStorage.setItem("current-league", JSON.stringify(league));
             $state.reload();
-
         }
     };
 
@@ -40,7 +39,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
 
     service.setCurrentLeagueId = function(leagueId){
         if(leagueId){
-            console.log(leagueId);
             saveCurrentLeagueId(leagueId);
         }
     };
@@ -65,14 +63,12 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
             }
         });
         }
-        if(currentLeagueId() === false){
+        if(!$window.localStorage["current-league-id"]){
             console.log("In service.getLeague false statement");
         }
         else{
-            console.log("Error in service.getleague");
-            
-        }
-        
+            console.log("Error in service.getleague");    
+        }      
     };
 
     service.createNewLeague = function (newLeagueInfo, callback) {
@@ -113,6 +109,21 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
             AuthenticationService.updateToken(updatedUserToken);
             console.log(vm.currentUser.leagues[0]);
         });
+    };
+
+    service.defaultCurrentLeague = function(){
+        console.log("Start!");
+        console.log(vm.currentUser);
+        if(vm.isLoggedIn !== false && vm.currentUser.leagues !== undefined){
+            console.log(vm.currentUser.firstName);
+        //  && vm.currentLeague !== undefined
+
+            // defaultLeague = vm.currentUser.leagues[0]._id;
+            // saveCurrentLeagueId(defaultLeague);
+            // service.getLeague();
+            console.log("Done!");
+      }
+      
     };
 
     service.downloadPlayers = function () {

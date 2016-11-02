@@ -1,4 +1,4 @@
-angular.module('UserController', []).controller('UserController', function($scope, $q, $location, $state, AuthenticationService, DraftService){
+angular.module('UserController', []).controller('UserController', function($scope, $q, $view, $location, $state, AuthenticationService, DraftService){
     var vm = this;
 
     vm.currentUser = AuthenticationService.currentUser();
@@ -10,12 +10,12 @@ angular.module('UserController', []).controller('UserController', function($scop
 
     vm.userViewChange = function(view){
         function registerViewChange(){
-            $scope.loginView = false;
-            $scope.registerView = true;
+            vm.loginView = false;
+            vm.registerView = true;
         }
         function loginViewChange(){
-            $scope.loginView = true;
-            $scope.registerView = false;
+            vm.loginView = true;
+            vm.registerView = false;
         }
         if(view === true){
             registerViewChange();
@@ -52,12 +52,16 @@ angular.module('UserController', []).controller('UserController', function($scop
         AuthenticationService.login(vm.loginInfo, function(data){
             if(data == "Success"){
                 $location.path("/availablePlayers");
-                // console.log(vm.currentUser);
+                console.log(vm.currentUser);
             }
             else{
                 vm.message = data;
             }
         });
+        DraftService.defaultCurrentLeague();
+        console.log("Done!");
+        
+
         // AuthenticationService.login(vm.loginInfo)
         //     .then(function(data){
         //         if(data === "Success"){

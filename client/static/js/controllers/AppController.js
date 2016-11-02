@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService, UserFactory, ChatFactory) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService) {
 
     var vm = this;
 
@@ -10,13 +10,13 @@ angular.module('AppController', []).controller('AppController', function ($scope
 
     vm.setCurrentLeague = function(leagueId){
       DraftService.setCurrentLeagueId(leagueId);
+      DraftService.getLeague();
     };
 
     vm.appViewChange = function(view){
       if(vm.isLoggedIn === true){
         if(view == "/availablePlayers" | view == "/draftBoard" | "/chat"){
-          console.log(view);
-          DraftService.getLeague();
+          // DraftService.getLeague();
           $location.path(view);
         }
         else{
