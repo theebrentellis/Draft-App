@@ -82,28 +82,14 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     return UserFactory.login(user)
       .then(function (response) {
         if (response.data.token) {
-        //   console.log(data.data.token);
           saveToken(response.data.token);
           return 'Success';
         }else {
-          console.log(response.data.message);
           return response.data.message;
         }
       }, function (err) {
         console.log(err);
       });
-      // .then(function(data){
-
-  //     console.log("Working?!")
-  //     return data
-  // })
-  // .then(function(data){
-  //     console.log("First Response")
-  //     return data
-  // }, function(data){
-  //     console.log("Second Response")
-  //     return data
-  // })
   };
 
   service.currentUserLogOut = function () {

@@ -74,9 +74,7 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
     service.createNewLeague = function (newLeagueInfo, callback) {
         LeagueFactory.createLeague(newLeagueInfo, function (token) {
             AuthenticationService.updateToken(token);
-            // var workingLeagueId = vm.currentUser.leagues[0]._id;
-            // saveCurrentLeagueId(workingLeagueId);
-            // callback("Success");
+            console.log(vm.currentUser);
         });
     };
 
@@ -111,8 +109,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
     };
 
     service.defaultCurrentLeague = function(){
-        console.log("Start!");
-        console.log(vm.currentUser);
         if(vm.isLoggedIn !== false && vm.currentUser.leagues !== undefined){
             console.log(vm.currentUser.firstName);
         //  && vm.currentLeague !== undefined

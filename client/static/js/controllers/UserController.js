@@ -51,29 +51,18 @@ angular.module('UserController', []).controller('UserController', function($scop
     };
 
     vm.login = function(){
-        // AuthenticationService.login(vm.loginInfo, function(data){
-        //     if(data == "Success"){
-        //         $location.path("/availablePlayers");
-        //         console.log(vm.currentUser);
-        //     }
-        //     else{
-        //         vm.message = data;
-        //     }
-        // });
-        
-        // DraftService.defaultCurrentLeague();
-        // console.log("Done!");
-        
-
        return AuthenticationService.login(vm.loginInfo)
             .then(function(response){
                 if(response == "Success"){
-                    console.log(response);
                     theUser = AuthenticationService.currentUser();
-                    console.log(theUser.leagues[0]._id);
-                    DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
-                    DraftService.getLeague();
-                    $location.path("/availablePlayers");
+                    if(theUser.leagues[0] === undefined){
+                        $location.path("/commish");
+                    }
+                    else{
+                        DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
+                        DraftService.getLeague();
+                        $location.path("availablePlayers")
+                    }             
                 }
                 else{
                     vm.message = response;
@@ -82,13 +71,6 @@ angular.module('UserController', []).controller('UserController', function($scop
             }, function(error){
                 console.log(error);
             });
-            // .then(function(){
-            //     theUser = AuthenticationService.currentUser();
-            //     console.log(theUser.leagues[0]._id);
-            //     DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
-            //     DraftService.getLeague();
-            //     $location.path("/availablePlayers");
-            // });
     };
 });
 
