@@ -107,7 +107,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         };
         LeagueFactory.joinLeague(package, function(updatedUserToken){
             AuthenticationService.updateToken(updatedUserToken);
-            console.log(vm.currentUser.leagues[0]);
         });
     };
 

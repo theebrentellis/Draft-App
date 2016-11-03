@@ -3,6 +3,8 @@ angular.module('UserController', []).controller('UserController', function($scop
 
     vm.currentUser = AuthenticationService.currentUser();
 
+    vm.currentLeague = DraftService.currentLeague();
+
     vm.message = "";
 
     vm.loginView = true;
@@ -49,31 +51,44 @@ angular.module('UserController', []).controller('UserController', function($scop
     };
 
     vm.login = function(){
-        AuthenticationService.login(vm.loginInfo, function(data){
-            if(data == "Success"){
-                $location.path("/availablePlayers");
-                console.log(vm.currentUser);
-            }
-            else{
-                vm.message = data;
-            }
-        });
-        DraftService.defaultCurrentLeague();
-        console.log("Done!");
+        // AuthenticationService.login(vm.loginInfo, function(data){
+        //     if(data == "Success"){
+        //         $location.path("/availablePlayers");
+        //         console.log(vm.currentUser);
+        //     }
+        //     else{
+        //         vm.message = data;
+        //     }
+        // });
+        
+        // DraftService.defaultCurrentLeague();
+        // console.log("Done!");
         
 
-        // AuthenticationService.login(vm.loginInfo)
-        //     .then(function(data){
-        //         if(data === "Success"){
-        //             $location.path("/availablePlayers");
-        //             console.log(vm.currentUser);
-        //         }
-        //         else{
-        //             console.log("Else Error!");
-        //         }
-        //     }, function(error){
-        //         console.log("Error!");
-        //     });
+       return AuthenticationService.login(vm.loginInfo)
+            .then(function(response){
+                if(response == "Success"){
+                    console.log(response);
+                    theUser = AuthenticationService.currentUser();
+                    console.log(theUser.leagues[0]._id);
+                    DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
+                    DraftService.getLeague();
+                    $location.path("/availablePlayers");
+                }
+                else{
+                    vm.message = response;
+                    console.log(response);
+                }
+            }, function(error){
+                console.log(error);
+            });
+            // .then(function(){
+            //     theUser = AuthenticationService.currentUser();
+            //     console.log(theUser.leagues[0]._id);
+            //     DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
+            //     DraftService.getLeague();
+            //     $location.path("/availablePlayers");
+            // });
     };
 });
 

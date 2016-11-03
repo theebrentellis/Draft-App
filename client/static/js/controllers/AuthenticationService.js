@@ -1,94 +1,120 @@
-angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $location, UserFactory) {
+angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $rootScope, $location, $q, UserFactory) {
+  var service = {};
 
-    var service = {};
+  var saveToken = function (token) {
+    $window.localStorage['user-token'] = token;
+  };
 
-    var saveToken = function(token){
-        $window.localStorage["user-token"] = token;
-    };
+  var getToken = function () {
+    return $window.localStorage['user-token'];
+  };
 
-    var getToken = function(){
-        return $window.localStorage["user-token"];
-    };
+  service.isLoggedIn = function () {
+    var token = getToken();
+    var payload;
 
-    service.isLoggedIn = function(){
-        var token = getToken();
-        var payload;
+    if (token) {
+      payload = token.split('.')[1];
+      payload = $window.atob(payload);
+      payload = JSON.parse(payload);
 
-        if(token){
-            payload = token.split(".")[1];
-            payload = $window.atob(payload);
-            payload = JSON.parse(payload);
+      return payload.exp > Date.now() / 1000;
+    }else {
+      return false;
+    }
+  };
 
-            return payload.exp > Date.now() / 1000;
+  service.currentUser = function () {
+    if (service.isLoggedIn()) {
+      var token = getToken();
+      var payload = token.split('.')[1];
+
+      payload = $window.atob(payload);
+      payload = JSON.parse(payload);
+
+      return {
+        _id: payload._id,
+        userName: payload.userName,
+        firstName: payload.firstName,
+        leagues: payload.leagues
+      };
+    }
+  };
+
+  service.updateToken = function (token) {
+    $window.localStorage.removeItem('user-token');
+    saveToken(token.token);
+    service.isLoggedIn();
+    $state.reload();
+    return 'Success!';
+  };
+
+  service.register = function (user, callback) {
+    UserFactory.register(user, function (data) {
+      if (data.token) {
+        saveToken(data.token);
+        callback('Success');
+      }
+      if (data.message) {
+        callback(data.message);
+      }else {
+        callback('Unknown Error!');
+      }
+    });
+  };
+
+  // service.login = function(user, callback){
+  //     UserFactory.login(user, function(data){
+  //         if(data.token){
+  //             saveToken(data.token)
+  //             callback("Success")
+  //         }
+  //         if(data.message){
+  //             callback(data.message)
+  //         }
+  //         else{
+  //             callback("Unknown Error")
+  //         }
+  //     })
+  // }
+
+  service.login = function (user) {
+    return UserFactory.login(user)
+      .then(function (response) {
+        if (response.data.token) {
+        //   console.log(data.data.token);
+          saveToken(response.data.token);
+          return 'Success';
+        }else {
+          console.log(response.data.message);
+          return response.data.message;
         }
-        else{
-            return false;
-        }
-    };
+      }, function (err) {
+        console.log(err);
+      });
+      // .then(function(data){
 
-    service.currentUser = function(){
-        if(service.isLoggedIn()){
-            var token = getToken();
-            var payload = token.split(".")[1];
+  //     console.log("Working?!")
+  //     return data
+  // })
+  // .then(function(data){
+  //     console.log("First Response")
+  //     return data
+  // }, function(data){
+  //     console.log("Second Response")
+  //     return data
+  // })
+  };
 
-            payload = $window.atob(payload);
-            payload = JSON.parse(payload);
-           
-            return {
-                _id: payload._id,
-                userName: payload.userName,
-                firstName: payload.firstName,
-                leagues: payload.leagues,         
-            };
-        }
-    };
+  service.currentUserLogOut = function () {
+    $window.localStorage.clear();
+    $rootScope = $rootScope.$new(true);
+    console.log($window.localStorage);
+  };
 
-    service.updateToken = function(token){
-        $window.localStorage.removeItem("user-token");
-        saveToken(token.token);
-        service.isLoggedIn();
-        $state.reload();
-        return "Success!";
-        
-    };
+  service.deleteAllUsers = function () {
+    UserFactory.deleteAllUsers();
+  };
 
-    service.register = function(user, callback){
-        UserFactory.register(user, function(data){
-            if(data.token){
-                saveToken(data.token);
-                callback("Success");
-            }
-            if(data.message){
-                callback(data.message);
-            }
-            else{
-                callback("Unknown Error!");
-            }
-        });
-    };
-
-    service.login = function(user, callback){
-        UserFactory.login(user, function(data){
-            if(data.token){
-                saveToken(data.token);
-                callback("Success");
-            }
-            if(data.message){
-                callback(data.message);
-            }
-            else{
-                callback("Unknown Error");
-            }
-        });
-    };
-
-    service.currentUserLogOut = function(){
-        $window.localStorage.clear();
-    };
-
-    service.deleteAllUsers = function(){
-        UserFactory.deleteAllUsers();
-    };
-
-return service;
+  return service;
 });
