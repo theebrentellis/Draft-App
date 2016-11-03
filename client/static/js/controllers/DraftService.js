@@ -23,11 +23,9 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         if($window.localStorage["current-league"]){
             $window.localStorage.removeItem("current-league");
             $window.localStorage.setItem("current-league", JSON.stringify(league));
-            $state.reload();
         }
         else{
             $window.localStorage.setItem("current-league", JSON.stringify(league));
-            $state.reload();
         }
     };
 
@@ -79,7 +77,7 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
     };
 
     service.getAllLeagues = function(callback){
-        if(vm.currentUser.leagues[0] == false){
+        if(vm.currentUser.leagues[0] === undefined){
             LeagueFactory.getAllLeagues(function(leagues){
                 callback(leagues);
             });
@@ -119,6 +117,16 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
             console.log("Done!");
       }
       
+    };
+
+    service.isOnClock = function(){
+        onClock = service.currentLeague.onClock;
+        if(onClock === vm.currentUser._id){
+            return true;
+        }
+        else{
+            return false;
+        }
     };
 
     service.downloadPlayers = function () {

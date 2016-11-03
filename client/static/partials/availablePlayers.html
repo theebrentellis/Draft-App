@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <div>
+    <div ng-if="vm.message" class="alert alert-danger">
+        {{vm.message}}
+    </div>
     <div>
         <h2>{{vm.currentLeague.leagueName}}</h2>
         <p ng-repeat="team in vm.currentLeague.draftOrder">{{team.firstName}}</p>
@@ -26,7 +29,7 @@
         <div ng-repeat="player in available_players | filter: playerFilter">
             
             <form role="form" class="col-sm-4">
-                <label><input type="checkbox" ng-click="vm.draftPlayer(player._id)" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
+                <label><input type="checkbox" ng-click="vm.draftPlayer(player._id)" ng-model="vm.checkBox.value" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>
             </form>
         </div>
     </div>

@@ -1,25 +1,13 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, DraftFactory, AuthenticationService, DraftService) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, $timeout, DraftFactory, AuthenticationService, DraftService) {
   $scope.available_players = [];
 
   $scope.allDraftedPlayers = [];
 
   var vm = this;
 
-  vm.currentLeague = DraftService.currentLeague();
+  vm.message = "";
 
-  // $scope.getAll = function () {
-  //   var position = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
-  //   for (var x in position) {
-  //     $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
-  //       DraftFactory.getAll(data);
-  //     }).success(function(){
-  //         console.log("Success!!");
-  //     })
-  //       .error(function (data) {
-  //         console.log('Error: ' + data);
-  //       });
-  //   }
-  // };
+  vm.currentLeague = DraftService.currentLeague();
 
   vm.getPlayers = function (position) {
     DraftFactory.getPlayers($scope.players, function (data) {
@@ -28,9 +16,23 @@ angular.module('PlayerController', []).controller('PlayerController', function (
   };
 
   vm.draftPlayer = function (id) {
-    DraftFactory.draftPlayer(id, function (data) {
-      $scope.getPlayers();
-    });
+    
+    if(DraftService.isOnClock() === true){
+        DraftFactory.draftPlayer(id, function (data) {
+          $scope.getPlayers();
+        });
+    }
+    if(DraftService.isOnClock() === false){
+      vm.message = "You Are Not On The Clock!";
+      vm.checkBox.value = false;
+      $timeout(function(){
+        vm.message = false;
+      }, 2500);
+    }
+    else{
+      console.log("Error!");
+    }
+    
   };
 
   var getDraftedPlayers = function () {
