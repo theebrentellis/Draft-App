@@ -24,9 +24,9 @@
     </div>
     <br>
     <div class="form-group">
-        <input type="text" class="form-control" ng-if="available_players" placeholder="Filter Available Players" ng-model="playerFilter" >
+        <input type="text" class="form-control" ng-if="vm.available_players" placeholder="Filter Available Players" ng-model="playerFilter">
         <br>
-        <div ng-repeat="player in available_players | filter: playerFilter">
+        <div ng-repeat="player in vm.available_players | filter: playerFilter">
             
             <form role="form" class="col-sm-4">
                 <label><input type="checkbox" ng-click="vm.draftPlayer(player._id)" ng-model="vm.checkBox.value" confirm-if="checked" confirm="Are you sure you want to draft {{player.displayName}}?" confirm-settings="{size: 'sm'}"> {{player.displayName}} {{player.position}}</label>

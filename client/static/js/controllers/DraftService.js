@@ -78,11 +78,13 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
 
     service.getAllLeagues = function(callback){
         if(vm.currentUser.leagues[0] === undefined){
+            console.log("In If");
             LeagueFactory.getAllLeagues(function(leagues){
                 callback(leagues);
             });
         }
         else{
+            console.log("In Else");
             LeagueFactory.getAllLeagues(function(leagues){
             for(var x in leagues){
                 for(var y in vm.currentUser.leagues){
@@ -115,13 +117,12 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
             // saveCurrentLeagueId(defaultLeague);
             // service.getLeague();
             console.log("Done!");
-      }
-      
+      } 
     };
 
     service.isOnClock = function(){
-        onClock = service.currentLeague.onClock;
-        if(onClock === vm.currentUser._id){
+        onClock = getCurrentLeague();
+        if(onClock.onClock === vm.currentUser._id){
             return true;
         }
         else{
@@ -129,18 +130,28 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         }
     };
 
-    service.downloadPlayers = function () {
-        var position = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
-        for (var x in position) {
-            $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
-                    DraftFactory.getAll(data);
-                }).success(function () {
-                    console.log("Success!!");
-                })
-                .error(function (data) {
-                    console.log('Error: ' + data);
-                });
+    service.draftPlayer = function(id){
+        if(isOnClock){
+            
         }
+    };
+
+    // service.downloadPlayers = function () {
+    //     var position = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
+    //     for (var x in position) {
+    //         $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
+    //                 DraftFactory.getAll(data);
+    //             }).success(function () {
+    //                 console.log("Success!!");
+    //             })
+    //             .error(function (data) {
+    //                 console.log('Error: ' + data);
+    //             });
+    //     }
+    // };
+
+    service.downloadPlayers = function(){
+        DraftFactory.downloadPlayers();
     };
 
     service.leaguesClearAll = function () {
@@ -151,8 +162,10 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
         ChatFactory.deleteAllChat();
     };
 
-    service.deleteAllPlayers = function(){
-
+    service.deleteAllPlayers = function(callback){
+        DraftFactory.deleteAllPlayers(function(data){
+            callback(data);
+        });
     };
 
     service.undraftedPlayers = function () {

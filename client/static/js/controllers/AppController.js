@@ -36,7 +36,9 @@ angular.module('AppController', []).controller('AppController', function ($scope
     };
 
     vm.deleteAllPlayers = function(){
-      DraftService.deleteAllPlayers();
+      DraftService.deleteAllPlayers(function(data){
+        console.log(data);
+      });
     };
 
     vm.currentUserLogOut = function(){

@@ -3,6 +3,8 @@ var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
 var Chat = require("./../controllers/ChatController.js");
 
+var request = require("request");
+
 // var passport = require("./../config/passport.js");
 // var passport = require("passport");
 
@@ -30,8 +32,9 @@ module.exports = function(app, passport){
     });
 
     //Player Calls
-    app.post("/getAll", function(req, res){
-        Player.getAll(req, res);
+    app.post("/downloadPlayers", function(req, res){
+        console.log("In Routes!");
+        Player.downloadPlayers(req, res);
     });
     app.get("/getPlayers", function(req, res){
         Player.getPlayers(req, res);
@@ -48,6 +51,15 @@ module.exports = function(app, passport){
     app.post("/deleteAllPlayers", function(req, res){
         Player.deleteAllPlayers(req, res);
     });
+
+    // app.post("/getAll", function(req, res){
+        
+    //     Player.getAll(req, res);
+    // });
+
+
+
+
 
     //League Calls
     app.post("/createLeague", function(req, res){

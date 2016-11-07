@@ -37,7 +37,7 @@
 	<br>
 	<div id="drafted_list">
 		<h2>Drafted Players</h2>
-		<div ng-repeat="player in allDraftedPlayers | filter: playerFilter">
+		<div ng-repeat="player in vm.allDraftedPlayers | filter: playerFilter">
 			{{player.displayName}} {{player.position}} {{player.draftedBy}}
 		</div>
 
