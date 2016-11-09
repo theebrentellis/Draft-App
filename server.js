@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
 app.use(express.static(path.join(__dirname, "./client")));
 
 require("./server/config/mongoose.js");
 require("./server/config/passport.js")(passport);
-require("./server/config/routes.js")(app);
+require("./server/config/routes.js")(app, passport);
 
 // app.listen(1234, function(){
 //     console.log("Your Mom Goes To College!");

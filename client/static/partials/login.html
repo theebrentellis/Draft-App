@@ -6,7 +6,9 @@
             <form role="form" ng-show="vm.loginView">
                 <div class="form-group" >
                     <h5>Please Enter Your Username and Password</h5>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" ng-model="vm.loginInfo.userName">
+                    <!--<input type="text" class="form-control" name="username" id="username" placeholder="Username" ng-model="vm.loginInfo.userName">
+                    <br>-->
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="vm.loginInfo.email">
                     <br>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Password" ng-model="vm.loginInfo.password">
                     <br>
@@ -18,6 +20,8 @@
             
             <form role="form" ng-show="vm.registerView">
                 <h5>New Team Registration:</h5>
+                <input type="email" class="form-control" name="" id="" placeholder="Email" ng-model="vm.registerInfo.email">
+                <br>
                 <input type="text" class="form-control" placeholder="Username" ng-model="vm.registerInfo.userName" required>
                 <br>
                 <input type="text" class="form-control" placeholder="First Name" ng-model="vm.registerInfo.firstName" required>

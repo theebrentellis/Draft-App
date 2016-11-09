@@ -2,6 +2,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
+var Chat = mongoose.model("Chat");
+var Draft = mongoose.model("Draft");
+
 //League Schema
 var LeagueSchema = new mongoose.Schema({
     leagueName: {
@@ -9,11 +12,12 @@ var LeagueSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    draftOrder: [ObjectId],
     commish: [ObjectId],
+    draftOrder: [ObjectId],
     onClock: ObjectId,
+    draft: [Draft],
+    chat: [Chat],
     draftStarted: Boolean,
-    // chat: chatSchema,
 });
 LeagueSchema.methods.populateUsers = function(leagueId, callback){
     this.model("League").findOne({_id: leagueId})

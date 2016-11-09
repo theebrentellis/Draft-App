@@ -3,13 +3,6 @@ var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
 var Chat = require("./../controllers/ChatController.js");
 
-var request = require("request");
-
-// var passport = require("./../config/passport.js");
-// var passport = require("passport");
-
-// var jwt = require("express-jwt");
-
 // var auth = jwt({
 //     secret: "Draft_Secret",
 //     userProperty: "payload"
@@ -21,9 +14,21 @@ module.exports = function(app, passport){
     app.post("/register", function(req, res){
         User.register(req, res);
     });
-    app.post("/login", function(req, res){
-        User.login(req, res);
-    });
+    // app.post("/login", function(req, res){
+    //     console.log("In Routes");
+    //     User.login(req, res);
+    // });
+    app.post("/login", passport.authenticate("local"), function(req, res){
+        res.send(req.user);
+        console.log(req.user);
+        // console.log(res);
+    }
+    // ,{
+    //     successRedirect: "/commish",
+    //     failureRedirect: "/login",
+    // }
+    );
+
     app.post("/deleteAllUsers", function(req, res){
         User.deleteAllUsers(req, res);
     });

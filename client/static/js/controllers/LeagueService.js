@@ -1,4 +1,4 @@
-angular.module("LeagueService", []).service("LeagueService", function(AuthenticaionService, DraftService){
+angular.module("LeagueService", []).service("LeagueService", function(AuthenticaionService, DraftService, LeagueFactory){
     var service = {};
 
     var vm = this;

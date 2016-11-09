@@ -28,13 +28,14 @@ angular.module('UserController', []).controller('UserController', function($scop
     };
 
     vm.registerInfo = {
+        email: "",
         userName: "",
         firstName: "",
         password: ""
     };
 
     vm.loginInfo = {
-        userName: "",
+        email: "",
         password: ""
     };
 

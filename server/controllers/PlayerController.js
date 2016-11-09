@@ -20,22 +20,8 @@ module.exports = (function(){
                             }
                         });
                     }
-                    console.log("Done!");
                 });
             }
-            
-            // for(var x in req.body.Players){
-            //     var player = new Player({displayName: req.body.Players[x].displayName, position: req.body.Players[x].position, drafted: false} );
-            //     player.save(function(err, results){
-            //         if(err){
-            //             console.log("Error: "+err);
-            //         }
-            //         else{
-            //             console.log(results);
-            //             // res.json(results);
-            //         }
-            //     });
-            // }
         },
 
         getPlayers: function(req, res){

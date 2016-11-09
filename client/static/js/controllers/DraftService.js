@@ -1,4 +1,4 @@
-angular.module('DraftService', []).service('DraftService', function ($http, $window, $state, LeagueFactory, DraftFactory, AuthenticationService) {
+angular.module('DraftService', []).service('DraftService', function ($window, $state, LeagueFactory, DraftFactory, AuthenticationService) {
     var service = {};
 
     var vm = this;
@@ -135,20 +135,6 @@ angular.module('DraftService', []).service('DraftService', function ($http, $win
             
         }
     };
-
-    // service.downloadPlayers = function () {
-    //     var position = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
-    //     for (var x in position) {
-    //         $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
-    //                 DraftFactory.getAll(data);
-    //             }).success(function () {
-    //                 console.log("Success!!");
-    //             })
-    //             .error(function (data) {
-    //                 console.log('Error: ' + data);
-    //             });
-    //     }
-    // };
 
     service.downloadPlayers = function(){
         DraftFactory.downloadPlayers();

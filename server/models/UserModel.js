@@ -7,6 +7,11 @@ var ObjectId = Schema.ObjectId;
 
 //User Schema
 var userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        unique: true,
+        reqired: true
+    },
     userName: {
         type: String,
         unique: true,

@@ -45,15 +45,4 @@ angular.module('PlayerController', []).controller('PlayerController', function (
     });
   };
   getDraftedPlayers();
-
-  // $scope.newDraft = function () {
-  //   DraftFactory.newDraft(function (data) {
-  //     console.log("Draft Results Cleared");
-  //   });
-  // };
-
-
-
-
-
 });

@@ -63,21 +63,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     });
   };
 
-  // service.login = function(user, callback){
-  //     UserFactory.login(user, function(data){
-  //         if(data.token){
-  //             saveToken(data.token)
-  //             callback("Success")
-  //         }
-  //         if(data.message){
-  //             callback(data.message)
-  //         }
-  //         else{
-  //             callback("Unknown Error")
-  //         }
-  //     })
-  // }
-
   service.login = function (user) {
     return UserFactory.login(user)
       .then(function (response) {
@@ -95,7 +80,6 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   service.currentUserLogOut = function () {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
-    console.log($window.localStorage);
   };
 
   service.deleteAllUsers = function () {

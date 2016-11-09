@@ -8,16 +8,9 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
     });
   };
 
-  // factory.login = function(loginInfo, callback){
-  //   $http.post("/login", loginInfo).success(function(data){
-  //     callback(data);
-  //   });
-  // };
-
   factory.login = function(loginInfo){
    return $http.post("/login", loginInfo)
       .then(function(data){
-        // console.log(data);
         return data;
       });
   };

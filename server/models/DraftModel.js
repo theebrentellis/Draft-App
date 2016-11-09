@@ -4,10 +4,20 @@ var ObjectId = Schema.ObjectId;
 
 //Draft Schema
 var DraftSchema = new mongoose.Schema({
-    displayName: String,
-    position: String,
-    drafted: Boolean,
-    draftedBy: String
+    leagueId: {
+        type: ObjectId,
+        ref: "League"
+    },
+    draft: [{
+        team:{
+            type: ObjectId,
+            ref: "User"
+        },
+        picks: [{
+            type: ObjectId,
+            ref: "Player"
+        }]
+    }],
 
 });
 mongoose.model("Draft", DraftSchema);
