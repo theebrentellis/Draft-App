@@ -31,7 +31,6 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
 
     service.currentLeague = function(){
         var theLeague = JSON.parse($window.localStorage.getItem("current-league"));
-        // console.log(theLeague);
         return theLeague;
     };
 
@@ -69,34 +68,49 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
     };
 
     service.joinLeague = function(leagueId, callback){
+        currentUser = AuthenticationService.currentUser();
         var package = {
-            "userId": vm.currentUser._id,
+            "userId": currentUser._id,
             "leagueId": leagueId
         };
-        LeagueFactory.joinLeague(package, function(updatedUserToken){
-            AuthenticationService.updateToken(updatedUserToken.token);
-            $location.path("/availablePlayers");
-        });
+        return LeagueFactory.joinLeague(package)
+            .then(function(updateToken){
+                $q.when(AuthenticationService.updateToken(updateToken))
+                    .then(function(){
+                        $location.path("/availablePlayers");
+                    }, function(error){
+                        console.log(error);
+                    });
+            }, function(error){
+                console.log(error);
+            });
     };
 
-    service.getAllLeagues = function(callback){
-        if(vm.currentUser.leagues[0] === undefined){
-            LeagueFactory.getAllLeagues(function(leagues){
-                callback(leagues);
-            });
+    service.getAllLeagues = function(){
+        currentUser = AuthenticationService.currentUser();
+        if(currentUser.leagues[0] === undefined){
+            return LeagueFactory.getAllLeagues()
+                .then(function(leagues){
+                    return leagues;
+                }, function(error){
+                    console.log(error);
+                });
         }
         else{
-            console.log("In Else");
-            LeagueFactory.getAllLeagues(function(leagues){
-            for(var x in leagues){
-                for(var y in vm.currentUser.leagues){
-                    if(leagues[x]._id == vm.currentUser.leagues[y]._id){
-                        leagues.splice(x, 1);
+            return LeagueFactory.getAllLeagues()
+                .then(function(leagues){
+
+                    for(var x in leagues){
+                        for(var y in currentUser.leagues){
+                            if(leagues[x]._id == currentUser.leagues[y]._id){
+                                leagues.splice(x, 1);
+                            }
+                        }
                     }
-                }
-            }
-            callback(leagues);
-            });
+                    return leagues;
+                }, function(error){
+                    console.log(error);
+                });
         }   
     };
 

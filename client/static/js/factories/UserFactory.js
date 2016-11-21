@@ -24,6 +24,7 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
 
   factory.getUserLeague = function(callback){
     $http.get("/getUserLeagues").success(function(data){
+      console.log(data);
       callback(data);
     });
   };

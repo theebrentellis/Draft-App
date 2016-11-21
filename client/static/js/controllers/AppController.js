@@ -25,9 +25,17 @@ angular.module('AppController', []).controller('AppController', function ($scope
 
     //Sets A League and Returns League Info
     vm.setCurrentLeague = function(leagueId){
-      LeagueService.setCurrentLeagueId(leagueId);
-      LeagueService.getLeague();
-      $location.path("/availablePlayers");
+      return LeagueService.setCurrentLeagueId(leagueId)
+        .then(function(){
+          return LeagueService.getLeague()
+            .then(function(){
+              $location.path("/availablePlayers");
+            }, function(error){
+              console.log(error);
+            });
+        }, function(error){
+          console.log(error);
+        });
     };
 
     //Sets Current League To Bold

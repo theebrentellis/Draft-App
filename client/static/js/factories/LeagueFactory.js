@@ -21,16 +21,21 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
     };
 
     factory.getAllLeagues = function(callback){
-        $http.get("/getAllLeagues").success(function(leagues){
-            console.log(leagues);
-            callback(leagues);
-        });
+        return $http.get("/getAllLeagues")
+            .then(function(response){
+                return response.data;
+            }, function(error){
+                console.log(error);
+            });
     };
 
     factory.joinLeague = function(package, callback){
-        $http.patch("/joinLeague/", package).success(function(status){
-            callback(status);
-        });
+        return $http.patch("/joinLeague/", package)
+            .then(function(response){
+                return response.data.token;
+            }, function(error){
+                console.log(error);
+            });
     };
 
     factory.deleteAllLeagues = function(callback){

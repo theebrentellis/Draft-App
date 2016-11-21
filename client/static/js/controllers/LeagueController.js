@@ -12,9 +12,12 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     vm.findLeagueView = false;
 
     var getAllLeagues = function(){
-        LeagueService.getAllLeagues(function(leagues){
-            vm.allLeagues = leagues;
-        });
+        return LeagueService.getAllLeagues()
+            .then(function(leagues){
+                vm.allLeagues = leagues;
+            }, function(error){
+                console.log(error);
+            });
     };
 
     var getUserLeague = function(id){
@@ -28,9 +31,15 @@ angular.module('LeagueController', []).controller('LeagueController', function (
             vm.findLeagueView = false;
         }
         if(view === "findLeague"){
-            vm.findLeagueView = true;
-            vm.createNewLeagueView = false;
-            getAllLeagues();
+            return getAllLeagues()
+                .then(function(){
+                    vm.findLeagueView = true;
+                    vm.createNewLeagueView = false;
+                }, function(error){
+                    console.log(error);
+                });
+            
+            
         }
     };
 

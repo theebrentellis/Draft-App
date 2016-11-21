@@ -42,8 +42,13 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   };
 
   service.updateToken = function (token) {
-    $window.localStorage.removeItem('user-token');
-    saveToken(token);
+    $q.resolve($window.localStorage.removeItem('user-token'))
+      .then(function(){
+        saveToken(token);
+        return "Done";
+      }, function(error){
+        console.log(error);
+      });
   };
 
   service.register = function (user, callback) {
