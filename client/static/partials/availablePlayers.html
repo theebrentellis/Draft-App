@@ -3,10 +3,18 @@
     <div ng-if="vm.message" class="alert alert-danger">
         {{vm.message}}
     </div>
-    <div>
-        <h2>{{vm.currentLeague.leagueName}}</h2>
-        <p ng-repeat="team in vm.currentLeague.draftOrder">{{team.firstName}}</p>
+    <div>   
+        <p>League Info: {{vm.currentLeague}}</p>
+        <h2>{{vm.currentLeague.leagueName}} League</h2>
+        <p>League Id: {{vm.currentLeague._id}}</p>
+        <p ng-repeat="commish in vm.currentLeague.commish">Commish: {{commish._id}}</p>
+        <p>On The Clock: {{vm.currentLeague.onClock}}</p>
+        <p>Chat Id: {{vm.currentLeague.chat._id}}</p>
+        <p>Draft Id: {{vm.currentLeague.draft._id}}</p>
+        <h3>Draft Order</h3>
+        <p ng-repeat="team in vm.currentLeague.draftOrder" ng-style="vm.setColorOnClock(team)">{{team.firstName}}</p>
     </div>
+    <button type="submit" class="btn btn-primary" ng-click="vm.startDraft()" ng-if="vm.currentLeague.draftStarted === false">Start Draft</button>
     <br>
     <div>
         <form name="position_selector">

@@ -15,19 +15,11 @@ module.exports = function(app, passport){
         User.register(req, res);
     });
     // app.post("/login", function(req, res){
-    //     console.log("In Routes");
     //     User.login(req, res);
     // });
-    app.post("/login", passport.authenticate("local"), function(req, res){
+    app.post("/login", passport.authenticate("local", {session: false}), function(req, res){
         res.send(req.user);
-        console.log(req.user);
-        // console.log(res);
-    }
-    // ,{
-    //     successRedirect: "/commish",
-    //     failureRedirect: "/login",
-    // }
-    );
+    });
 
     app.post("/deleteAllUsers", function(req, res){
         User.deleteAllUsers(req, res);
@@ -38,13 +30,12 @@ module.exports = function(app, passport){
 
     //Player Calls
     app.post("/downloadPlayers", function(req, res){
-        console.log("In Routes!");
         Player.downloadPlayers(req, res);
     });
     app.get("/getPlayers", function(req, res){
         Player.getPlayers(req, res);
     });
-    app.patch("/draftPlayer/:_id", function(req, res){
+    app.post("/draftPlayer", function(req, res){
         Player.draftPlayer(req, res);
     });
     app.get("/getDraftedPlayers", function(req, res){
@@ -56,15 +47,6 @@ module.exports = function(app, passport){
     app.post("/deleteAllPlayers", function(req, res){
         Player.deleteAllPlayers(req, res);
     });
-
-    // app.post("/getAll", function(req, res){
-        
-    //     Player.getAll(req, res);
-    // });
-
-
-
-
 
     //League Calls
     app.post("/createLeague", function(req, res){

@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService, LeagueService) {
 
     var vm = this;
 
@@ -6,17 +6,12 @@ angular.module('AppController', []).controller('AppController', function ($scope
 
     vm.currentUser = AuthenticationService.currentUser();
 
-    vm.currentLeague = DraftService.currentLeague();
+    vm.currentLeague = LeagueService.currentLeague();
 
-    vm.setCurrentLeague = function(leagueId){
-      DraftService.setCurrentLeagueId(leagueId);
-      DraftService.getLeague();
-    };
-
+    //Changes Views
     vm.appViewChange = function(view){
       if(vm.isLoggedIn === true){
         if(view == "/availablePlayers" | view == "/draftBoard" | "/chat"){
-          // DraftService.getLeague();
           $location.path(view);
         }
         else{
@@ -26,38 +21,55 @@ angular.module('AppController', []).controller('AppController', function ($scope
       else{
         $location.path("/login");
       }
-      
     };
 
+    //Sets A League and Returns League Info
+    vm.setCurrentLeague = function(leagueId){
+      LeagueService.setCurrentLeagueId(leagueId);
+      LeagueService.getLeague();
+      $location.path("/availablePlayers");
+    };
+
+    //Sets Current League To Bold
+    vm.setColor = function(league){
+      var currentLeague = LeagueService.currentLeague();
+      if(currentLeague._id === league._id){
+        return {"font-weight": "bold"};
+      }
+    };
+
+
+    //Dev Tools (Not For Production)
+    vm.deleteAllDBs = function(){
+      DraftService.deleteAllPlayers();
+      AuthenticationService.deleteAllUsers();
+      LeagueService.deleteAllChat();
+      DraftService.deleteAllDrafts();
+    };
     vm.downloadPlayers = function(){
       DraftService.downloadPlayers(function(data){
         console.log(data);
       });
     };
-
     vm.deleteAllPlayers = function(){
       DraftService.deleteAllPlayers(function(data){
         console.log(data);
       });
     };
-
-    vm.currentUserLogOut = function(){
-      AuthenticationService.currentUserLogOut();
-      $location.path("/login");
-    };
-
     vm.deleteAllUsers = function(){
       AuthenticationService.deleteAllUsers();
       $location.path("/login");
     };
-
     vm.deleteAllChat = function(){
-      DraftService.deleteAllChat();
+      LeagueService.deleteAllChat();
     };
-
     vm.leaguesClearAll = function(){
-      DraftService.leaguesClearAll();
+      LeagueService.deleteAllLeagues();
     };
-
-
+    vm.draftsClearAll = function(){
+      DraftService.deleteAllDrafts();
+    };
+    vm.currentUserLogOut = function(){
+      AuthenticationService.currentUserLogOut();
+    };
 });

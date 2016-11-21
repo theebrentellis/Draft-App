@@ -1,10 +1,20 @@
-var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "AppController", "AuthenticationService", "ChatController", "DraftService", "LeagueController", "UserController", "PlayerController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory", "ui.router", "ui.bootstrap", "angular-confirm"]);
+var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
     $urlRouterProvider.otherwise("/login");
 
     $stateProvider
+        .state("home", {
+            url: "/",
+            views: {
+                "header":{
+                    templateUrl: "/static/partials/app.html",
+                    controller: "AppController",
+                    controllerAs: "vm"
+                }
+            }
+        })
         .state("login", {
             url:"/login",
             views: {
@@ -18,16 +28,6 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                     controller: "UserController",
                     controllerAs: "vm"
                 },
-            }
-        })
-        .state("home", {
-            url: "/",
-            views: {
-                "header":{
-                    templateUrl: "/static/partials/app.html",
-                    controller: "AppController",
-                    controllerAs: "vm"
-                }
             }
         })
         .state("commish", {

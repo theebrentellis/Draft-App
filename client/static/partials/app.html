@@ -9,12 +9,12 @@
             <ul class="nav navbar-nav">
                 <li ng-if="vm.isLoggedIn" uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Welcome, {{vm.currentUser.firstName}}!</a>
                     <ul class="dropdown-menu">
-                        <li><a ng-click="vm.currentUserLogOut()">Logout</a></li>
+                        <li><a href="" ng-click="vm.currentUserLogOut()">Logout</a></li>
                     </ul>
                 </li>
-                <li ng-if="vm.currentUser.leagues" uib-dropdown on-toggle="toggle(open)"><a href="" uib-dropdown-toggle>League</a>
+                <li ng-if="vm.currentUser.leagues" uib-dropdown on-toggle="toggle(open)"><a href="" uib-dropdown-toggle>Leagues</a>
                     <ul class="dropdown-menu" >
-                        <li ng-repeat="league in vm.currentUser.leagues"><a href="" ng-click="vm.setCurrentLeague(league._id)">{{league.leagueName}}</a></li>
+                        <li ng-repeat="league in vm.currentUser.leagues"><a href="" ng-click="vm.setCurrentLeague(league._id)" ng-style="vm.setColor(league)">{{league.leagueName}}</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="" ng-click="vm.appViewChange('/commish')">Create New League</a></li>
                         <li><a href="" ng-click="vm.appViewChange('/commish')">Join League</a></li>
@@ -27,13 +27,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <li uib-dropdown on-toggle="toggled(open)"><a href="" uib-dropdown-toggle>Dev Tools</a>
                     <ul class="dropdown-menu">
-                        <li><a href="" ng-click="vm.newDraft()">New League</a></li>
+                        <li><a href="" ng-click="vm.deleteAllDBs()">Reset All DBs</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="" ng-click="vm.downloadPlayers()">Download Players</a></li>
                         <li><a href="" ng-click="vm.deleteAllPlayers()">Reset Player DB</a></li>
-                        <li><a href="" ng-click="vm.leaguesClearAll()">Reset League DB</a></li>
+                        <li><a href="" ng-click="vm.deleteAllLeagues()">Reset League DB</a></li>
                         <li><a href="" ng-click="vm.deleteAllUsers()">Reset User DB</a></li>
                         <li><a href="" ng-click="vm.deleteAllChat()">Reset Chat DB</a></li>
+                        <li><a href="" ng-click="vm.deleteAllDrafts()">Reset Draft DB</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="" ng-click="vm.currentUserLogOut()">Logout</a></li>
                     </ul>
@@ -43,6 +44,7 @@
     </div>
     <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
     <p>Current User Id: {{vm.currentUser._id}}</p>
-    <p>On The Clock: {{vm.currentLeague.onClock}}</p>
+    <!--<p>Current User Leagues: {{vm.currentUser.leagues}}</p>
+    <p ng-repeat="league in vm.currentUser.leagues">Name: {{league.leagueName}}</p>-->
     <!--<b ng-if="league._id === vm.currentLeague._id"></b>-->
 </div>

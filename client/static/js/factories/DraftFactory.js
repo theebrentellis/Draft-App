@@ -1,4 +1,4 @@
-angular.module("DraftFactory", []).factory("DraftFactory", function($http){
+angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
     var factory = {};
 
     var drafted = [];
@@ -25,10 +25,13 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
         });
     };
 
-    factory.draftPlayer = function(id, callback){
-        $http.patch("/draftPlayer/"+id).success(function(output){
-            callback(output);
-        });
+    factory.draftPlayer = function(draftPackage){
+        return $http.post("/draftPlayer", draftPackage)
+            .then(function(response){
+                return response;
+            }, function(error){
+                console.log(error);
+            });
     };
 
     factory.getDraftedPlayers = function(callback){

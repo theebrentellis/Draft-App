@@ -10,44 +10,48 @@ angular.module('ngEnter', []).directive('ngEnter', function ($scope, element, at
     });
 });
 
-angular.module('ChatController', []).controller('ChatController', function ($scope, AuthenticationService, ChatFactory) {
+angular.module('ChatController', []).controller('ChatController', function ($scope, AuthenticationService, LeagueService, ChatFactory) {
 
     var vm = this;
 
     vm.currentUser = AuthenticationService.currentUser();
 
-    $scope.message = "";
-    $scope.filterText = "";
+    vm.currentLeague = LeagueService.currentLeague();
 
-    $scope.messages = [];
+    vm.messages = [];
 
+    vm.message = "";
+    vm.filterText = "";
+
+    
     var socket = io.connect();
 
     socket.on("pastMessages", function (data) {
         $scope.$apply(function(){
-            $scope.messages = data.reverse();
+            vm.messages = data.reverse();
         });
     });
 
     socket.on("receiveMessage", function(data){
         $scope.$apply(function(){
-            $scope.messages.unshift(data);
+            vm.messages.unshift(data);
         });
     });
 
-    $scope.sendMessage = function () {
-        var chatMessage = {
-            "userName": vm.currentUser.firstName,
-            "message": $scope.message
-        };
-        ChatFactory.postMessage(chatMessage, function (result, err) {
+    vm.sendMessage = function () {
+        // var chatMessage = {
+        //     "_id": vm.currentLeague.chat._id,
+        //     "userName": vm.currentUser.firstName,
+        //     "message": vm.message
+        // };
+        LeagueService.postMessage(vm.message, function (result, err) {
             if (err) {
                 window.alert("Error!");
             }
-            else{
-                socket.emit("receiveMessage", result);
-                $scope.message = "";
-            }
+            // else{
+            //     socket.emit("receiveMessage", result);
+            //     vm.message = "";
+            // }
         });
     };
 });

@@ -15,8 +15,8 @@ var LeagueSchema = new mongoose.Schema({
     commish: [ObjectId],
     draftOrder: [ObjectId],
     onClock: ObjectId,
-    draft: [Draft],
-    chat: [Chat],
+    draft: ObjectId,
+    chat: ObjectId,
     draftStarted: Boolean,
 });
 LeagueSchema.methods.populateUsers = function(leagueId, callback){
@@ -30,6 +30,16 @@ LeagueSchema.methods.populateUsers = function(leagueId, callback){
             path: "commish",
             model: "User",
             select: "_id"
+        })
+        .populate({
+            path: "chat",
+            model: "Chat",
+            select: "chat"
+        })
+        .populate({
+            path: "draft",
+            model: "Draft",
+            select: "draft"
         })
         .exec(function(err, league){
             if(league){

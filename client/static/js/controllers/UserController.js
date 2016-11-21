@@ -1,9 +1,9 @@
-angular.module('UserController', []).controller('UserController', function($scope, $q, $view, $location, $state, AuthenticationService, DraftService){
+angular.module('UserController', []).controller('UserController', function($scope, $q, $view, $location, $state, AuthenticationService, LeagueService){
     var vm = this;
 
     vm.currentUser = AuthenticationService.currentUser();
 
-    vm.currentLeague = DraftService.currentLeague();
+    vm.currentLeague = LeagueService.currentLeague();
 
     vm.message = "";
 
@@ -11,19 +11,13 @@ angular.module('UserController', []).controller('UserController', function($scop
     vm.registerView = false;
 
     vm.userViewChange = function(view){
-        function registerViewChange(){
+        if(view === true){
             vm.loginView = false;
             vm.registerView = true;
         }
-        function loginViewChange(){
+        else{
             vm.loginView = true;
             vm.registerView = false;
-        }
-        if(view === true){
-            registerViewChange();
-        }
-        else{
-            loginViewChange();
         }
     };
 
@@ -46,8 +40,7 @@ angular.module('UserController', []).controller('UserController', function($scop
             }
             else{
                 vm.message = data;
-            }
-            
+            }     
         });
     };
 
@@ -60,9 +53,17 @@ angular.module('UserController', []).controller('UserController', function($scop
                         $location.path("/commish");
                     }
                     else{
-                        DraftService.setCurrentLeagueId(theUser.leagues[0]._id);
-                        DraftService.getLeague();
-                        $location.path("availablePlayers")
+                        $q.when(LeagueService.setCurrentLeagueId(theUser.leagues[0]._id))
+                            .then(function(){
+                                return LeagueService.getLeague()
+                                    .then(function(response){
+                                        $location.path("/availablePlayers");
+                                    }, function(error){
+                                        console.log(error);
+                                    });
+                            }, function(error){
+                                console.log(error);
+                            });
                     }             
                 }
                 else{
@@ -73,5 +74,14 @@ angular.module('UserController', []).controller('UserController', function($scop
                 console.log(error);
             });
     };
+
+    function onSignIn(googleUser){
+        console.log("Fired onSign In");
+        if(googleUser){
+            var profile = googleUser.getBasicProfile();
+            console.log("Email: " + profile.getEmail());
+        }
+    }
+
 });
 

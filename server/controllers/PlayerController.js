@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 
 var Player = mongoose.model("Player");
+var Draft = mongoose.model("Draft");
 
 var request = require("request");
 
@@ -36,14 +37,22 @@ module.exports = (function(){
         },
 
         draftPlayer: function(req, res){
-            Player.update({"_id": req.params._id},{$set:{drafted:true}}, function(err, results){
-                if(err){
-                    console.log("Error: "+err);
-                }
-                else{
-                    res.json(results);
-                }
-            });
+            console.log(req.body.leagueId);
+            console.log(req.body.team);
+            console.log(req.body.pick);
+            console.log(req.body.draftId);
+            Draft.update({
+                "_id": req.body.draftId,
+                "draft.team": req.body.team
+            },{"$push":{"draft.$.picks.$": req.body.pick}});
+            // Player.update({"_id": req.params._id},{$set:{drafted:true}}, function(err, results){
+            //     if(err){
+            //         console.log("Error: "+err);
+            //     }
+            //     else{
+            //         res.json(results);
+            //     }
+            // });
         },
 
         getDraftedPlayers: function(req, res){

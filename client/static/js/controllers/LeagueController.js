@@ -1,51 +1,54 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($scope, $confirm, $location, AuthenticationService, DraftService) {
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $confirm, $location, AuthenticationService, LeagueService) {
     
-    $scope.allLeagues = [];
-
     var vm = this;
+
+    vm.allLeagues = [];
 
     vm.currentUser = AuthenticationService.currentUser();
 
-    vm.currentLeague = DraftService.currentLeague();
+    vm.currentLeague = LeagueService.currentLeague();
 
-    $scope.createNewLeagueView = false;
-    $scope.findLeagueView = false;
-
-    $scope.leagueViewChange = function(view){
-        if(view === "createNew"){
-            $scope.createNewLeagueView = true;
-            $scope.findLeagueView = false;
-        }
-        if(view === "findLeague"){
-            $scope.findLeagueView = true;
-            $scope.createNewLeagueView = false;
-            getAllLeagues();
-        }
-        else{
-            console.log("View Change Error");
-        }
-    };
-
-
-    $scope.createNewLeague = function(){
-        var newLeagueInfo = {
-            "leagueName": $scope.newLeague.leagueName,
-            "userId": vm.currentUser._id
-        };
-        DraftService.createNewLeague(newLeagueInfo, function(updatedUserToken){
-            AuthenticationService.updateToken(updatedUserToken);
-        });
-        $location.path("/availablePlayers");
-    };
+    vm.createNewLeagueView = false;
+    vm.findLeagueView = false;
 
     var getAllLeagues = function(){
-        DraftService.getAllLeagues(function(leagues){
-            $scope.allLeagues = leagues;
+        LeagueService.getAllLeagues(function(leagues){
+            vm.allLeagues = leagues;
         });
     };
 
-    $scope.joinLeague = function(leagueId, callback){
-        DraftService.joinLeague(leagueId, function(status){
+    var getUserLeague = function(id){
+        LeagueService.getUserLeague(id, function(league){
+        });
+    };
+
+    vm.leagueViewChange = function(view){
+        if(view === "createNew"){
+            vm.createNewLeagueView = true;
+            vm.findLeagueView = false;
+        }
+        if(view === "findLeague"){
+            vm.findLeagueView = true;
+            vm.createNewLeagueView = false;
+            getAllLeagues();
+        }
+    };
+
+    vm.createNewLeague = function(){
+        var newLeagueInfo = {
+            "leagueName": vm.newLeague.leagueName,
+            "userId": vm.currentUser._id
+        };
+        return LeagueService.createNewLeague(newLeagueInfo)
+        .then(function(){
+            $location.path("/availablePlayers");
+        }, function(error){
+            console.log(error);
+        });
+    };
+
+    vm.joinLeague = function(leagueId, callback){
+        LeagueService.joinLeague(leagueId, function(status){
             if(status == "Success"){
                 console.log("Success!");
             }
@@ -55,8 +58,4 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         });
     };
 
-    var getUserLeague = function(id){
-        DraftService.getUserLeague(id, function(league){
-        });
-    };
 });

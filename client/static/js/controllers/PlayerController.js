@@ -1,4 +1,4 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, $timeout, DraftFactory, AuthenticationService, DraftService) {
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, $timeout, $q, DraftFactory, AuthenticationService, DraftService, LeagueService) {
 
   var vm = this;
 
@@ -8,7 +8,15 @@ angular.module('PlayerController', []).controller('PlayerController', function (
 
   vm.message = "";
 
-  vm.currentLeague = DraftService.currentLeague();
+  vm.currentUser = AuthenticationService.currentUser();
+
+  vm.currentLeague = LeagueService.currentLeague();
+
+  vm.setColorOnClock = function(team){
+      if(vm.currentLeague.onClock === team._id){
+        return {"font-weight": "bold"};
+      }
+  };
 
   vm.getPlayers = function (position) {
     DraftFactory.getPlayers(position, function (data) {
@@ -18,25 +26,34 @@ angular.module('PlayerController', []).controller('PlayerController', function (
 
   vm.draftPlayer = function (id) {
     if(DraftService.isOnClock() === true){
-        DraftFactory.draftPlayer(id, function (data) {
-          $location.path("/draftBoard");
-          // vm.checkBox.value = false;
-          console.log(data);
-          // vm.getPlayers();
+
+      var draftPackage = {
+        draftId: vm.currentLeague.draft._id,
+        leagueId: vm.currentLeague._id,
+        team: vm.currentUser._id,
+        pick: id,
+      };
+      
+      return DraftService.draftPlayer(draftPackage)
+        .then(function(response){
+          console.log(response);
+          if(response === true){
+            $location.path("/draftBoard");
+          }
+          if(response === false){
+            console.log("Error in PlayerControiller draftPlayer");
+          }
+        }, function(error){
+          console.log(error);
         });
     }
     if(DraftService.isOnClock() === false){
-      console.log("In 2nd if!");
       vm.message = "You Are Not On The Clock!";
       vm.checkBox.value = false;
       $timeout(function(){
         vm.message = false;
-      }, 2500);
+      }, 5000);
     }
-    // else{
-    //   console.log("Error!");
-    // }
-    
   };
 
   var getDraftedPlayers = function () {

@@ -5,12 +5,15 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+
     <title>Draft App</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
@@ -22,18 +25,22 @@
     <script type="text/javascript" src="/static/js/app.js"></script>
 
     <script type="text/javascript" src="/static/js/controllers/AppController.js"></script>
-    <script type="text/javascript" src="/static/js/controllers/AuthenticationService.js"></script>
     <script type="text/javascript" src="/static/js/controllers/ChatController.js"></script>
-    <script type="text/javascript" src="/static/js/controllers/DraftService.js"></script>
     <script type="text/javascript" src="/static/js/controllers/LeagueController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/PlayerController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/UserController.js"></script>
 
     <script type="text/javascript" src="/static/js/factories/ChatFactory.js"></script>
     <script type="text/javascript" src="/static/js/factories/DraftFactory.js"></script>
-    <!--<script type="text/javascript" src="/static/js/factories/FlashFactory.js"></script>-->
     <script type="text/javascript" src="/static/js/factories/LeagueFactory.js"></script>
     <script type="text/javascript" src="/static/js/factories/UserFactory.js"></script>
+
+    <script type="text/javascript" src="/static/js/services/AuthenticationService.js"></script>
+    <script type="text/javascript" src="/static/js/services/DraftService.js"></script>
+    <script type="text/javascript" src="/static/js/services/LeagueService.js"></script>
+
+    <meta name="google-signin-client_id" content="88269947025-1468nk2s4psf88hmah87raf7ecj4shf0.apps.googleusercontent.com" ng-click="googleSignIn">    
+    
 </head>
 
 <body ng-app="DraftApp">

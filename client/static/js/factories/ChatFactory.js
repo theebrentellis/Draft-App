@@ -13,7 +13,7 @@ angular.module("ChatFactory", []).factory("ChatFactory", function($http){
 
     factory.deleteAllChat = function(){
         $http.post("/deleteAllChat").success(function(data){
-            callback(data);
+            console.log(data);
         });
     };
 

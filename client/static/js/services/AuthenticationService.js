@@ -43,10 +43,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
 
   service.updateToken = function (token) {
     $window.localStorage.removeItem('user-token');
-    saveToken(token.token);
-    service.isLoggedIn();
-    $state.reload();
-    return 'Success!';
+    saveToken(token);
   };
 
   service.register = function (user, callback) {
@@ -80,11 +77,16 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   service.currentUserLogOut = function () {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
+    $location.path("/login");
   };
 
   service.deleteAllUsers = function () {
     UserFactory.deleteAllUsers();
+    $window.localStorage.clear();
+    $rootScope = $rootScope.$new(true);
+    $location.path("/login");
   };
+  // service.currentUserLogOut();
 
   return service;
 });
