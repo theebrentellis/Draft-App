@@ -14,19 +14,15 @@ module.exports = function(app, passport){
     app.post("/register", function(req, res){
         User.register(req, res);
     });
-    // app.post("/login", function(req, res){
-    //     User.login(req, res);
-    // });
     app.post("/login", passport.authenticate("local", {session: false}), function(req, res){
         res.send(req.user);
     });
-
     app.post("/deleteAllUsers", function(req, res){
         User.deleteAllUsers(req, res);
     });
-    app.get("/getUserLeagues", function(req, res){
-        User.getUserLeagues(req, res);
-    });
+    // app.get("/getUserLeagues", function(req, res){
+    //     User.getUserLeagues(req, res);
+    // });
 
     //Player Calls
     app.post("/downloadPlayers", function(req, res){
@@ -40,9 +36,6 @@ module.exports = function(app, passport){
     });
     app.get("/getDraftedPlayers", function(req, res){
         Player.getDraftedPlayers(req, res);
-    });
-    app.post("/newDraft", function(req, res){
-        Player.newDraft(req, res);
     });
     app.post("/deleteAllPlayers", function(req, res){
         Player.deleteAllPlayers(req, res);
@@ -72,5 +65,10 @@ module.exports = function(app, passport){
     app.post("/deleteAllChat", function(req, res){
         Chat.deleteAllChat(req, res);
     });
+
+    //DraftCalls
+    app.post("/deleteAllDrafts", function(req, res){
+        League.deleteAllDrafts(req, res);
+    })
 };
 

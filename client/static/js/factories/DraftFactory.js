@@ -1,12 +1,6 @@
 angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
     var factory = {};
 
-    var drafted = [];
-
-    // factory.getAll = function(data){
-    //     $http.post("/getAll", data);
-    // };
-
     factory.downloadPlayers = function(){
         $http.post("/downloadPlayers").success(function(data){
             console.log(data);
@@ -40,10 +34,8 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
         });
     };
 
-    factory.newDraft = function(callback){
-        $http.post("/newDraft").success(function(output){
-            callback(output);
-        });
+    factory.deleteAllDrafts = function(){
+        return $http.post("/deleteAllDrafts");
     };
 
     return factory;

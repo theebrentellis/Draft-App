@@ -41,6 +41,8 @@ angular.module('AppController', []).controller('AppController', function ($scope
     //Sets Current League To Bold
     vm.setColor = function(league){
       var currentLeague = LeagueService.currentLeague();
+      console.log(league._id);
+      console.log(currentLeague._id);
       if(currentLeague._id === league._id){
         return {"font-weight": "bold"};
       }
@@ -71,10 +73,10 @@ angular.module('AppController', []).controller('AppController', function ($scope
     vm.deleteAllChat = function(){
       LeagueService.deleteAllChat();
     };
-    vm.leaguesClearAll = function(){
+    vm.deleteAllLeagues = function(){
       LeagueService.deleteAllLeagues();
     };
-    vm.draftsClearAll = function(){
+    vm.deleteAllDrafts = function(){
       DraftService.deleteAllDrafts();
     };
     vm.currentUserLogOut = function(){

@@ -32,6 +32,14 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
             });
     };
 
+    service.undraftedPlayers = function () {
+
+    };
+
+    service.draftedPlayers = function () {
+
+    };
+
     service.downloadPlayers = function(){
         DraftFactory.downloadPlayers();
     };
@@ -40,18 +48,14 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
         ChatFactory.deleteAllChat();
     };
 
+    service.deleteAllDrafts = function(){
+        DraftFactory.deleteAllDrafts();
+    }
+
     service.deleteAllPlayers = function(callback){
         DraftFactory.deleteAllPlayers(function(data){
             callback(data);
         });
-    };
-
-    service.undraftedPlayers = function () {
-
-    };
-
-    service.draftedPlayers = function () {
-
     };
 
     return service;

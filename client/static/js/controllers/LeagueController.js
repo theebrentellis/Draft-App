@@ -1,4 +1,4 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($scope, $confirm, $location, AuthenticationService, LeagueService) {
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $confirm, $location, AuthenticationService, LeagueService) {
     
     var vm = this;
 
@@ -48,12 +48,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
             "leagueName": vm.newLeague.leagueName,
             "userId": vm.currentUser._id
         };
-        return LeagueService.createNewLeague(newLeagueInfo)
-        .then(function(){
-            $location.path("/availablePlayers");
-        }, function(error){
-            console.log(error);
-        });
+        LeagueService.createNewLeague(newLeagueInfo);
     };
 
     vm.joinLeague = function(leagueId, callback){

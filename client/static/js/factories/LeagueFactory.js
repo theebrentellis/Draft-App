@@ -1,7 +1,7 @@
 angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
     var factory = {};
 
-    factory.createLeague = function(newLeagueInfo, callback){
+    factory.createLeague = function(newLeagueInfo){
         return $http.post("/createLeague", newLeagueInfo)
             .then(function(token){
                 return token;
@@ -11,7 +11,7 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.getLeague = function(leagueId, callback){
+    factory.getLeague = function(leagueId){
         return $http.get("/getLeague/", {params: {_id: leagueId}})
             .then(function(data){
                 return data;
@@ -20,7 +20,7 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.getAllLeagues = function(callback){
+    factory.getAllLeagues = function(){
         return $http.get("/getAllLeagues")
             .then(function(response){
                 return response.data;
@@ -29,7 +29,7 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.joinLeague = function(package, callback){
+    factory.joinLeague = function(package){
         return $http.patch("/joinLeague/", package)
             .then(function(response){
                 return response.data.token;
@@ -38,10 +38,16 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.deleteAllLeagues = function(callback){
-        $http.post("/leaguesClearAll").success(function(data){
-            console.log(data);
-        });
+    factory.deleteAllLeagues = function(){
+        return $http.post("/leaguesClearAll")
+            .then(function(response){
+                console.log(response);
+            }, function(error){
+                console.log(error);
+            });
+        // .success(function(data){
+        //     console.log(data);
+        // });
     };
 
     return factory;

@@ -187,6 +187,17 @@ module.exports = (function () {
           res.json(results);
         }
       });
+    },
+
+    deleteAllDrafts: function(req, res){
+      Draft.remove({}, function(err, results){
+        if(err){
+          console.log("Error: " + err);
+        }
+        if(results){
+          console.log("All Drafts Cleared");
+        }
+      });
     }
 
   };
