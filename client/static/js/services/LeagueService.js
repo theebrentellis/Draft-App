@@ -71,7 +71,8 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
                         $q.when(service.setCurrentLeagueId(currentUser.leagues[0]._id))
                             .then(function(){
                                 $q.when(service.getLeague())
-                                    .then(function(){
+                                    .then(function(response){
+                                        console.log(response);
                                         $location.path("/availablePlayers");
                                         return response;
                                     }, function(error){

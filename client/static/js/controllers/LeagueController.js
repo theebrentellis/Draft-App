@@ -20,10 +20,10 @@ angular.module('LeagueController', []).controller('LeagueController', function (
             });
     };
 
-    var getUserLeague = function(id){
-        LeagueService.getUserLeague(id, function(league){
-        });
-    };
+    // var getUserLeague = function(id){
+    //     LeagueService.getUserLeague(id, function(league){
+    //     });
+    // };
 
     vm.leagueViewChange = function(view){
         if(view === "createNew"){

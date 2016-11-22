@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, AuthenticationService, DraftService, LeagueService) {
+angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, $state, AuthenticationService, DraftService, LeagueService) {
 
     var vm = this;
 
@@ -29,7 +29,7 @@ angular.module('AppController', []).controller('AppController', function ($scope
         .then(function(){
           return LeagueService.getLeague()
             .then(function(){
-              $location.path("/availablePlayers");
+              $state.reload();
             }, function(error){
               console.log(error);
             });
@@ -41,8 +41,6 @@ angular.module('AppController', []).controller('AppController', function ($scope
     //Sets Current League To Bold
     vm.setColor = function(league){
       var currentLeague = LeagueService.currentLeague();
-      console.log(league._id);
-      console.log(currentLeague._id);
       if(currentLeague._id === league._id){
         return {"font-weight": "bold"};
       }
