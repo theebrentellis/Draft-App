@@ -69,6 +69,9 @@ module.exports = function(app, passport){
     //DraftCalls
     app.post("/deleteAllDrafts", function(req, res){
         League.deleteAllDrafts(req, res);
-    })
+    });
+    app.post("/startDraft", function(req, res){
+        League.startDraft(req, res);
+    });
 };
 

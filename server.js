@@ -1,14 +1,14 @@
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var passport = require("passport");
-var SECRET = "MY_SECRET";
-var http = require("http");
-var mongodb = require("mongodb");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const SECRET = "MY_SECRET";
+const http = require("http");
+const mongodb = require("mongodb");
 
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.json({
     limit: "50mb"
@@ -31,12 +31,16 @@ require("./server/config/routes.js")(app, passport);
 //     console.log("Your Mom Goes To College!");
 // });
 
-var server = http.createServer(app).listen(1234, function(){
+const server = http.createServer(app).listen(1234, function(){
     console.log("Your Mom Goes To College!");
 });
 
 // //Chat Socket.io Settings
-var io = require("socket.io").listen(server);
+const io = require("socket.io").listen(server);
+
+// Add your instrumentation key or use the APPLICATIONINSIGHTSKEY environment variable on your production machine to start collecting data.
+// var ai = require('applicationinsights');
+// ai.setup(process.env.APPLICATIONINSIGHTSKEY || 'your_instrumentation_key').start();
 
 var Chat = mongoose.model("Chat");
 

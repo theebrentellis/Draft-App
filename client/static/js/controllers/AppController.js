@@ -54,30 +54,38 @@ angular.module('AppController', []).controller('AppController', function ($scope
       LeagueService.deleteAllChat();
       DraftService.deleteAllDrafts();
     };
+  
     vm.downloadPlayers = function(){
       DraftService.downloadPlayers(function(data){
         console.log(data);
       });
     };
+  
     vm.deleteAllPlayers = function(){
       DraftService.deleteAllPlayers(function(data){
         console.log(data);
       });
     };
+  
     vm.deleteAllUsers = function(){
       AuthenticationService.deleteAllUsers();
       $location.path("/login");
     };
+  
     vm.deleteAllChat = function(){
       LeagueService.deleteAllChat();
     };
+  
     vm.deleteAllLeagues = function(){
       LeagueService.deleteAllLeagues();
     };
+  
     vm.deleteAllDrafts = function(){
       DraftService.deleteAllDrafts();
     };
+  
     vm.currentUserLogOut = function(){
       AuthenticationService.currentUserLogOut();
     };
+  
 });

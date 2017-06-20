@@ -19,6 +19,15 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
         });
     };
 
+    factory.startDraft = function(draftPackage){
+        return $http.post("/startDraft", draftPackage)
+            .then(function(response){
+                console.log(response);
+            }, function(error){
+                console.log(error);
+            });
+    };
+
     factory.draftPlayer = function(draftPackage){
         return $http.post("/draftPlayer", draftPackage)
             .then(function(response){

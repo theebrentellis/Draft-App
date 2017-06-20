@@ -52,7 +52,6 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
             .then(function(response){
                 $q.resolve(saveCurrentLeague(response.data))
                     .then(function(){
-                        console.log(service.currentLeague());
                         return "Done";
                     }, function(error){
                         console.log(error);
@@ -62,7 +61,7 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
             });
     };
 
-    service.createNewLeague = function (newLeagueInfo, callback) {
+    service.createNewLeague = function (newLeagueInfo) {
         $q.when(LeagueFactory.createLeague(newLeagueInfo))
             .then(function(response){
                 $q.when(AuthenticationService.updateToken(response.data.token))
@@ -72,7 +71,6 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
                             .then(function(){
                                 $q.when(service.getLeague())
                                     .then(function(response){
-                                        console.log(response);
                                         $location.path("/availablePlayers");
                                         return response;
                                     }, function(error){
@@ -89,7 +87,7 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
             });
     };
 
-    service.joinLeague = function(leagueId, callback){
+    service.joinLeague = function(leagueId){
         currentUser = AuthenticationService.currentUser();
         var package = {
             "userId": currentUser._id,
@@ -99,7 +97,18 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
             .then(function(updateToken){
                 $q.when(AuthenticationService.updateToken(updateToken))
                     .then(function(){
-                        $location.path("/availablePlayers");
+                        updatedCurrentUser = AuthenticationService.currentUser();
+                        $q.when(service.setCurrentLeagueId(updatedCurrentUser.leagues[0]._id))
+                            .then(function(){
+                                $q.when(service.getLeague())
+                                    .then(function(){
+                                        $location.path("/availablePlayers");
+                                    }, function(error){
+                                        console.log(error);
+                                    });
+                            }, function(error){
+                                console.log(error);
+                            });
                     }, function(error){
                         console.log(error);
                     });
@@ -121,7 +130,6 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
         else{
             return LeagueFactory.getAllLeagues()
                 .then(function(leagues){
-
                     for(var x in leagues){
                         for(var y in currentUser.leagues){
                             if(leagues[x]._id == currentUser.leagues[y]._id){

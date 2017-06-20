@@ -9,13 +9,17 @@ var DraftSchema = new mongoose.Schema({
         ref: "League"
     },
     draft: [{
-        team:{
+        _id:{
             type: ObjectId,
-            ref: "User"
+            ref: "User",
+            autoIndexId: false,
+            _id: false,
         },
         picks: [{
             type: ObjectId,
-            ref: "Player"
+            ref: "Player",
+            autoIndexId: false,
+            _id: false
         }]
     }],
 

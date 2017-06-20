@@ -9,6 +9,15 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
 
     vm.currentLeague = LeagueService.currentLeague();
 
+    service.startDraft = function(draftPackage){
+        return DraftFactory.startDraft(draftPackage)
+            .then(function(reponse){
+                console.log(response);
+            }, function(error){
+                console.log(error);
+            });
+    };
+
     service.isOnClock = function(){
         if(vm.currentLeague.onClock === vm.currentUser._id){
             return true;
@@ -50,7 +59,7 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
 
     service.deleteAllDrafts = function(){
         DraftFactory.deleteAllDrafts();
-    }
+    };
 
     service.deleteAllPlayers = function(callback){
         DraftFactory.deleteAllPlayers(function(data){

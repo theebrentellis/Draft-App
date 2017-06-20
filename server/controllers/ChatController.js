@@ -10,8 +10,6 @@ module.exports = (function(){
 
             console.log(req.body._id, req.body.message, req.body.userName);
 
-
-
             var chat = new Chat();
 
             chat.leagueId = req.body._id;

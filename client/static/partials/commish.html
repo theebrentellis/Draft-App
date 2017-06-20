@@ -16,7 +16,7 @@
             <h4>Find Your League:</h4>
             <br>
             <div ng-repeat="league in vm.allLeagues | filter: leagueFilter" ng-if="leagueFilter">
-                <a ng-click="vm.joinLeague(league._id)" href="" confirm="Are you sure you want to join {{league.leagueName}}?" confirm-settings="{size: 'sm'}">{{league.leagueName}}</a>
+                <a ng-click="vm.joinLeague(league._id)" href="#" confirm="Are you sure you want to join {{league.leagueName}}?" confirm-settings="{size: 'sm'}">{{league.leagueName}}</a>
             </div>
             <br>
             <input type="text" placeholder="Search For Your League's Name" class="form-control" ng-model="leagueFilter.$" required>

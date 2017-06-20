@@ -43,7 +43,6 @@ LeagueSchema.methods.populateUsers = function(leagueId, callback){
         })
         .exec(function(err, league){
             if(league){
-                console.log(league);
                 callback(league);
             }
         });

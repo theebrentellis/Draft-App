@@ -8,6 +8,20 @@
 
     <title>Draft App</title>
 
+    
+
+    <link rel="stylesheet" type="text/css" href="/static/stylesheet/css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"></script>
@@ -19,10 +33,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-confirm/1.2.5/angular-confirm.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-    <script type="text/javascript" src="/static/js/app.js"></script>
 
     <script type="text/javascript" src="/static/js/controllers/AppController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/ChatController.js"></script>
@@ -39,6 +49,11 @@
     <script type="text/javascript" src="/static/js/services/DraftService.js"></script>
     <script type="text/javascript" src="/static/js/services/LeagueService.js"></script>
 
+    
+
+    <script type="text/javascript" src="/static/js/app.js"></script>
+
+
     <meta name="google-signin-client_id" content="88269947025-1468nk2s4psf88hmah87raf7ecj4shf0.apps.googleusercontent.com" ng-click="googleSignIn">    
     
 </head>
@@ -46,11 +61,11 @@
 <body ng-app="DraftApp">
     <div class="container">
 
-        <div ui-view="header"></div>
+        <div class="row" ui-view="header"></div>
         <br>
-        <div ui-view="content"></div>
-    </div>
+        <div class="row" ui-view="content"></div>
 
+    </div>
 
 </body>
 

@@ -38,17 +38,17 @@ module.exports = (function () {
 
     login: function (req, res) {
       console.log("In Server Login");
-      var token;
-      passport.authenticate("local", {session: false}, function(err, user, info){
-        console.log(err);
-        console.log(user);
-        console.log(info);
-        token = user.generateJwt();
-        console.log(token);
-        // res.json({
-        //   "token": token
-        // });
-      });
+      // var token;
+      // passport.authenticate("local", {session: false}, function(err, user, info){
+      //   console.log(err);
+      //   console.log(user);
+      //   console.log(info);
+      //   token = user.generateJwt();
+      //   console.log(token);
+      //   // res.json({
+      //   //   "token": token
+      //   // });
+      // });
       // User.findOne({
       //   userName: req.body.userName.toLowerCase()
       // }, function (err, user) {
@@ -108,44 +108,7 @@ module.exports = (function () {
 
     updateUserLeague: function(req, res){
       console.log("updateUserLeague");
-      // User.findById(id, function(err, user){
-      //   if (err){
-      //     return res.json({
-      //       message: "Error Finding User"
-      //     });
-      //   }
-      //   else{
-      //     user._leagueId = "";
-      //     user.save(function(err, user){
-      //       if(err){
-      //         return res.json({
-      //           message: "Error Updating User"
-      //         });
-      //       }
-      //       else{
-      //         var token;
-      //         token = user.generateJwt();
-      //         res.json({
-      //           "token": token
-      //         });
-      //       }
-      //     });
-      //   }
-      // });
     },
-
-    // profileRead: function(req, res){
-    //   if(!req.payload._id){
-    //     res.status(401).json({
-    //       "message": "UnathorizedError: private profile"
-    //     });
-    //   }
-    //   else{
-    //     User.findById(req.payload._id).exec(function(err, user){
-    //       res.status(200).json(user);
-    //     });
-    //   }
-    // }
 
   };
 })();

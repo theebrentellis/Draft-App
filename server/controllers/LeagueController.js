@@ -17,7 +17,7 @@ module.exports = (function () {
 
       chat.save(function(err, chat){
         if(err){
-          console.log(err);
+          console.log("Chat Save Error: " + err);
         }
       });
 
@@ -26,7 +26,7 @@ module.exports = (function () {
 
       draft.save(function(err, draft){
         if(err){
-          console.log(err);
+          console.log("Draft Save Error: " + err);
         }
       });
 
@@ -41,11 +41,9 @@ module.exports = (function () {
         draftStarted: false
       });
 
-      console.log(league);
-
       league.save(function (err, league) {
         if (err) {
-          console.log('Error: ' + err);
+          console.log('League Save Error: ' + err);
         }
         if (league) {
           //If new league is successfully created update Chat schema with League ID
@@ -59,9 +57,6 @@ module.exports = (function () {
             if(err){
               console.log(err);
             }
-            if(chat){
-              console.log(chat);
-            }
           });
 
           //If new League is successfully created update Draft schema with League ID
@@ -74,9 +69,6 @@ module.exports = (function () {
           }, function(err, draft){
             if(err){
               console.log(err);
-            }
-            if(draft){
-              console.log(draft);
             }
           });
 
@@ -109,7 +101,7 @@ module.exports = (function () {
         }
       });
     },
-
+    //Gets League after user sets current league
     getLeague: function (req, res) {
       League.findById(req.query._id, function (err, league) {
         if (err) {
@@ -124,7 +116,7 @@ module.exports = (function () {
         }
       });
     },
-
+    //Gets All Leagues
     getAllLeagues: function (req, res) {
       League.find({}, function (err, leagues) {
         if (err) {
@@ -135,9 +127,8 @@ module.exports = (function () {
         }
       });
     },
-
+    //Lets User join league
     joinLeague: function (req, res) {
-      console.log(req.body.userId);
       League.findByIdAndUpdate(req.body.leagueId, {
         $push: {
           draftOrder: req.body.userId
@@ -154,9 +145,7 @@ module.exports = (function () {
             new: true
           }, function (err, user) {
             if (user) {
-              console.log(user);
               user.populateUserLeagues(req.body.userId, function (user) {
-                console.log(user);
                 var token;
                 token = user.generateJwt();
                 res.json({
@@ -178,6 +167,36 @@ module.exports = (function () {
       });
     },
 
+    //Start Draft
+      //Sets draft order
+    startDraft: function(req, res){
+      console.log(req.body.draftId);
+      // console.log(req.body.draftOrder._id);
+
+      for(var x in req.body.draftOrder){
+        Draft.update({_id: req.body.draftId},
+        {
+          $addToSet: {
+            "draft": {
+              "_id": req.body.draftOrder[x]._id
+            }
+          }
+        }, {
+          upsert: true
+        }, function(err, draft){
+          if(err){
+            console.log(err);
+          }
+          if(draft){
+            console.log(draft);
+          }
+        });
+      }
+      
+    },
+
+    //Deletes All Saved Leagues
+      //For developement use only; Not for production
     leaguesClearAll: function (req, res) {
       League.remove({}, function (err, results) {
         if (err) {
@@ -188,7 +207,8 @@ module.exports = (function () {
         }
       });
     },
-
+    //Deletes All Saved Drafts
+      //For development user only; Not for production
     deleteAllDrafts: function(req, res){
       Draft.remove({}, function(err, results){
         if(err){

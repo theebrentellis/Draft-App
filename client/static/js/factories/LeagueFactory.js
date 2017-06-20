@@ -41,7 +41,6 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
     factory.deleteAllLeagues = function(){
         return $http.post("/leaguesClearAll")
             .then(function(response){
-                console.log(response);
             }, function(error){
                 console.log(error);
             });

@@ -24,6 +24,20 @@ angular.module('PlayerController', []).controller('PlayerController', function (
     });
   };
 
+  vm.startDraft = function(id){
+    var draftPackage = {
+      draftId: vm.currentLeague.draft._id,
+      draftOrder: vm.currentLeague.draftOrder
+
+    };
+    return DraftService.startDraft(draftPackage)
+      .then(function(response){
+        console.log(response);
+      }, function(error){
+        console.log(error);
+      });
+  };
+
   vm.draftPlayer = function (id) {
     if(DraftService.isOnClock() === true){
 
