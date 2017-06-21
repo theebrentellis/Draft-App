@@ -5,6 +5,7 @@ const passport = require("passport");
 const SECRET = "MY_SECRET";
 const http = require("http");
 const mongodb = require("mongodb");
+const webpack = require('webpack');
 
 const mongoose = require("mongoose");
 
@@ -61,3 +62,12 @@ io.on("connection", function(socket){
     });
 
 });
+
+// let compiler = webpack({
+
+// });
+// compiler.run({
+
+// }, function (err, stats) {
+    
+// });

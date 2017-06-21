@@ -1,16 +1,15 @@
 {
-  "name": "DraftApp",
+  "name": "draft-app",
+  "description": "The League Fantasy Football Draft App",
+  "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "star": "grunt"
   },
-  "description": "Fantasy football draft app",
-  "version": "1.0.0",
   "dependencies": {
     "applicationinsights": "^0.18.0",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
-    "express": "^4.14.0",
+    "express": "^4.9.8",
     "express-jwt": "^5.0.0",
     "express-session": "^1.14.1",
     "express-sessions": "^1.0.6",
@@ -19,7 +18,11 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "q": "^1.4.1",
-    "socket.io": "latest"
+    "socket.io": "^2.0.3",
+    "webpack": "^3.0.0"
+  },
+  "engines": {
+    "node": "4.1.1"
   },
   "repository": {
     "type": "git"

@@ -2,16 +2,19 @@ var DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
         .state("home", {
             url: "/",
             views: {
-                "header":{
-                    templateUrl: "/static/partials/app.html",
-                    controller: "AppController",
-                    controllerAs: "vm"
+                // "header":{
+                //     templateUrl: "/static/partials/app.html",
+                //     controller: "AppController",
+                //     controllerAs: "vm"
+                // },
+                "content": {
+                    templateUrl: "/static/partials/welcome.html"
                 }
             }
         })

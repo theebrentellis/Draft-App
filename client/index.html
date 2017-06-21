@@ -5,12 +5,11 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-
     <title>Draft App</title>
 
-    
-
     <link rel="stylesheet" type="text/css" href="/static/stylesheet/css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/stylesheet/css/app.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
         crossorigin="anonymous">
@@ -59,11 +58,10 @@
 </head>
 
 <body ng-app="DraftApp">
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="row" ui-view="header"></div>
-        <br>
-        <div class="row" ui-view="content"></div>
+        <div ui-view="header"></div>
+        <div ui-view="content"></div>
 
     </div>
 
