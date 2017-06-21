@@ -7,22 +7,27 @@ var io = require("socket.io");
 module.exports = (function(){
     return {
         postMessage: function(req, res){
-            var chat = new Chat();
-            chat.message = req.body.message;
-            chat.userName = req.body.userName;
 
-            chat.save(function(err, results){
-                if(err){
-                    return res.json({
-                        message: "Error Saving to Database"
-                    });
-                }
-                else{
-                    res.json(results);
-                }
-                
-                
-            });
+            console.log(req.body._id, req.body.message, req.body.userName);
+
+            var chat = new Chat();
+
+            chat.leagueId = req.body._id;
+            chat.chat.message = req.body.message;
+            chat.chat.user = req.body.userName;
+
+            console.log(chat);
+
+            // chat.save(function(err, results){
+            //     if(err){
+            //         return res.json({
+            //             message: "Error Saving to Database"
+            //         });
+            //     }
+            //     else{
+            //         res.json(results);
+            //     }         
+            // });
         },
 
         getAllMessages: function(req, res){
@@ -46,7 +51,7 @@ module.exports = (function(){
                     console.log(err);
                 }
                 else{
-                    console.log(results);
+                    console.log("Chat Log Cleared!");
                 }
             });
         },

@@ -1,22 +1,40 @@
-angular.module("DraftFactory", []).factory("DraftFactory", function($http){
+angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
     var factory = {};
 
-    var drafted = [];
-
-    factory.getAll = function(data){
-        $http.post("/getAll", data);
+    factory.downloadPlayers = function(){
+        $http.post("/downloadPlayers").success(function(data){
+            console.log(data);
+        });
     };
 
     factory.getPlayers = function(position, callback){
-        $http.get("/getPlayers/", {params: position}).success(function(output){
+        $http.get("/getPlayers/", {params: {position: position}}).success(function(output){
             callback(output);
         });
     };
 
-    factory.draftPlayer = function(id, callback){
-        $http.patch("/draftPlayer/"+id).success(function(output){
-            callback(output);
+    factory.deleteAllPlayers = function(callback){
+        $http.post("/deleteAllPlayers").success(function(data){
+            callback(data);
         });
+    };
+
+    factory.startDraft = function(draftPackage){
+        return $http.post("/startDraft", draftPackage)
+            .then(function(response){
+                console.log(response);
+            }, function(error){
+                console.log(error);
+            });
+    };
+
+    factory.draftPlayer = function(draftPackage){
+        return $http.post("/draftPlayer", draftPackage)
+            .then(function(response){
+                return response;
+            }, function(error){
+                console.log(error);
+            });
     };
 
     factory.getDraftedPlayers = function(callback){
@@ -25,10 +43,8 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http){
         });
     };
 
-    factory.newDraft = function(callback){
-        $http.post("/newDraft").success(function(output){
-            callback(output);
-        });
+    factory.deleteAllDrafts = function(){
+        return $http.post("/deleteAllDrafts");
     };
 
     return factory;

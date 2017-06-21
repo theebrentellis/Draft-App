@@ -1,46 +1,79 @@
-angular.module('PlayerController', []).controller('PlayerController', function ($scope, $http, $route, $routeParams, $location, $controller, $confirm, DraftFactory) {
-  $scope.available_players = [];
+angular.module('PlayerController', []).controller('PlayerController', function ($scope, $location, $confirm, $timeout, $q, DraftFactory, AuthenticationService, DraftService, LeagueService) {
 
-  $scope.allDraftedPlayers = [];
+  var vm = this;
 
-  $scope.getAll = function () {
-    var position = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
-    for (var x in position) {
-      $http.get('http://www.fantasyfootballnerd.com/service/players/json/rtj7893jmh8t/' + position[x]).success(function (data) {
-        DraftFactory.getAll(data);
-      }).success(function(){
-          console.log("Success!!");
-      })
-        .error(function (data) {
-          console.log('Error: ' + data);
+  vm.available_players = [];
+
+  vm.allDraftedPlayers = [];
+
+  vm.message = "";
+
+  vm.currentUser = AuthenticationService.currentUser();
+
+  vm.currentLeague = LeagueService.currentLeague();
+
+  vm.setColorOnClock = function(team){
+      if(vm.currentLeague.onClock === team._id){
+        return {"font-weight": "bold"};
+      }
+  };
+
+  vm.getPlayers = function (position) {
+    DraftFactory.getPlayers(position, function (data) {
+      vm.available_players = data;
+    });
+  };
+
+  vm.startDraft = function(id){
+    var draftPackage = {
+      draftId: vm.currentLeague.draft._id,
+      draftOrder: vm.currentLeague.draftOrder
+
+    };
+    return DraftService.startDraft(draftPackage)
+      .then(function(response){
+        console.log(response);
+      }, function(error){
+        console.log(error);
+      });
+  };
+
+  vm.draftPlayer = function (id) {
+    if(DraftService.isOnClock() === true){
+
+      var draftPackage = {
+        draftId: vm.currentLeague.draft._id,
+        leagueId: vm.currentLeague._id,
+        team: vm.currentUser._id,
+        pick: id,
+      };
+      
+      return DraftService.draftPlayer(draftPackage)
+        .then(function(response){
+          console.log(response);
+          if(response === true){
+            $location.path("/draftBoard");
+          }
+          if(response === false){
+            console.log("Error in PlayerControiller draftPlayer");
+          }
+        }, function(error){
+          console.log(error);
         });
     }
-  };
-
-  $scope.getPlayers = function (position) {
-    DraftFactory.getPlayers($scope.players, function (data) {
-      $scope.available_players = data;
-    });
-  };
-
-  $scope.draftPlayer = function (id) {
-    DraftFactory.draftPlayer(id, function (data) {
-      $scope.getPlayers();
-    });
+    if(DraftService.isOnClock() === false){
+      vm.message = "You Are Not On The Clock!";
+      vm.checkBox.value = false;
+      $timeout(function(){
+        vm.message = false;
+      }, 5000);
+    }
   };
 
   var getDraftedPlayers = function () {
     DraftFactory.getDraftedPlayers(function (data) {
-      $scope.allDraftedPlayers = data;
+      vm.allDraftedPlayers = data;
     });
   };
   getDraftedPlayers();
-
-  $scope.newDraft = function () {
-    DraftFactory.newDraft(function (data) {
-      console.log("Draft Results Cleared");
-    });
-  };
-
-
 });

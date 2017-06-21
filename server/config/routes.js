@@ -1,47 +1,44 @@
 var Player = require("./../controllers/PlayerController.js");
 var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
-var Chat = require("./../controllers/ChatController");
+var Chat = require("./../controllers/ChatController.js");
 
-// var passport = require("./../config/passport.js");
-// var passport = require("passport");
+// var auth = jwt({
+//     secret: "Draft_Secret",
+//     userProperty: "payload"
+// });
 
-var jwt = require("express-jwt");
-
-var auth = jwt({
-    secret: "Draft_Secret",
-    userProperty: "payload"
-});
-
-module.exports = function(app){
+module.exports = function(app, passport){
 
     //User Calls
     app.post("/register", function(req, res){
         User.register(req, res);
     });
-
-    app.post("/login", function(req, res){
-        User.login(req, res);
+    app.post("/login", passport.authenticate("local", {session: false}), function(req, res){
+        res.send(req.user);
     });
     app.post("/deleteAllUsers", function(req, res){
         User.deleteAllUsers(req, res);
     });
+    // app.get("/getUserLeagues", function(req, res){
+    //     User.getUserLeagues(req, res);
+    // });
 
     //Player Calls
-    app.post("/getAll", function(req, res){
-        Player.getAll(req, res);
+    app.post("/downloadPlayers", function(req, res){
+        Player.downloadPlayers(req, res);
     });
     app.get("/getPlayers", function(req, res){
         Player.getPlayers(req, res);
     });
-    app.patch("/draftPlayer/:_id", function(req, res){
+    app.post("/draftPlayer", function(req, res){
         Player.draftPlayer(req, res);
     });
     app.get("/getDraftedPlayers", function(req, res){
         Player.getDraftedPlayers(req, res);
     });
-    app.post("/newDraft", function(req, res){
-        Player.newDraft(req, res);
+    app.post("/deleteAllPlayers", function(req, res){
+        Player.deleteAllPlayers(req, res);
     });
 
     //League Calls
@@ -51,8 +48,14 @@ module.exports = function(app){
     app.get("/getLeague", function(req, res){
         League.getLeague(req, res);
     });
-    app.post("/clearAll", function(req, res){
-        League.clearAll(req, res);
+    app.get("/getAllLeagues", function(req, res){
+        League.getAllLeagues(req, res);
+    });
+    app.patch("/joinLeague", function(req, res){
+        League.joinLeague(req, res);
+    });
+    app.post("/leaguesClearAll", function(req, res){
+        League.leaguesClearAll(req, res);
     });
 
     //Chat Calls
@@ -61,6 +64,14 @@ module.exports = function(app){
     });
     app.post("/deleteAllChat", function(req, res){
         Chat.deleteAllChat(req, res);
+    });
+
+    //DraftCalls
+    app.post("/deleteAllDrafts", function(req, res){
+        League.deleteAllDrafts(req, res);
+    });
+    app.post("/startDraft", function(req, res){
+        League.startDraft(req, res);
     });
 };
 
