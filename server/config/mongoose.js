@@ -1,8 +1,11 @@
 var mongoose = require("mongoose");
 var fs = require("fs");
 var path = require("path");
+const bluebird = require('bluebird');
 
-mongoose.connect("mongodb://brentellis:DraftApp1!@ds153785.mlab.com:53785/draftapp");
+let options = { promiseLibrary: bluebird };
+
+mongoose.connect("mongodb://brentellis:DraftApp1!@ds153785.mlab.com:53785/draftapp", options);
 
 var models_path = __dirname + "/../models";
 
