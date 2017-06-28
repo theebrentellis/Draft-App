@@ -58,7 +58,7 @@ userSchema.methods.populateUserLeagues = function(userId, callback){
     })
     .exec(function(err, user){
         if(user){
-            callback(user);
+            return user;
         }
     });
 };
