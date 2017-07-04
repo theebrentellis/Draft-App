@@ -71,8 +71,10 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         if (response.data.token) {
           saveToken(response.data.token);
           return 'Success';
-        }else {
-          return response.data.message;
+        } else {
+          if (response.status == 401) {
+            return "Incorrect Username or Password!";
+          }
         }
       }, function (err) {
         console.log(err);
@@ -83,6 +85,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
     $location.path("/login");
+    console.log("Logout");
   };
 
   service.deleteAllUsers = function () {

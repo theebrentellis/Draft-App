@@ -14,10 +14,10 @@ module.exports = function(app, passport){
     app.post("/register", function(req, res){
         User.register(req, res);
     });
-    app.post("/login", passport.authenticate("local", { session: false }), function (req, res) {
-        // console.log(req);
-        // console.log(res);
-        res.send(req.user);
+    app.post('/login', passport.authenticate('local', {
+        session: false
+    }), (req, res) => {
+        return res.json({ "token": req.user });
     });
     app.post("/deleteAllUsers", function(req, res){
         User.deleteAllUsers(req, res);

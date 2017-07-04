@@ -1,9 +1,9 @@
-var passport = require("passport");
-var mongoose = require('mongoose');
+let passport = require("passport");
+let mongoose = require('mongoose');
 
-var User = mongoose.model("User");
+let User = mongoose.model("User");
 
-var sendJSONresponse = function (res, status, content) {
+let sendJSONresponse = function (res, status, content) {
   res.status(status);
   res.json(content);
 };
@@ -13,7 +13,7 @@ module.exports = (function () {
 
     register: function (req, res) {
 
-      var user = new User();
+      let user = new User();
 
       user.email = req.body.email;
       user.userName = req.body.userName;
@@ -27,8 +27,7 @@ module.exports = (function () {
           });
         }
         else{
-          var token;
-          token = user.generateJwt();
+          let token = user.generateJwt();
           res.json({
             "token": token
           });
@@ -38,7 +37,7 @@ module.exports = (function () {
 
     login: function (req, res) {
       console.log("In Server Login");
-      // var token;
+      // let token;
       // passport.authenticate("local", {session: false}, function(err, user, info){
       //   console.log(err);
       //   console.log(user);
@@ -62,13 +61,13 @@ module.exports = (function () {
       //     if (user.validPassword(req.body.password) === true) {
             
       //       user.populateUserLeagues(user._id, function(user){
-      //         var token;
+      //         let token;
       //         token = user.generateJwt();
       //         res.json({
       //           "token": token
       //         });
       //       });
-      //       // var token;
+      //       // let token;
       //       // token = user.generateJwt();
       //       // res.json({
       //       //   "token": token

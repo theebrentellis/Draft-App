@@ -1,14 +1,19 @@
-const mongoose = require("mongoose");
+let mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
-const bluebird = require('bluebird');
+let bluebird = require('bluebird');
+let MongoClient = require('mongodb').MongoClient;
 
 let options = {
-	promiseLibrary: bluebird,
-	useMongoClient: true 
+	useMongoClient: true,
+	promiseLibrary: bluebird
 };
 
-mongoose.connect("mongodb://brentellis:DraftApp1!@ds153785.mlab.com:53785/draftapp", options);
+mongoose.connect("mongodb://brentellis:DraftApp4$@ds153785.mlab.com:53785/draftapp", options).then((db) => {
+	console.log("Open For Business!");
+});
+
+mongoose.Promise = bluebird;
 
 var models_path = __dirname + "/../models";
 

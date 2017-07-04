@@ -36,7 +36,7 @@ angular.module('UserController', []).controller('UserController', function($scop
     vm.registerNew = function(){
         AuthenticationService.register(vm.registerInfo, function(data){
             if(data === "Success"){
-                $location.path("/commish");
+                $location.path("/dashboard");
             }
             else{
                 vm.message = data;
@@ -48,7 +48,7 @@ angular.module('UserController', []).controller('UserController', function($scop
        return AuthenticationService.login(vm.loginInfo)
            .then(function (response) {
                if (response == "Success") {
-                   $location.url('/dashboard');
+                   $location.path('/dashboard');
                     // let theUser = AuthenticationService.currentUser();
                     // if(theUser.leagues[0] === undefined){
                     //     $location.path("/commish");

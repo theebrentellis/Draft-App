@@ -52,16 +52,19 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
         })
         .state("dashboard", {
             url: "/dashboard",
+            authenticate: true,
             views: {
                 "header": {
                     templateUrl: "/partials/app.html",
                     controller: "AppController",
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    authenticate: true
                 },
                 "content": {
                     templateUrl: '/partials/dashboard.html',
                     controller: "UserController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
+                    authenticate: true
                 }
             }
         })
@@ -97,8 +100,9 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
-        .state("draftBoard", {
-            url: "/draftBoard",
+        .state("draftboard", {
+            url: "/draftboard",
+            authenticate: true,
             views: {
                 "header":{
                     templateUrl: "/partials/app.html",
@@ -131,10 +135,14 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
         });
 });
 
-DraftApp.run(function($rootScope, $state, AuthenticationService){
-    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-        if(toState.authenticate && !AuthenticationService.isLoggedIn()){
+DraftApp.run(function($rootScope, $location, $state, AuthenticationService){
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+        // console.log(toState);
+        // console.log(AuthenticationService.isLoggedIn());
+        if (toState.authenticate && !AuthenticationService.isLoggedIn()) {
+            console.log("Good To Go");
             $location.path("/login");
+            $state.transitionTo('login');
         }
     });
 });

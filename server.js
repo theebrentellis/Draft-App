@@ -6,23 +6,24 @@ const SECRET = "MY_SECRET";
 const http = require("http");
 const mongodb = require("mongodb");
 const webpack = require('webpack');
-
-const mongoose = require("mongoose");
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+let mongoose = require("mongoose");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, "./client")));
+app.use(cookieParser());
 app.use(bodyParser.json({
     limit: "50mb"
 }));
-
 app.use(bodyParser.urlencoded({
     limit: "50mb",
     extended: false
 }));
 
 app.use(passport.initialize());
-
-app.use(express.static(path.join(__dirname, "./client")));
 
 require("./server/config/mongoose.js");
 require("./server/config/passport.js")(passport);
