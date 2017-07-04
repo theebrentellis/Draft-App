@@ -1,6 +1,10 @@
 <div class="row justify-content-center">
     <div class="col-6"> 
-        <div ng-if="vm.message" class="alert alert-danger">{{vm.message}}</div>
+        <div ng-if="vm.message" class="alert alert-danger">
+            <button type="button" class="close" ng-click="vm.dismissError()">
+                <span aria-hidden="true">&times;</span>
+            </button> {{vm.message}}
+        </div>
         <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
         <div class="card">
             <h3 class="card-header">

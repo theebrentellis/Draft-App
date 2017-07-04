@@ -83,6 +83,10 @@ angular.module('UserController', []).controller('UserController', function($scop
             var profile = googleUser.getBasicProfile();
             console.log("Email: " + profile.getEmail());
         }
+    };
+    vm.dismissError = ()=>{
+        console.log("Dismiss");
+        vm.message = "";
     }
 
 });

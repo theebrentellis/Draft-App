@@ -75,6 +75,9 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
           if (response.status == 401) {
             return "Incorrect Username or Password!";
           }
+          else {
+            return "Unknown Error!"
+          }
         }
       }, function (err) {
         console.log(err);
