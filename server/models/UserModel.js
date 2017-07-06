@@ -40,6 +40,7 @@ userSchema.methods.generateJwt = function(){
     _id: this.id,
     userName: this.userName,
     firstName: this.firstName,
+    email: this.email,
     commish: this.commish,
     leagues: this.leagues,
     exp: parseInt(expiry.getTime() / 1000),
@@ -50,10 +51,10 @@ userSchema.methods.populateUserLeagues = function(userId, callback){
     .populate({
         path: "leagues",
         model: "League",
-        populate: {
-            path: "commish",
-            model: "League"
-        },
+        // populate: {
+        //     path: "commish",
+        //     model: "League"
+        // },
     })
     .exec(function(err, user){
         if(user){

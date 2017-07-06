@@ -36,6 +36,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         _id: payload._id,
         userName: payload.userName,
         firstName: payload.firstName,
+        email: payload.email,
         leagues: payload.leagues
       };
     }

@@ -1,4 +1,4 @@
-<div ng-controller="AppController">
+<div ng-controller="AppController" class="header">
     <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
         <a class="navbar-brand" href="#" ui-sref="welcome" ng-if="!vm.isLoggedIn">
             <img src="/images/Logo.png" id="navbarBrandLogo" alt="The League">
@@ -11,9 +11,9 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown" ng-if="vm.isLoggedIn">
-                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{vm.currentUser.firstName}}!</a>
+                    <a href class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ vm.currentUser.firstName }}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a href="#" class="dropdown-item" ng-click=""><i class="fa fa-fw fa-btn fa-cogs"></i>Settings</a>
+                        <a href="#" class="dropdown-item" ui-sref="settings"><i class="fa fa-fw fa-btn fa-cogs"></i>Settings</a>
                         <a href="#" class="dropdown-item" ng-click="vm.currentUserLogOut()"><i class="fa fa-fw fa-btn fa-sign-out"></i>Logout</a>
                     </div>
                 </li>

@@ -1,10 +1,21 @@
-<div class="row">
-    <div class="col">
+<div class="row justify-content-center">
+    <div class="col-8">
         <div class="card">
             <h3 class="card-header">My Dashboard</h3>
             <div class="card-block">
-                <p class="card-text">Sample Text</p>
+                <!--<p class="card-text">Sample Text</p>-->
+                <p>{{ vm.currentLeague }}</p>
+                <p>{{ vm.currentUser }}</p>
+                <ul>
+                    <li ng-repeat="league in vm.currentUser.leagues">
+                        {{ league }}
+                    </li>
+                </ul>
+                <hr>
+                <a href><i class="fa fa-btn fa-fw fa-plus-circle"></i>New League</a>
+                <a href><i class="fa fa-btn fa-fw fa-plus-circle"></i>Join League</a>
             </div>
+            
         </div>
     </div>
 </div>

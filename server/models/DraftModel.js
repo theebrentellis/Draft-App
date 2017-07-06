@@ -8,20 +8,16 @@ var DraftSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "League"
     },
-    draft: [{
-        _id:{
-            type: ObjectId,
-            ref: "User",
-            autoIndexId: false,
-            _id: false,
-        },
-        picks: [{
-            type: ObjectId,
-            ref: "Player",
-            autoIndexId: false,
-            _id: false
-        }]
+    draftOrder: [{
+        type: ObjectId,
+        ref: "User"
     }],
+    picks: [{
+        type: ObjectId,
+        ref: "Player",
+    }],
+    onClock: ObjectId,
+    draftStarted: Boolean,
 
 });
 mongoose.model("Draft", DraftSchema);

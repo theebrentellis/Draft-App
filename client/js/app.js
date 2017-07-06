@@ -68,6 +68,24 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
+        .state("settings", {
+            url: "/settings",
+            authenticate: true,
+            views: {
+                "header": {
+                    templateUrl: "/partials/app.html",
+                    controller: "AppController",
+                    controllerAs: 'vm',
+                    authenticate: true
+                },
+                "content": {
+                    templateUrl: '/partials/settings.html',
+                    controller: "UserController",
+                    controllerAs: "vm",
+                    authenticate: true
+                }
+            }
+        })
         .state("commish", {
             url: "/commish",
             views: {
@@ -117,6 +135,7 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
+        .state('')
         .state("chatroom", {
             url: "/chat",
             views: {

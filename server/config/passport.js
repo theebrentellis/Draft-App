@@ -44,16 +44,16 @@ module.exports = function (passport, app) {
             message: 'Password Incorrect'
           });
         }
-        let token = user.generateJwt();
+        // let token = user.generateJwt();
 
-        return done(null, token);
-        // user.populateUserLeagues(user._id, function(user){
-        //   let token;
-        //   token = user.generateJwt();
-        //   console.log(token);
-        //   return done(null, token);
-        //   // return done(null, {"token": token});
-        // });
+        // return done(null, token);
+        user.populateUserLeagues(user._id, function(user){
+          // let token;
+          let token = user.generateJwt();
+          // console.log(token);
+          return done(null, token);
+          // return done(null, {"token": token});
+        });
       });
     }));
 

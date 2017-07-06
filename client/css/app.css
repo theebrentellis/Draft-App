@@ -20,3 +20,16 @@ body {
     color: inherit;
     text-decoration: none !important;
 }
+
+ul.nav-tabs.settings {
+    display: block;
+    
+    /*border-bottom: none !important;*/
+}
+a.nav-link {
+    border: none !important;
+}
+
+.header{
+    margin-bottom: 25px;
+}

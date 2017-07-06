@@ -10,7 +10,7 @@ let options = {
 };
 
 mongoose.connect("mongodb://brentellis:DraftApp4$@ds153785.mlab.com:53785/draftapp", options).then((db) => {
-	console.log("Open For Business!");
+	console.log("Hot Dog!");
 });
 
 mongoose.Promise = bluebird;

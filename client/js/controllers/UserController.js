@@ -10,6 +10,16 @@ angular.module('UserController', []).controller('UserController', function($scop
     vm.loginView = true;
     vm.registerView = false;
 
+    vm.tab = 1;
+
+    vm.setTab = function (tabId) {
+        vm.tab = tabId;
+    };
+
+    vm.isSet = function (tabId) {
+        return vm.tab === tabId;
+    };
+
     vm.userViewChange = function(view){
         if(view === true){
             vm.loginView = false;

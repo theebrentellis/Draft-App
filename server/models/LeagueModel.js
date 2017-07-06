@@ -9,22 +9,20 @@ var Draft = mongoose.model("Draft");
 var LeagueSchema = new mongoose.Schema({
     leagueName: {
         type: String,
-        unique: true,
         required: true
     },
     commish: [ObjectId],
-    draftOrder: [ObjectId],
-    onClock: ObjectId,
-    draft: ObjectId,
+    team: [ObjectId],
+    drafts: [ObjectId],
     chat: ObjectId,
-    draftStarted: Boolean,
+    
 });
 LeagueSchema.methods.populateUsers = function(leagueId, callback){
     this.model("League").findOne({_id: leagueId})
         .populate({
-            path: "draftOrder",
+            path: "teams",
             model: "User",
-            select: "firstName"
+            select: "_id"
         })
         .populate({
             path: "commish",
@@ -34,16 +32,19 @@ LeagueSchema.methods.populateUsers = function(leagueId, callback){
         .populate({
             path: "chat",
             model: "Chat",
-            select: "chat"
+            select: "_id"
         })
         .populate({
             path: "draft",
             model: "Draft",
-            select: "draft"
+            select: "_id"
         })
         .exec(function(err, league){
             if(league){
                 callback(league);
+            }
+            if (err) {
+                console.log(err);
             }
         });
 };
