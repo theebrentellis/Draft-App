@@ -8,12 +8,12 @@ let options = {
 	useMongoClient: true,
 	promiseLibrary: bluebird
 };
-
+mongoose.Promise = bluebird;
 mongoose.connect("mongodb://brentellis:DraftApp4$@ds153785.mlab.com:53785/draftapp", options).then((db) => {
 	console.log("Hot Dog!");
 });
 
-mongoose.Promise = bluebird;
+
 
 var models_path = __dirname + "/../models";
 
