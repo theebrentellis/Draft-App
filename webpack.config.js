@@ -1,15 +1,25 @@
-const webpack = require('webpack');
 const path = require('path');
-
+const webpack = require('webpack');
 
 module.exports = {
-    context: __dirname,
     entry: {
-        app: './client/static/js/app.js',
+        app: './client/js/app.js',
         // vendor: ['angular']
     },
     output: {
-        path: __dirname + './public/js',
-        filename: 'app.bundle.js'
-    }
+        path: './public/js',
+        filename: 'bundle.js'
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+            },
+            { test: /\.html$/, loader: "html" },
+            { test: /\.css$/, loader: "style!css" }
+        ]
+    },
+    devtool: "#inline-source-map"
 }

@@ -29,8 +29,8 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.joinLeague = function(package){
-        return $http.patch("/joinLeague/", package)
+    factory.joinLeague = function(user){
+        return $http.patch("/joinLeague/", user)
             .then(function(response){
                 return response.data.token;
             }, function(error){

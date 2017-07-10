@@ -89,11 +89,11 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
 
     service.joinLeague = function(leagueId){
         currentUser = AuthenticationService.currentUser();
-        var package = {
+        var user = {
             "userId": currentUser._id,
             "leagueId": leagueId
         };
-        return LeagueFactory.joinLeague(package)
+        return LeagueFactory.joinLeague(user)
             .then(function(updateToken){
                 $q.when(AuthenticationService.updateToken(updateToken))
                     .then(function(){

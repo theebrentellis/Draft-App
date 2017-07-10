@@ -1,4 +1,4 @@
-let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
+let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DashboardController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
 DraftApp.config(function($stateProvider, $urlRouterProvider){
     
@@ -14,7 +14,10 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 //     controllerAs: "vm"
                 // },
                 "content": {
-                    templateUrl: "/partials/welcome.html",
+                    // templateUrl: "/partials/welcome.html",
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('welcome.html');
+                    },
                     controller: "AppController",
                     controllerAs: "vm"
                 }
@@ -23,13 +26,19 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
         .state("login", {
             url:"/login",
             views: {
-                "header":{
-                    templateUrl: "/partials/app.html",
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    // templateUrl: "/partials/app.html",
                     controller: "AppController",
                     controllerAs: "vm",
                 },
-                "content":{
-                    templateUrl: "/partials/login.html",
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('login.html');
+                    },
+                    // templateUrl: "login.html",
                     controller: "UserController",
                     controllerAs: "vm"
                 },
@@ -39,12 +48,18 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
             url: "/register",
             views: {
                 "header": {
-                    templateUrl: "/partials/app.html",
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    // templateUrl: "/partials/app.html",
                     controller: "AppController",
                     controllerAs: 'vm'
                 },
                 "content": {
-                    templateUrl: '/partials/register.html',
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('register.html');
+                    },
+                    // templateUrl: '/partials/register.html',
                     controller: "UserController",
                     controllerAs: "vm"
                 }
@@ -55,13 +70,19 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
             authenticate: true,
             views: {
                 "header": {
-                    templateUrl: "/partials/app.html",
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    // templateUrl: "/partials/app.html",
                     controller: "AppController",
                     controllerAs: 'vm',
                     authenticate: true
                 },
                 "content": {
-                    templateUrl: '/partials/dashboard.html',
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('dashboard.html');
+                    },
+                    // templateUrl: '/partials/dashboard.html',
                     controller: "UserController",
                     controllerAs: "vm",
                     authenticate: true
@@ -135,7 +156,7 @@ DraftApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
-        .state('')
+        // .state('')
         .state("chatroom", {
             url: "/chat",
             views: {
@@ -159,9 +180,13 @@ DraftApp.run(function($rootScope, $location, $state, AuthenticationService){
         // console.log(toState);
         // console.log(AuthenticationService.isLoggedIn());
         if (toState.authenticate && !AuthenticationService.isLoggedIn()) {
-            console.log("Good To Go");
-            $location.path("/login");
+            console.log("Go To Login!");
+            // $location.path("/login");
             $state.transitionTo('login');
         }
     });
+});
+
+DraftApp.run(function ($templateCache) {
+    
 });

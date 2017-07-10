@@ -13,7 +13,7 @@ let mongoose = require("mongoose");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "./client")));
+app.use(express.static(path.join(__dirname, "./public")));
 app.use(cookieParser());
 app.use(bodyParser.json({
     limit: "50mb"
