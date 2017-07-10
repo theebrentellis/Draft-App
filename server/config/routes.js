@@ -8,7 +8,11 @@ var Chat = require("./../controllers/ChatController.js");
 //     userProperty: "payload"
 // });
 
-module.exports = function(app, passport){
+module.exports = function (app, passport) {
+    
+    app.get('/', function () {
+        res.render('welcome');
+    });
 
     //User Calls
     app.post("/register", function(req, res){
