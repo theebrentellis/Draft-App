@@ -33,7 +33,7 @@ require("./server/config/routes.js")(app, passport);
 //     console.log("Your Mom Goes To College!");
 // });
 
-const server = http.createServer(app).listen(1234, function(){
+const server = http.createServer(app).listen(process.env.PORT || 1234, function(){
     console.log("Your Mom Goes To College!");
 });
 
