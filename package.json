@@ -6,7 +6,8 @@
   "scripts": {
     "build": "gulp --build",
     "watch": "webpack --watch",
-    "nodemon": "nodemon --watch server --watch config --watch bin ./bin/www"
+    "nodemon": "nodemon --watch server --watch config --watch bin ./bin/www",
+    "start": "gulp --build"
   },
   "dependencies": {
     "applicationinsights": "^0.18.0",
