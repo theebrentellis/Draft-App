@@ -29,7 +29,8 @@
     "webpack": "^3.0.0"
   },
   "engines": {
-    "node": "6.11.0"
+    "node": "6.11.0",
+    "npm": "3.10.10"
   },
   "repository": {
     "type": "git"
