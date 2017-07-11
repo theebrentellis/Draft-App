@@ -109,6 +109,12 @@ gulp.task('template-cache', () => {
         .pipe(gulp.dest('./public/partials'));
 });
 
+gulp.task('watch', () => {
+    gulp.watch('./client/js/**/*.js', ['js']);
+    gulp.watch('./client/sass/*.scss', ['css']);
+    gulp.watch('./client/partials/*.html', ['template-cache'])
+});
+
 //Redudant Task
 // gulp.task('angular-template-build', () => {
 //     return gulp.src('./client/partials/*.html')

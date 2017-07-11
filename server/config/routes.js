@@ -11,6 +11,7 @@ var Chat = require("./../controllers/ChatController.js");
 module.exports = function (app, passport) {
     
     app.get('/', function () {
+        console.log("Index!");
         res.render('welcome');
     });
 
