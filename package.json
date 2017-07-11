@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "nodemon": "nodemon --watch server --watch config --watch bin ./bin/www",
-    "start": "gulp --build"
+    "start": "node server.js"
   },
   "dependencies": {
     "applicationinsights": "^0.18.0",
