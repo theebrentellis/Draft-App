@@ -10,7 +10,7 @@ var Chat = require("./../controllers/ChatController.js");
 
 module.exports = function (app, passport) {
     
-    app.get('/', function () {
+    app.get('/', (req, res) => {
         console.log("Index!");
         res.render('welcome');
     });

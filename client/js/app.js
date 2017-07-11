@@ -78,6 +78,22 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                 }
             }
         })
+        .state('newLeague', {
+            url: "/league/new",
+            authenticate: true,
+            views: {
+                'header': {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    }
+                },
+                'content': {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('newLeague.html');
+                    },
+                }
+            }
+        })
         .state("settings", {
             url: "/settings",
             authenticate: true,

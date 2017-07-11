@@ -11,9 +11,12 @@ body {
 #navbarBrandLogo {
     height: 100px;
 }
-.welcomeLink {
-    color: blue;
+a.welcomeLink {
+    color: black;
     text-decoration: none !important;
+}
+a.welcomeLink:hover{
+    color: black;
 }
 
 .navbar-brand a {

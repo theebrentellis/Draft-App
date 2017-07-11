@@ -4,8 +4,6 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "build": "gulp --build",
-    "watch": "webpack --watch",
     "nodemon": "nodemon --watch server --watch config --watch bin ./bin/www",
     "start": "gulp --build"
   },
