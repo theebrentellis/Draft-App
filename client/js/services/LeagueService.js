@@ -62,23 +62,25 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
     };
 
     service.createNewLeague = function (newLeagueInfo) {
-        $q.when(LeagueFactory.createLeague(newLeagueInfo))
-            .then(function(response){
+        return LeagueFactory.createLeague(newLeagueInfo)
+            .then(function (response) {
+                console.log(response);
                 $q.when(AuthenticationService.updateToken(response.data.token))
-                    .then(function(){
-                        currentUser = AuthenticationService.currentUser();
-                        $q.when(service.setCurrentLeagueId(currentUser.leagues[0]._id))
-                            .then(function(){
-                                $q.when(service.getLeague())
-                                    .then(function(response){
-                                        $location.path("/availablePlayers");
-                                        return response;
-                                    }, function(error){
-                                        console.log(error);
-                                    });
-                            }, function(error){
-                                console.log(error);
-                            });
+                    .then(function () {
+                        $state.transitionTo('dashboard');
+                        // currentUser = AuthenticationService.currentUser();
+                        // $q.when(service.setCurrentLeagueId(currentUser.leagues[0]._id))
+                        //     .then(function(){
+                        //         $q.when(service.getLeague())
+                        //             .then(function(response){
+                        //                 $location.path("/availablePlayers");
+                        //                 return response;
+                        //             }, function(error){
+                        //                 console.log(error);
+                        //             });
+                        //     }, function(error){
+                        //         console.log(error);
+                        //     });
                     }, function(error){
                         console.log(error);
                     });

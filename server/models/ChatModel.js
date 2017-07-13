@@ -4,13 +4,13 @@ var ObjectId = Schema.ObjectId;
 
 //Chat Schema
 var chatSchema = new mongoose.Schema({
-    leagueId: {
+    league_id: {
         type: ObjectId,
         ref: "League"
     },
     chat: [{
         message: String,
-        user: {
+        user_id: {
             type: ObjectId,
             ref: "User"
         }

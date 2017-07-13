@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-headline">Create A New League</h3>
+            </div>
+            <div class="card-block">
+                <form class="" role="form" name="newLeague">
+                    <div class="form-group">
+                        <label for="">League Name</label>
+                        <input type="text" name="" value="" placeholder="League Name" class="form-control" ng-model="vm.newLeague.leagueName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="leagueSize" class="">League Size</label>
+                        <select name="leagueSize" id="leagueSize" class="form-control" ng-model="vm.newLeague.leagueSize" required>
+                            <option value="">Please Select...</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" ng-click="vm.createNewLeague()" class="btn btn-outline-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

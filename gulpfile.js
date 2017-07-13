@@ -80,8 +80,8 @@ gulp.task('css', () => {
 });
 
 gulp.task('js', () => {
-    let js = gulp.src('./client/js/**/*')
-        .pipe(newer('./public/js'))
+    let js = gulp.src('./client/js/**/*.js')
+        .pipe(newer('./client/js/**/*.js'))
         .pipe(sourcemaps.init())    
         .pipe(babel({
             presets: ['es2015']
@@ -97,7 +97,7 @@ gulp.task('js', () => {
 });
 
 gulp.task('template-cache', () => {
-    return gulp.src('./client/partials/*.html')
+    return gulp.src('./client/partials/**/*.html')
         .pipe(htmlmin({
             collapseWhitespace: true
         }))    
@@ -112,7 +112,7 @@ gulp.task('template-cache', () => {
 gulp.task('watch', () => {
     gulp.watch('./client/js/**/*.js', ['js']);
     gulp.watch('./client/sass/*.scss', ['css']);
-    gulp.watch('./client/partials/*.html', ['template-cache'])
+    gulp.watch('./client/partials/**/*.html', ['template-cache'])
 });
 
 //Redudant Task

@@ -4,7 +4,7 @@ var ObjectId = Schema.ObjectId;
 
 //Draft Schema
 var DraftSchema = new mongoose.Schema({
-    leagueId: {
+    league_id: {
         type: ObjectId,
         ref: "League"
     },
@@ -17,7 +17,7 @@ var DraftSchema = new mongoose.Schema({
         ref: "Player",
     }],
     onClock: ObjectId,
-    draftStarted: Boolean,
+    started: Boolean,
 
 });
 mongoose.model("Draft", DraftSchema);

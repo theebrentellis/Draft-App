@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
+const randomstring = require('randomstring');
 
-var League = mongoose.model('League');
-var User = mongoose.model('User');
-var Chat = mongoose.model("Chat");
-var Draft = mongoose.model("Draft");
+let League = mongoose.model('League');
+let User = mongoose.model('User');
+let Chat = mongoose.model("Chat");
+let Draft = mongoose.model("Draft");
 
 module.exports = (function () {
   return {
@@ -12,8 +13,9 @@ module.exports = (function () {
       //Updates User with new league and returns token
     createLeague: function (req, res) {
 
+      console.log("Create New League");
       //Create and save new Chat schema
-      var chat = new Chat();
+      let chat = new Chat();
 
       chat.save(function(err, chat){
         if(err){
@@ -22,7 +24,7 @@ module.exports = (function () {
       });
 
       //Create and save new Draft schema
-      var draft = new Draft();
+      let draft = new Draft();
 
       draft.save(function(err, draft){
         if(err){
@@ -30,15 +32,32 @@ module.exports = (function () {
         }
       });
 
+      let accessToken = randomstring.generate({
+        length: 6,
+        charset: 'alphanumeric',
+        capitalization: 'lowercase'
+      });
+
+      League.findOne({ 'token': accessToken }, (err, league) => {
+        if (err) {
+          console.log(err);
+        }
+        if (league) {
+          console.log(league);
+          return res.json({
+            error: "Error generating unique access token"
+          });
+        }
+      });
+
       //Create and save new League schema
-      var league = new League({
+      let league = new League({
         leagueName: req.body.leagueName,
-        draftOrder: req.body.userId,
-        draft: draft._id,
-        commish: req.body.userId,
-        onClock: req.body.userId,
-        chat: chat._id,
-        draftStarted: false
+        draft_id: draft._id,
+        chat_id: chat._id,
+        commish_id: [req.body.user_id],
+        teams: [{ user_id: req.body.user_id }],
+        token: accessToken
       });
 
       league.save(function (err, league) {
@@ -47,9 +66,9 @@ module.exports = (function () {
         }
         if (league) {
           //If new league is successfully created update Chat schema with League ID
-          Chat.findByIdAndUpdate(chat._id, {
+          Chat.findByIdAndUpdate(league.chat_id, {
             $set: {
-              leagueId: league._id
+              league_id: league._id
             }
           }, {
             new: true
@@ -60,9 +79,10 @@ module.exports = (function () {
           });
 
           //If new League is successfully created update Draft schema with League ID
-          Draft.findByIdAndUpdate(draft._id, {
+          Draft.findByIdAndUpdate(league.draft_id[0], {
             $set: {
-              leagueId: league._id
+              league_id: league._id,
+              started: false
             }
           }, {
             new: true
@@ -73,7 +93,7 @@ module.exports = (function () {
           });
 
           //If new League is successfully created update User with League ID
-          User.findByIdAndUpdate(req.body.userId, {
+          User.findByIdAndUpdate(req.body.user_id, {
             $push: {
               leagues: league._id
             }
@@ -82,9 +102,9 @@ module.exports = (function () {
           }, function (err, user) {
             if (user) {
               //If User is successfully updated populate User with Leagues and return token to client
-              user.populateUserLeagues(req.body.userId, function (user) {
-                var token;
-                token = user.generateJwt();
+              user.populateUserLeagues(req.body.user_id, function (user) {
+                console.log(user);
+                let token = user.generateJwt();
                 res.json({
                   'token': token,
                   message: 'Created New League!'
@@ -146,7 +166,7 @@ module.exports = (function () {
           }, function (err, user) {
             if (user) {
               user.populateUserLeagues(req.body.userId, function (user) {
-                var token;
+                let token;
                 token = user.generateJwt();
                 res.json({
                   'token': token
@@ -173,7 +193,7 @@ module.exports = (function () {
       console.log(req.body.draftId);
       // console.log(req.body.draftOrder._id);
 
-      for(var x in req.body.draftOrder){
+      for(let x in req.body.draftOrder){
         Draft.update({_id: req.body.draftId},
         {
           $addToSet: {

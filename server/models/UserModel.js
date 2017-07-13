@@ -46,7 +46,8 @@ userSchema.methods.generateJwt = function(){
     exp: parseInt(expiry.getTime() / 1000),
   }, "Draft_Secret");
 };
-userSchema.methods.populateUserLeagues = function(userId, callback){
+userSchema.methods.populateUserLeagues = function (userId, callback) {
+    console.log(userId);
     this.model("User").findOne({_id: userId})
     .populate({
         path: "leagues",

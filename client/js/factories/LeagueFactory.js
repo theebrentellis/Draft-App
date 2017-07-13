@@ -1,10 +1,11 @@
 angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
     var factory = {};
 
-    factory.createLeague = function(newLeagueInfo){
+    factory.createLeague = function (newLeagueInfo) {
         return $http.post("/createLeague", newLeagueInfo)
-            .then(function(token){
-                return token;
+            .then(function(response){
+                console.log(response);
+                return response;
             }, function(error){
                 console.log(error);
                 return error;

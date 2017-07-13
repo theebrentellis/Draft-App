@@ -2,7 +2,7 @@ let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
 
 angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
     
-    $urlRouterProvider.otherwise("/dashboard");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
         .state("index", {
@@ -31,7 +31,6 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('login.html');
                     },
-                    // templateUrl: "login.html",
                     controller: "UserController",
                     controllerAs: "vm"
                 },
@@ -44,7 +43,6 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('app.html');
                     },
-                    // templateUrl: "/partials/app.html",
                     controller: "AppController",
                     controllerAs: 'vm'
                 },
@@ -52,7 +50,6 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('register.html');
                     },
-                    // templateUrl: '/partials/register.html',
                     controller: "UserController",
                     controllerAs: "vm"
                 }
@@ -85,12 +82,16 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                 'header': {
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('app.html');
-                    }
+                    },
+                    controller: "AppController",
+                    controllerAs: 'vm'
                 },
                 'content': {
                     templateProvider: ($templateCache) => {
-                        return $templateCache.get('newLeague.html');
+                        return $templateCache.get('league/newLeague.html');
                     },
+                    controller: "LeagueController",
+                    controllerAs: "vm",
                 }
             }
         })
@@ -170,8 +171,7 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                         return $templateCache.get('draftBoard.html');
                     },
                     controller: "PlayerController",
-                    controllerAs: "vm",
-                    authenticate: true
+                    controllerAs: "vm"
                 }
             }
         })
@@ -201,12 +201,11 @@ angular.module('DraftApp').run(function ($transitions, $location, $state, Authen
     $transitions.onStart({to: '*'}, function (trans) {
         let AuthService = trans.injector().get('AuthenticationService');
         if (trans.to().authenticate && !AuthService.isLoggedIn()) {
-            console.log("Go To Login!");
             $state.transitionTo('login');
         }
     });
 });
 
-DraftApp.run(function ($templateCache) {
+// DraftApp.run(function ($templateCache) {
     
-});
+// });
