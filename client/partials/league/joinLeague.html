@@ -10,12 +10,12 @@
                         <label for="">League Access Code</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode1" ng-model="vm.data.accessCode1">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode2" ng-model="vm.data.accessCode2">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode3" ng-model="vm.data.accessCode3">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode4" ng-model="vm.data.accessCode4">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode5" ng-model="vm.data.accessCode5">
-                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="" name="accessCode6" ng-model="vm.data.accessCode6">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field1" name="accessCode1" ng-model="vm.data.accessCode1" ng-keyup="vm.moveFocus('field2')">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field2" name="accessCode2" ng-model="vm.data.accessCode2" ng-keyup="vm.moveFocus('field3')">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field3" name="accessCode3" ng-model="vm.data.accessCode3" ng-keyup="vm.moveFocus('field4')">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field4" name="accessCode4" ng-model="vm.data.accessCode4" ng-keyup="vm.moveFocus('field5')">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field5" name="accessCode5" ng-model="vm.data.accessCode5" ng-keyup="vm.moveFocus('field6')">
+                        <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field6" name="accessCode6" ng-model="vm.data.accessCode6">
                     </div>
                     <div class="form-group row justify-content-center">
                         <button type="submit" ng-click="vm.joinLeague()" class="btn btn-outline-success">Join League</button>

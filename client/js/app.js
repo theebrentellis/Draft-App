@@ -73,7 +73,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('dashboard.html');
                     },
-                    controller: "UserController",
+                    controller: "DashboardController",
                     controllerAs: "vm",
                 }
             }

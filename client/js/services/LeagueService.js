@@ -96,13 +96,10 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     };
 
     service.joinLeague = function (code) {
-        console.log(vm.currentUser);
-        // currentUser = AuthenticationService.currentUser();
         let leaguePack = {
             "user_id": vm.currentUser._id,
             "league_code": code
         };
-
         return LeagueFactory.joinLeague(leaguePack)
             .then((response) => {
                 console.log(response);
