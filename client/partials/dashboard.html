@@ -1,15 +1,17 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div class="card">
-            <h3 class="card-header">My Leagues</h3>
+            <div class="card-header">
+                <h3 class="card-headline">My Leagues</h3>
+            </div>
+            
             <div class="card-block">
-                <!--<p class="card-text">Sample Text</p>-->
-                <!-- <p>{{ vm.currentLeague }}</p>
-                <p>{{ vm.currentUser }}</p> -->
+                <!-- <p class="card-text">{{ vm.currentLeague }}</p> -->
+                <!-- <p class="card-text">{{ vm.currentUser }}</p>    -->
                 <p ng-if="!vm.currentUser.leagues[0]">No Leagues Yet!</p>
                 <ul>
                     <li ng-repeat="league in vm.currentUser.leagues">
-                        <a href="#">{{ league.leagueName }}</a>
+                        <a href="#" ui-sref="league">{{ league.leagueName }}</a>
                     </li>
                 </ul>
                 <hr>

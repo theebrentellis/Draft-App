@@ -1,7 +1,7 @@
 let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DashboardController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
-angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
-    
+angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) {
+
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
@@ -18,7 +18,7 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
             }
         })
         .state("login", {
-            url:"/login",
+            url: "/login",
             views: {
                 "header": {
                     templateProvider: ($templateCache) => {
@@ -58,6 +58,9 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
         .state("dashboard", {
             url: "/dashboard",
             authenticate: true,
+            resolve: () => {
+                AuthenticationService.currentUser();
+            },
             views: {
                 "header": {
                     templateProvider: ($templateCache) => {
@@ -92,6 +95,46 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
                     },
                     controller: "LeagueController",
                     controllerAs: "vm",
+                }
+            }
+        })
+        .state('joinLeague', {
+            url: "/league/join",
+            authenticate: true,
+            views: {
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    controller: "AppController",
+                    controllerAs: 'vm'
+                },
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('league/joinLeague.html');
+                    },
+                    controller: "LeagueController",
+                    controllerAs: "vm"
+                }
+            }
+        })
+        .state('league/{id}', {
+            url: "/league/{id}",
+            authenticate: true,
+            views: {
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    controller: "AppController",
+                    controllerAs: 'vm'
+                },
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('league/index.html');
+                    },
+                    controller: "LeagueController",
+                    controllerAs: "vm"
                 }
             }
         })
@@ -197,15 +240,11 @@ angular.module('DraftApp').config(function($stateProvider, $urlRouterProvider){
         });
 });
 
-angular.module('DraftApp').run(function ($transitions, $location, $state, AuthenticationService) {
-    $transitions.onStart({to: '*'}, function (trans) {
+angular.module('DraftApp').run(function ($transitions, $location, $state, $q, AuthenticationService) {
+    $transitions.onStart({ to: '*' }, function (trans) {
         let AuthService = trans.injector().get('AuthenticationService');
         if (trans.to().authenticate && !AuthService.isLoggedIn()) {
             $state.transitionTo('login');
         }
     });
 });
-
-// DraftApp.run(function ($templateCache) {
-    
-// });

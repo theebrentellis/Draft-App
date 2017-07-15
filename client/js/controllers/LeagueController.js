@@ -1,10 +1,16 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $confirm, $location, AuthenticationService, LeagueService) {
-    
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $confirm, $location, $state, AuthenticationService, LeagueService) {
+
     var vm = this;
 
     vm.allLeagues = [];
 
-    vm.currentUser = AuthenticationService.currentUser();
+    vm.currentUser = {};
+    let getCurrentUser = AuthenticationService.currentUser();
+    getCurrentUser.then((response) => {
+        vm.currentUser = response;
+    }, (error) => {
+        console.log(error);
+    });
 
     vm.currentLeague = LeagueService.currentLeague();
 
@@ -38,12 +44,12 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     //             }, function(error){
     //                 console.log(error);
     //             });
-            
-            
+
+
     //     }
     // };
 
-    vm.createNewLeague = function(){
+    vm.createNewLeague = function () {
         var newLeagueInfo = {
             "leagueName": vm.newLeague.leagueName,
             "leagueSize": vm.newLeague.leagueSize,
@@ -52,15 +58,17 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         LeagueService.createNewLeague(newLeagueInfo);
     };
 
-    vm.joinLeague = function(leagueId, callback){
-        // LeagueService.joinLeague(leagueId, function(status){
-        //     if(status == "Success"){
-        //         console.log("Success!");
-        //     }
-        //     else{
-        //         console.log("Error");
-        //     }
-        // });
+    vm.joinLeague = function () {
+        let code = "";
+        for (var x in vm.data) {
+            code += vm.data[x];
+        }
+        return LeagueService.joinLeague(code)
+            .then((response) => {
+                $state.transitionTo('dashboard');
+            }, (error) => {
+                console.log(error);
+            });
     };
 
 });

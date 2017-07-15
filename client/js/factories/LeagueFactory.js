@@ -30,10 +30,10 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function($http){
             });
     };
 
-    factory.joinLeague = function(user){
-        return $http.patch("/joinLeague/", user)
-            .then(function(response){
-                return response.data.token;
+    factory.joinLeague = function(leaguePack){
+        return $http.patch("/joinLeague/", leaguePack)
+            .then(function (response) {
+                return response;
             }, function(error){
                 console.log(error);
             });

@@ -1,62 +1,68 @@
-angular.module("LeagueService", []).service("LeagueService", function($window, $state, $q, $location, LeagueFactory, ChatFactory, AuthenticationService){
+angular.module("LeagueService", []).service("LeagueService", function ($window, $state, $q, $location, LeagueFactory, ChatFactory, AuthenticationService) {
     var service = {};
 
     var vm = this;
 
-    vm.currentUser = AuthenticationService.currentUser();
+    vm.currentUser = {};
+    let getCurrentUser = AuthenticationService.currentUser();
+    getCurrentUser.then((response) => {
+        vm.currentUser = response;
+    }, (error) => {
+        console.log(error);
+    });
     vm.isLoggedIn = AuthenticationService.isLoggedIn();
 
-    var saveCurrentLeagueId = function(leagueId){
+    var saveCurrentLeagueId = function (leagueId) {
         $q.resolve($window.localStorage["current-league-id"] = leagueId);
     };
 
-    var currentLeagueId = function(){
-        if($window.localStorage["current-league-id"]){
+    var currentLeagueId = function () {
+        if ($window.localStorage["current-league-id"]) {
             return $window.localStorage["current-league-id"];
         }
-        else{
+        else {
             return false;
         }
     };
 
-    var saveCurrentLeague = function(league){
-        if($window.localStorage["current-league"]){
+    var saveCurrentLeague = function (league) {
+        if ($window.localStorage["current-league"]) {
             $window.localStorage.removeItem("current-league");
             $window.localStorage.setItem("current-league", JSON.stringify(league));
         }
-        else{
+        else {
             $window.localStorage.setItem("current-league", JSON.stringify(league));
         }
     };
 
-    service.currentLeague = function(){
+    service.currentLeague = function () {
         var theLeague = JSON.parse($window.localStorage.getItem("current-league"));
         return theLeague;
     };
 
-    service.setCurrentLeagueId = function(leagueId){
-        if(leagueId){
+    service.setCurrentLeagueId = function (leagueId) {
+        if (leagueId) {
             return $q.when(saveCurrentLeagueId(leagueId));
         }
     };
 
-    service.getCurrentLeagueId = function(){
-        if(currentLeagueId){
+    service.getCurrentLeagueId = function () {
+        if (currentLeagueId) {
             return currentLeagueId;
         }
     };
 
-    service.getLeague = function(){
+    service.getLeague = function () {
         var theLeague = currentLeagueId();
         return LeagueFactory.getLeague(theLeague)
-            .then(function(response){
+            .then(function (response) {
                 $q.resolve(saveCurrentLeague(response.data))
-                    .then(function(){
+                    .then(function () {
                         return "Done";
-                    }, function(error){
+                    }, function (error) {
                         console.log(error);
                     });
-            }, function(error){
+            }, function (error) {
                 console.log(error);
             });
     };
@@ -81,72 +87,69 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
                         //     }, function(error){
                         //         console.log(error);
                         //     });
-                    }, function(error){
+                    }, function (error) {
                         console.log(error);
                     });
-            }, function(error){
+            }, function (error) {
                 console.log(error);
             });
     };
 
-    service.joinLeague = function(leagueId){
-        currentUser = AuthenticationService.currentUser();
-        var user = {
-            "userId": currentUser._id,
-            "leagueId": leagueId
+    service.joinLeague = function (code) {
+        console.log(vm.currentUser);
+        // currentUser = AuthenticationService.currentUser();
+        let leaguePack = {
+            "user_id": vm.currentUser._id,
+            "league_code": code
         };
-        return LeagueFactory.joinLeague(user)
-            .then(function(updateToken){
-                $q.when(AuthenticationService.updateToken(updateToken))
-                    .then(function(){
-                        updatedCurrentUser = AuthenticationService.currentUser();
-                        $q.when(service.setCurrentLeagueId(updatedCurrentUser.leagues[0]._id))
-                            .then(function(){
-                                $q.when(service.getLeague())
-                                    .then(function(){
-                                        $location.path("/availablePlayers");
-                                    }, function(error){
-                                        console.log(error);
-                                    });
-                            }, function(error){
-                                console.log(error);
-                            });
-                    }, function(error){
-                        console.log(error);
-                    });
-            }, function(error){
+
+        return LeagueFactory.joinLeague(leaguePack)
+            .then((response) => {
+                console.log(response);
+                if (response.data.token) {
+                    return AuthenticationService.updateToken(response.data.token)
+                        .then(() => {
+                            return "League Joined";
+                        }, (error) => {
+                            console.log(error);
+                        });
+                }
+                else {
+                    return reponse.message;
+                }
+            }, function (error) {
                 console.log(error);
             });
     };
 
-    service.getAllLeagues = function(){
+    service.getAllLeagues = function () {
         currentUser = AuthenticationService.currentUser();
-        if(currentUser.leagues[0] === undefined){
+        if (currentUser.leagues[0] === undefined) {
             return LeagueFactory.getAllLeagues()
-                .then(function(leagues){
+                .then(function (leagues) {
                     return leagues;
-                }, function(error){
+                }, function (error) {
                     console.log(error);
                 });
         }
-        else{
+        else {
             return LeagueFactory.getAllLeagues()
-                .then(function(leagues){
-                    for(var x in leagues){
-                        for(var y in currentUser.leagues){
-                            if(leagues[x]._id == currentUser.leagues[y]._id){
+                .then(function (leagues) {
+                    for (var x in leagues) {
+                        for (var y in currentUser.leagues) {
+                            if (leagues[x]._id == currentUser.leagues[y]._id) {
                                 leagues.splice(x, 1);
                             }
                         }
                     }
                     return leagues;
-                }, function(error){
+                }, function (error) {
                     console.log(error);
                 });
-        }   
+        }
     };
 
-    service.postMessage = function(message){
+    service.postMessage = function (message) {
         var theLeague = service.currentLeague();
 
         var chatMessage = {
@@ -155,11 +158,11 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
             "message": message
         };
 
-        ChatFactory.postMessage(chatMessage, function(result, err){
-            if(err){
+        ChatFactory.postMessage(chatMessage, function (result, err) {
+            if (err) {
                 console.log(err);
             }
-            if(result){
+            if (result) {
                 console.log(result);
             }
         });
@@ -169,7 +172,7 @@ angular.module("LeagueService", []).service("LeagueService", function($window, $
         LeagueFactory.deleteAllLeagues();
     };
 
-    service.deleteAllChat = function(){
+    service.deleteAllChat = function () {
         ChatFactory.deleteAllChat();
     };
 

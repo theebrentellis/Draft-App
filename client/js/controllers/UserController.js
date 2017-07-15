@@ -1,14 +1,17 @@
-angular.module('UserController', []).controller('UserController', function($scope, $q, $view, $location, $state, AuthenticationService, LeagueService){
-    var vm = this;
+angular.module('UserController', []).controller('UserController', function ($scope, $q, $view, $location, $state, AuthenticationService, LeagueService) {
+    let vm = this;
 
-    vm.currentUser = AuthenticationService.currentUser();
+    vm.currentUser = {};
+    let getCurrentUser = AuthenticationService.currentUser();
+    getCurrentUser.then((response) => {
+        vm.currentUser = response;
+    }, (error) => {
+        console.log(error);
+    });
 
     vm.currentLeague = LeagueService.currentLeague();
 
     vm.message = "";
-
-    vm.loginView = true;
-    vm.registerView = false;
 
     vm.tab = 1;
 
@@ -20,12 +23,12 @@ angular.module('UserController', []).controller('UserController', function($scop
         return vm.tab === tabId;
     };
 
-    vm.userViewChange = function(view){
-        if(view === true){
+    vm.userViewChange = function (view) {
+        if (view === true) {
             vm.loginView = false;
             vm.registerView = true;
         }
-        else{
+        else {
             vm.loginView = true;
             vm.registerView = false;
         }
@@ -43,58 +46,40 @@ angular.module('UserController', []).controller('UserController', function($scop
         password: ""
     };
 
-    vm.registerNew = function(){
-        AuthenticationService.register(vm.registerInfo, function(data){
-            if(data === "Success"){
-                $location.path("/dashboard");
-            }
-            else{
-                vm.message = data;
-            }     
-        });
-    };
-
-    vm.login = function(){
-       return AuthenticationService.login(vm.loginInfo)
-           .then(function (response) {
-               if (response == "Success") {
-                   $location.path('/dashboard');
-                    // let theUser = AuthenticationService.currentUser();
-                    // if(theUser.leagues[0] === undefined){
-                    //     $location.path("/commish");
-                    // }
-                    // else{
-                    //     $q.when(LeagueService.setCurrentLeagueId(theUser.leagues[0]._id))
-                    //         .then(function(){
-                    //             return LeagueService.getLeague()
-                    //                 .then(function(response){
-                    //                     $location.path("/availablePlayers");
-                    //                 }, function(error){
-                    //                     console.log(error);
-                    //                 });
-                    //         }, function(error){
-                    //             console.log(error);
-                    //         });
-                    // }             
-                }
-                else{
-                    vm.message = response;
-                    console.log(response);
-                }
-           }, function (error) {
-               vm.message = "Error: " + error.status;
+    vm.registerNew = function () {
+        return AuthenticationService.register(vm.registerInfo)
+            .then((response) => {
+                $state.transitionTo('dashboard');
+            }, (error) => {
                 console.log(error);
             });
     };
 
-    function onSignIn(googleUser){
+    vm.login = function () {
+        return AuthenticationService.login(vm.loginInfo)
+            .then(function (response) {
+                console.log(response);
+                if (response == "Token Set!") {
+                    $state.transitionTo('dashboard');
+                }
+                else {
+                    vm.message = response;
+                    console.log(response);
+                }
+            }, function (error) {
+                vm.message = "Error: " + error.status;
+                console.log(error);
+            });
+    };
+
+    vm.onSignIn = (googleUser) => {
         console.log("Fired onSign In");
-        if(googleUser){
+        if (googleUser) {
             var profile = googleUser.getBasicProfile();
             console.log("Email: " + profile.getEmail());
         }
     };
-    vm.dismissError = ()=>{
+    vm.dismissError = () => {
         console.log("Dismiss");
         vm.message = "";
     }

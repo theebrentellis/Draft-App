@@ -22,11 +22,18 @@ a.welcomeLink:hover {
   text-decoration: none !important; }
 
 ul.nav-tabs.settings {
-  display: block;
-  /*border-bottom: none !important;*/ }
+  display: block; }
 
 a.nav-link {
   border: none !important; }
 
+nav {
+  margin-bottom: 25px; }
+
 .header {
   margin-bottom: 25px; }
+
+.joinInput {
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px; }

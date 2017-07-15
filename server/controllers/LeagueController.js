@@ -9,16 +9,16 @@ let Draft = mongoose.model("Draft");
 module.exports = (function () {
   return {
     //Creates new League
-      //Creates new chat, draft and league schemas; updates all new schemas with IDs
-      //Updates User with new league and returns token
+    //Creates new chat, draft and league schemas; updates all new schemas with IDs
+    //Updates User with new league and returns token
     createLeague: function (req, res) {
 
       console.log("Create New League");
       //Create and save new Chat schema
       let chat = new Chat();
 
-      chat.save(function(err, chat){
-        if(err){
+      chat.save(function (err, chat) {
+        if (err) {
           console.log("Chat Save Error: " + err);
         }
       });
@@ -26,8 +26,8 @@ module.exports = (function () {
       //Create and save new Draft schema
       let draft = new Draft();
 
-      draft.save(function(err, draft){
-        if(err){
+      draft.save(function (err, draft) {
+        if (err) {
           console.log("Draft Save Error: " + err);
         }
       });
@@ -71,12 +71,12 @@ module.exports = (function () {
               league_id: league._id
             }
           }, {
-            new: true
-          }, function(err, chat){
-            if(err){
-              console.log(err);
-            }
-          });
+              new: true
+            }, function (err, chat) {
+              if (err) {
+                console.log(err);
+              }
+            });
 
           //If new League is successfully created update Draft schema with League ID
           Draft.findByIdAndUpdate(league.draft_id[0], {
@@ -85,12 +85,12 @@ module.exports = (function () {
               started: false
             }
           }, {
-            new: true
-          }, function(err, draft){
-            if(err){
-              console.log(err);
-            }
-          });
+              new: true
+            }, function (err, draft) {
+              if (err) {
+                console.log(err);
+              }
+            });
 
           //If new League is successfully created update User with League ID
           User.findByIdAndUpdate(req.body.user_id, {
@@ -98,26 +98,26 @@ module.exports = (function () {
               leagues: league._id
             }
           }, {
-            new: true
-          }, function (err, user) {
-            if (user) {
-              //If User is successfully updated populate User with Leagues and return token to client
-              user.populateUserLeagues(req.body.user_id, function (user) {
-                console.log(user);
-                let token = user.generateJwt();
-                res.json({
-                  'token': token,
-                  message: 'Created New League!'
+              new: true
+            }, function (err, user) {
+              if (user) {
+                //If User is successfully updated populate User with Leagues and return token to client
+                user.populateUserLeagues(req.body.user_id, function (user) {
+                  console.log(user);
+                  let token = user.generateJwt();
+                  res.json({
+                    'token': token,
+                    message: 'Created New League!'
+                  });
                 });
-              });
-            }
-            if (err) {
-              console.log('Error: ' + err);
-              res.json({
-                message: 'Error Updating User With New League'
-              });
-            }
-          });
+              }
+              if (err) {
+                console.log('Error: ' + err);
+                res.json({
+                  message: 'Error Updating User With New League'
+                });
+              }
+            });
         }
       });
     },
@@ -131,7 +131,7 @@ module.exports = (function () {
           league.populateUsers(req.query._id, function (league) {
             res.json(league);
           });
-        }else {
+        } else {
           console.log('getLeague Error!');
         }
       });
@@ -149,74 +149,120 @@ module.exports = (function () {
     },
     //Lets User join league
     joinLeague: function (req, res) {
-      League.findByIdAndUpdate(req.body.leagueId, {
-        $push: {
-          draftOrder: req.body.userId
+      console.log(req.body);
+      League.findOneAndUpdate({ 'token': req.body.league_code }, {
+        teams: {
+          $push: {
+            user_id: req.body.user_id
+          }
         }
       }, {
-        new: true
-      }, function (err, league) {
-        if (league) {
-          User.findByIdAndUpdate(req.body.userId, {
-            $push: {
-              leagues: req.body.leagueId
-            }
-          }, {
-            new: true
-          }, function (err, user) {
-            if (user) {
-              user.populateUserLeagues(req.body.userId, function (user) {
-                let token;
-                token = user.generateJwt();
-                res.json({
-                  'token': token
-                });
+          new: true
+        }, (err, league) => {
+          if (err) {
+            console.log(err);
+            res.json({
+              message: "Incorrect League Code"
+            });
+          }
+          if (league) {
+            console.log(league);
+            User.findByIdAndUpdate(req.body.user_id, {
+              $push: {
+                leagues: league._id
+              }
+            }, {
+                new: true
+              }, (err, user) => {
+                if (user) {
+                  //If User is successfully updated populate User with Leagues and return token to client
+                  user.populateUserLeagues(req.body.user_id, function (user) {
+                    console.log(user);
+                    let token = user.generateJwt();
+                    res.json({
+                      'token': token,
+                      message: 'Joined New League!'
+                    });
+                  });
+                }
+                if (err) {
+                  console.log('Error: ' + err);
+                  res.json({
+                    message: 'Error Updating User With New League'
+                  });
+                }
               });
-            }
-            if (err) {
-              console.log('Error: ' + err);
-              res.json({
-                message: 'Error Updating User With New League'
-              });
-            }
-          });
-        }
-        if (err) {
-          console.log('Error: ' + err);
-        }
-      });
+          }
+        })
+
+      // League.findByIdAndUpdate(req.body.leagueId, {
+      //   $push: {
+      //     draftOrder: req.body.userId
+      //   }
+      // }, {
+      //   new: true
+      // }, function (err, league) {
+      //   if (league) {
+      //     User.findByIdAndUpdate(req.body.userId, {
+      //       $push: {
+      //         leagues: req.body.leagueId
+      //       }
+      //     }, {
+      //       new: true
+      //     }, function (err, user) {
+      //       if (user) {
+      //         user.populateUserLeagues(req.body.userId, function (user) {
+      //           let token;
+      //           token = user.generateJwt();
+      //           res.json({
+      //             'token': token
+      //           });
+      //         });
+      //       }
+      //       if (err) {
+      //         console.log('Error: ' + err);
+      //         res.json({
+      //           message: 'Error Updating User With New League'
+      //         });
+      //       }
+      //     });
+      //   }
+      //   if (err) {
+      //     console.log('Error: ' + err);
+      //   }
+      // });
     },
 
     //Start Draft
-      //Sets draft order
-    startDraft: function(req, res){
+    //Sets draft order
+    startDraft: function (req, res) {
       console.log(req.body.draftId);
       // console.log(req.body.draftOrder._id);
 
-      for(let x in req.body.draftOrder){
-        Draft.update({_id: req.body.draftId},
-        {
-          $addToSet: {
-            "draft": {
-              "_id": req.body.draftOrder[x]._id
+      for (let x in req.body.draftOrder) {
+        Draft.update({ _id: req.body.draftId },
+          {
+            $addToSet: {
+              "draft": {
+                "_id": req.body.draftOrder[x]._id
+              }
             }
-          }
-        }, {
-          upsert: true
-        }, function(err, draft){
-          if(err){
-            console.log(err);
-          }
-          if(draft){
-            console.log(draft);
-          }
-        });
+          }, {
+            upsert: true
+          }, function (err, draft) {
+            if (err) {
+              console.log(err);
+            }
+            if (draft) {
+              console.log(draft);
+            }
+          });
       }
-      
+
     },
 
     //Deletes All Saved Leagues
-      //For developement use only; Not for production
+    //For developement use only; Not for production
     leaguesClearAll: function (req, res) {
       League.remove({}, function (err, results) {
         if (err) {
@@ -228,13 +274,13 @@ module.exports = (function () {
       });
     },
     //Deletes All Saved Drafts
-      //For development user only; Not for production
-    deleteAllDrafts: function(req, res){
-      Draft.remove({}, function(err, results){
-        if(err){
+    //For development user only; Not for production
+    deleteAllDrafts: function (req, res) {
+      Draft.remove({}, function (err, results) {
+        if (err) {
           console.log("Error: " + err);
         }
-        if(results){
+        if (results) {
           console.log("All Drafts Cleared");
         }
       });

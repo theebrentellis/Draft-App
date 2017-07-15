@@ -1,27 +1,30 @@
 angular.module('AppController', []).controller('AppController', function ($scope, $location, $q, $state, AuthenticationService, DraftService, LeagueService) {
 
-    var vm = this;
-
-    vm.isLoggedIn = AuthenticationService.isLoggedIn();
-
-    vm.currentUser = AuthenticationService.currentUser();
+  let vm = this;
+  
+  vm.isLoggedIn = false;
+  let getLoginStatus = AuthenticationService.isLoggedIn();
+  getLoginStatus.then((response) => {
+    if (response == true) {
+      vm.isLoggedIn = true;
+    }
+    if (response == false) {
+      vm.isLoggedIn = false;
+    }
+  }, (error) => {
+    console.log(error);
+  });
+      
+  vm.currentUser = {};
+  let getCurrentUser = AuthenticationService.currentUser();
+  getCurrentUser.then((response) => {
+    vm.currentUser = response;
+  }, (error) => {
+    console.log(error);
+  });
 
     vm.currentLeague = LeagueService.currentLeague();
 
-    //Changes Views
-    vm.appViewChange = function(view){
-      if(vm.isLoggedIn === true){
-        if(view == "/availablePlayers" | view == "/draftBoard" | "/chat"){
-          $location.path(view);
-        }
-        else{
-          $location.path(view);
-        }  
-      }
-      else{
-        $location.path("/login");
-      }
-    };
 
     //Sets A League and Returns League Info
     vm.setCurrentLeague = function(leagueId){
@@ -36,14 +39,6 @@ angular.module('AppController', []).controller('AppController', function ($scope
         }, function(error){
           console.log(error);
         });
-    };
-
-    //Sets Current League To Bold
-    vm.setColor = function(league){
-      var currentLeague = LeagueService.currentLeague();
-      if(currentLeague._id === league._id){
-        return {"font-weight": "bold"};
-      }
     };
 
     //Dev Tools (Not For Production)
@@ -86,5 +81,4 @@ angular.module('AppController', []).controller('AppController', function ($scope
     vm.currentUserLogOut = function(){
       AuthenticationService.currentUserLogOut();
     };
-  
 });

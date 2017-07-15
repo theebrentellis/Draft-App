@@ -1,12 +1,14 @@
 angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
   var factory = {};
 
-  factory.register = function (registerInfo, callback) {
-    $http.post("/register", registerInfo)
-      .success(function (data) {
-      callback(data);
+  factory.register = function (registerInfo) {
+    return $http.post("/register", registerInfo)
+      .then((response) => {
+        console.log(response);
+        return response;
       }, (error) => {
         console.log(error);
+        return error;
     });
   };
 
