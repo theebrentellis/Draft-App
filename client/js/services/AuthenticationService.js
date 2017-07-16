@@ -1,4 +1,4 @@
-angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $q, UserFactory) {
+angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $rootScope, $q, UserFactory) {
   var service = {};
 
   const tokenStorage = {
@@ -103,6 +103,8 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
           return tokenStorage.setToken('user-token', response.data.token)
             .then(() => {
               return "Token Set!"
+            }, (error) => {
+              console.log(error);
             });
         } else {
           if (response.status == 401) {

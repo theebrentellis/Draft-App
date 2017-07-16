@@ -58,9 +58,9 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
         .state("dashboard", {
             url: "/dashboard",
             authenticate: true,
-            resolve: () => {
-                AuthenticationService.currentUser();
-            },
+            // resolve: () => {
+            //     AuthenticationService.currentUser();
+            // },
             views: {
                 "header": {
                     templateProvider: ($templateCache) => {
@@ -94,7 +94,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                         return $templateCache.get('league/newLeague.html');
                     },
                     controller: "LeagueController",
-                    controllerAs: "vm",
+                    controllerAs: "vm"
                 }
             }
         })
@@ -118,26 +118,26 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
-        .state('league/{id}', {
-            url: "/league/{id}",
-            authenticate: true,
-            views: {
-                "header": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
-                    },
-                    controller: "AppController",
-                    controllerAs: 'vm'
-                },
-                "content": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('league/index.html');
-                    },
-                    controller: "LeagueController",
-                    controllerAs: "vm"
-                }
-            }
-        })
+        // .state('league/{id}', {
+        //     url: "/league/{id}",
+        //     authenticate: true,
+        //     views: {
+        //         "header": {
+        //             templateProvider: ($templateCache) => {
+        //                 return $templateCache.get('app.html');
+        //             },
+        //             controller: "AppController",
+        //             controllerAs: 'vm'
+        //         },
+        //         "content": {
+        //             templateProvider: ($templateCache) => {
+        //                 return $templateCache.get('league/index.html');
+        //             },
+        //             controller: "LeagueController",
+        //             controllerAs: "vm"
+        //         }
+        //     }
+        // })
         .state("settings", {
             url: "/settings",
             authenticate: true,

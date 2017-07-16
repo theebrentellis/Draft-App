@@ -58,13 +58,11 @@ angular.module('UserController', []).controller('UserController', function ($sco
     vm.login = function () {
         return AuthenticationService.login(vm.loginInfo)
             .then(function (response) {
-                console.log(response);
                 if (response == "Token Set!") {
                     $state.transitionTo('dashboard');
                 }
                 else {
                     vm.message = response;
-                    console.log(response);
                 }
             }, function (error) {
                 vm.message = "Error: " + error.status;

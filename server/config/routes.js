@@ -9,11 +9,6 @@ var Chat = require("./../controllers/ChatController.js");
 // });
 
 module.exports = function (app, passport) {
-    
-    app.get('/', (req, res) => {
-        console.log("Index!");
-        res.render('welcome');
-    });
 
     //User Calls
     app.post("/register", function(req, res){

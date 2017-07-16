@@ -1,10 +1,11 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $confirm, $location, $state, AuthenticationService, LeagueService) {
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $view, $confirm, $location, $state, AuthenticationService, LeagueService) {
 
     let vm = this;
 
     vm.currentUser = {};
     let getCurrentUser = AuthenticationService.currentUser();
     getCurrentUser.then((response) => {
+        console.log(response);
         vm.currentUser = response;
     }, (error) => {
         console.log(error);
