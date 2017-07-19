@@ -22,7 +22,10 @@ module.exports = (function () {
       });
 
       //Create and save new Draft schema
-      let draft = new Draft();
+      let season = new Date().getFullYear();
+      let draft = new Draft({
+        season: season
+      });
       draft.save(function (err, draft) {
         if (err) {
           console.log("Draft Save Error: " + err);

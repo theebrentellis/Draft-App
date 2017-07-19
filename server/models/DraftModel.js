@@ -18,6 +18,8 @@ var DraftSchema = new mongoose.Schema({
     }],
     onClock: ObjectId,
     started: Boolean,
+    completed: Boolean,
+    season: Number
 
 });
 mongoose.model("Draft", DraftSchema);
