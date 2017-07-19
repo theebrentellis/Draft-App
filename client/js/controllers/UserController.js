@@ -9,7 +9,7 @@ angular.module('UserController', []).controller('UserController', function ($sco
         console.log(error);
     });
 
-    vm.currentLeague = LeagueService.currentLeague();
+    vm.currentLeague = LeagueService.league;
 
     vm.message = "";
 
@@ -21,17 +21,6 @@ angular.module('UserController', []).controller('UserController', function ($sco
 
     vm.isSet = function (tabId) {
         return vm.tab === tabId;
-    };
-
-    vm.userViewChange = function (view) {
-        if (view === true) {
-            vm.loginView = false;
-            vm.registerView = true;
-        }
-        else {
-            vm.loginView = true;
-            vm.registerView = false;
-        }
     };
 
     vm.registerInfo = {
@@ -77,6 +66,7 @@ angular.module('UserController', []).controller('UserController', function ($sco
             console.log("Email: " + profile.getEmail());
         }
     };
+    
     vm.dismissError = () => {
         console.log("Dismiss");
         vm.message = "";

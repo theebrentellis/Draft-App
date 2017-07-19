@@ -123,12 +123,13 @@ module.exports = (function () {
     },
     //Gets League after user sets current league
     getLeague: function (req, res) {
-      League.findById(req.query._id, function (err, league) {
+      League.findById(req.query._id, (err, league) => {
         if (err) {
-          console.log('Error: ' + err);
+          console.log(err);
         }
         if (league) {
-          league.populateUsers(req.query._id, function (league) {
+          league.populateLeague(req.query._id, function (league) {
+            console.log("League Controller: " + league);
             res.json(league);
           });
         } else {

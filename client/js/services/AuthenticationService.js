@@ -1,5 +1,5 @@
 angular.module('AuthenticationService', []).service('AuthenticationService', function ($window, $state, $rootScope, $q, UserFactory) {
-  var service = {};
+  let service = {};
 
   const tokenStorage = {
     setToken: (key, token) => {
@@ -122,7 +122,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   service.currentUserLogOut = function () {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
-    $location.path("/login");
+    $location.path("/");
     console.log("Logout");
   };
 

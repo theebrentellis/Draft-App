@@ -3,11 +3,11 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
 
     var vm = this;
 
-    vm.currentUser = AuthenticationService.currentUser();
+    // vm.currentUser = AuthenticationService.currentUser();
 
-    vm.isLoggedIn = AuthenticationService.isLoggedIn();
+    // vm.isLoggedIn = AuthenticationService.isLoggedIn();
 
-    vm.currentLeague = LeagueService.currentLeague();
+    // vm.currentLeague = LeagueService.currentLeague();
 
     service.startDraft = function(draftPackage){
         return DraftFactory.startDraft(draftPackage)

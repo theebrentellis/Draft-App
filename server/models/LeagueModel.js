@@ -16,17 +16,27 @@ var LeagueSchema = new mongoose.Schema({
     commish_id: [ObjectId],
     size: Number,
     teams: [{
-        user_id: Schema.Types.ObjectId,
+        _user: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
         pick: Number,
         name: String,
         _id: false
     }],
+    messages: [{
+        message: String,
+        _user: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    }],
     token: String
 });
-LeagueSchema.methods.populateUsers = function(leagueId, callback){
+LeagueSchema.methods.populateLeague = function (leagueId, callback) {
     this.model("League").findOne({_id: leagueId})
         // .populate({
-        //     path: "teams",
+        //     path: "teams.user_id",
         //     model: "User",
         //     select: "_id"
         // })
@@ -40,18 +50,20 @@ LeagueSchema.methods.populateUsers = function(leagueId, callback){
         //     model: "Chat",
         //     select: "_id"
         // })
-        // .populate({
-        //     path: "draft",
-        //     model: "Draft",
-        //     select: "_id"
-        // })
-        // .exec(function(err, league){
-        //     if(league){
-        //         callback(league);
-        //     }
-        //     if (err) {
-        //         console.log(err);
-        //     }
-        // });
+        .populate({
+            path: "draft_id",
+            model: "Draft",
+            // select: "_id"
+        })
+        .exec(function(err, league){
+            if (league) {
+                console.log("League Model: " + league);
+                // return league;
+                callback(league);
+            }
+            if (err) {
+                console.log(err);
+            }
+        });
 };
 mongoose.model("League", LeagueSchema);

@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-headline">Welcome to {{ vm.league.leagueName }} League!</h4>
+                <a href="" ng-if="vm.isCommish"><i class="fa fa-fw fa-btn fa-cog"></i>Commish Settings</a>
+            </div>
+            <div class="card-block">
+                <!-- {{ vm.league }} -->
+                <div class="row">
+                    <div class="col-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-headline">Drafts</h5>
+                            </div>
+                            <div class="card-block">
+                                <h6 class="card-title">Seasons</h6>
+                                <ul>
+                                    <li ng-repeat="draft in vm.league.draft_id">
+                                        {{ draft.season }} {{ draft.status }}
+                                    </li>
+                                </ul>
+                                <!-- <p class="card-text">{{ vm.league.draft_id[0]._id }}</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-headline">League Messages</h5>
+                                <a href="" ng-click="vm.newMessage()"><i class="fa fa-fw fa-btn fa-plus"></i>New Message</a>
+                            </div>
+                            <div class="card-block">
+                                <ul>
+                                    <li>Sample Message</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- <ul ng-repeat="draft in vm.league.draft_id">
+                    <li>{{ draft._id }} {{ draft.started }}</li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="newMessageModal.html">
+        <!-- <div class="modal-dialog"> -->
+            <!-- <div class="modal-content">   -->
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">New Message</h3>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="">Message</label>
+                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="vm.sendMessage">OK</button>
+                    <button class="btn btn-warning" type="button" ng-click="vm.cancelMessage">Cancel</button>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+    </script>
+</div>

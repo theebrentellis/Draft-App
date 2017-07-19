@@ -11,7 +11,7 @@
                 <p ng-if="!vm.currentUser.leagues[0]">No Leagues Yet!</p>
                 <ul>
                     <li ng-repeat="league in vm.currentUser.leagues">
-                        <a href="#" ui-sref="league">{{ league.leagueName }}</a>
+                        <a href="#" ui-sref="league({ leagueID: league._id })">{{ league.leagueName }}</a>
                     </li>
                 </ul>
                 <hr>

@@ -23,7 +23,7 @@ angular.module('AppController', []).controller('AppController', function ($scope
     console.log(error);
   });
 
-    vm.currentLeague = LeagueService.currentLeague();
+    // vm.currentLeague = LeagueService.currentLeague();
 
 
     //Sets A League and Returns League Info
