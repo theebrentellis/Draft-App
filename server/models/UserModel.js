@@ -47,7 +47,6 @@ userSchema.methods.generateJwt = function(){
   }, "Draft_Secret");
 };
 userSchema.methods.populateUserLeagues = function (userId, callback) {
-    console.log(userId);
     this.model("User").findOne({_id: userId})
     .populate({
         path: "leagues",

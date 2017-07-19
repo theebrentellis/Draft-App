@@ -23,13 +23,6 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
                 console.log(error);
             });
     };
-    // let getLeague = LeagueService.getLeague();
-    // getLeague.then((response) => {
-    //     vm.league = response;
-    // }, (error) => {
-    //     console.log(error);
-    //     });
-    
     
     service.createNewLeague = function (newLeagueInfo) {
         return LeagueFactory.createLeague(newLeagueInfo)
@@ -45,12 +38,8 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             });
     };
     
-    service.joinLeague = function (code) {
-        let leaguePack = {
-            "user_id": vm.currentUser._id,
-            "league_code": code
-        };
-        return LeagueFactory.joinLeague(leaguePack)
+    service.joinLeague = function (joinPac) {
+        return LeagueFactory.joinLeague(joinPac)
             .then((response) => {
                 if (response.data.token) {
                     return AuthenticationService.updateToken(response.data.token)
@@ -61,63 +50,14 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
                         });
                 }
                 else {
-                    return reponse.message;
+                    return response.data.message;
                 }
             }, (error) => {
                 console.log(error);
             });
     };
 
-
-    // vm.isLoggedIn = AuthenticationService.isLoggedIn();
-
-    // var saveCurrentLeagueId = function (leagueId) {
-    //     $q.resolve($window.localStorage["current-league-id"] = leagueId);
-    // };
-
-    // var currentLeagueId = function () {
-    //     if ($window.localStorage["current-league-id"]) {
-    //         return $window.localStorage["current-league-id"];
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // };
-
-    // var saveCurrentLeague = function (league) {
-    //     if ($window.localStorage["current-league"]) {
-    //         $window.localStorage.removeItem("current-league");
-    //         $window.localStorage.setItem("current-league", JSON.stringify(league));
-    //     }
-    //     else {
-    //         $window.localStorage.setItem("current-league", JSON.stringify(league));
-    //     }
-    // };
-
-    // service.currentLeague = function () {
-    //     var theLeague = JSON.parse($window.localStorage.getItem("current-league"));
-    //     return theLeague;
-    // };
-
-    // service.setCurrentLeagueId = function (leagueId) {
-    //     if (leagueId) {
-    //         return $q.when(saveCurrentLeagueId(leagueId));
-    //     }
-    // };
-
-    // service.getCurrentLeagueId = function () {
-    //     if (currentLeagueId) {
-    //         return currentLeagueId;
-    //     }
-    // };
-
-    
-
-    
-
-    
-
-    service.postMessage = function (message) {
+    service.postMessage = () => {
         var theLeague = service.currentLeague();
 
         var chatMessage = {
@@ -126,14 +66,14 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             "message": message
         };
 
-        ChatFactory.postMessage(chatMessage, function (result, err) {
-            if (err) {
-                console.log(err);
-            }
-            if (result) {
-                console.log(result);
-            }
-        });
+        // ChatFactory.postMessage(chatMessage, function (result, err) {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        //     if (result) {
+        //         console.log(result);
+        //     }
+        // });
     };
 
     service.deleteAllLeagues = function () {

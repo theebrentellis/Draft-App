@@ -2,6 +2,8 @@ angular.module('LeagueController', []).controller('LeagueController', function (
 
     let vm = this;
 
+    vm.message = "";
+
     //Current User
     vm.currentUser = {};
     let getCurrentUser = AuthenticationService.currentUser();
@@ -28,16 +30,16 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         else {
             return false;
         }
-    }
-
+    },
 
     //Create New League
-    vm.createNewLeague = function () {
-        var newLeagueInfo = {
+    vm.createNewLeague = () => {
+        let newLeagueInfo = {
             "leagueName": vm.newLeague.leagueName,
             "leagueSize": vm.newLeague.leagueSize,
             "user_id": vm.currentUser._id
         };
+
         return LeagueService.createNewLeague(newLeagueInfo)
             .then((response) => {
                 $state.transitionTo('dashboard');
@@ -52,9 +54,19 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         for (var x in vm.data) {
             code += vm.data[x];
         }
-        return LeagueService.joinLeague(code)
+        let leaguePack = {
+            "user_id": vm.currentUser._id,
+            "league_code": code,
+        };
+        return LeagueService.joinLeague(leaguePack)
             .then((response) => {
-                $state.transitionTo('dashboard');
+                if (response == "League Joined") {
+                    $state.transitionTo('dashboard');
+                }
+                else {
+                    vm.message = response;
+                }
+                
             }, (error) => {
                 console.log(error);
             });
@@ -100,6 +112,10 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         modalInstance.rendered.then(() => {
             console.log("Modal Rendered");
         });
+    }
+
+    vm.dismissError = () => {
+        vm.message = "";
     }
 }).directive('modalBackdrop', ['$timeout', function ($timeout) {
     return {

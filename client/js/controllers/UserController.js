@@ -68,7 +68,6 @@ angular.module('UserController', []).controller('UserController', function ($sco
     };
     
     vm.dismissError = () => {
-        console.log("Dismiss");
         vm.message = "";
     }
 
