@@ -33,7 +33,7 @@ module.exports = (function(){
         getAllMessages: function(req, res){
             console.log("Get All Messages");
 
-            Chat.find(function(err, results){
+            Chat.find({}, function(err, results){
                 if(err){
                     return res.json({
                         message: "Error Getting All Messages"

@@ -44,7 +44,6 @@ module.exports = (function () {
           console.log(err);
         }
         if (league) {
-          console.log(league);
           return res.json({
             error: "Error generating unique access token"
           });
@@ -105,7 +104,6 @@ module.exports = (function () {
               if (user) {
                 //If User is successfully updated populate User with Leagues and return token to client
                 user.populateUserLeagues(req.body.user_id, function (user) {
-                  console.log(user);
                   let token = user.generateJwt();
                   res.json({
                     'token': token,
@@ -129,7 +127,6 @@ module.exports = (function () {
         .then((league) => {
           if (league !== null) {
             league.populateLeague(req.query._id, function (league) {
-              console.log("League Controller: " + league);
               res.json(league);
             });
           }
@@ -191,6 +188,24 @@ module.exports = (function () {
     //Start Draft
     startDraft: function (req, res) {
 
+    },
+
+    newLeagueMessage: (req, res) => {
+      console.log(req.body);
+      League.findByIdAndUpdate(req.body.leagueID, {
+        $addToSet: {
+          messages: {
+            message: req.body.message,
+            _user: req.body.userID
+          }
+        },
+      }, {
+        new: true  
+        }).then((league) => {
+          league.populateLeague(req.body.leagueID, (league) => {
+            res.json(league);
+          });
+      })
     },
 
     //Deletes All Saved Leagues

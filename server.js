@@ -38,7 +38,7 @@ const server = http.createServer(app).listen(process.env.PORT || 1234, function(
 });
 
 // //Chat Socket.io Settings
-const io = require("socket.io").listen(server);
+let io = require("socket.io").listen(server);
 
 // Add your instrumentation key or use the APPLICATIONINSIGHTSKEY environment variable on your production machine to start collecting data.
 // var ai = require('applicationinsights');
@@ -49,7 +49,7 @@ var Chat = mongoose.model("Chat");
 io.on("connection", function(socket){
     console.log("I Love Lamp!");
 
-    Chat.find(function(err, allMessages){
+    Chat.find({}, function(err, allMessages){
         if(err){
             return console.log(err);
         }
@@ -63,12 +63,3 @@ io.on("connection", function(socket){
     });
 
 });
-
-// let compiler = webpack({
-
-// });
-// compiler.run({
-
-// }, function (err, stats) {
-    
-// });

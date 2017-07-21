@@ -57,23 +57,13 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             });
     };
 
-    service.postMessage = () => {
-        var theLeague = service.currentLeague();
-
-        var chatMessage = {
-            "_id": theLeague.chat._id,
-            "userName": vm.currentUser.firstName,
-            "message": message
-        };
-
-        // ChatFactory.postMessage(chatMessage, function (result, err) {
-        //     if (err) {
-        //         console.log(err);
-        //     }
-        //     if (result) {
-        //         console.log(result);
-        //     }
-        // });
+    service.newLeagueMessage = (messagePack) => {
+        return LeagueFactory.newLeagueMessage(messagePack)
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
     };
 
     service.deleteAllLeagues = function () {

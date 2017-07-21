@@ -66,7 +66,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
                 else {
                     vm.message = response;
                 }
-                
+
             }, (error) => {
                 console.log(error);
             });
@@ -77,93 +77,34 @@ angular.module('LeagueController', []).controller('LeagueController', function (
 
     //New League Message
     vm.newMessage = () => {
-        console.log("New Message");
-        // let parentElem = parentSelector ? angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
-        // console.log(parentElem)
-        let modalInstance = $uibModal.open({
+        $scope.modalInstance = $uibModal.open({
             animation: true,
             size: "lg",
             templateUrl: 'newMessageModal.html',
-            // controller: 'LeagueController',
-            // transclude: false,
-            // backdrop: "static",
-            // ariaLabelledBy: 'modal-title',
-            // ariaDescribedBy: 'modal-body',
-            // appendTo: "newMessageModal.html",
-            // size: size
-            // component: 'modalComponent',
-            // resolve: {
-            //     items: function () {
-            //         return $ctrl.items;
-            //     }
-            // }
-        });
-
-        modalInstance.result.then(($view) => {
-            console.log($view);
-        }, () => {
-            console.log()
-        });
-
-        modalInstance.opened.then(() => {
-            console.log("Modal Open")
-        });
-
-        modalInstance.rendered.then(() => {
-            console.log("Modal Rendered");
+            controller: 'LeagueController',
+            controllerAs: 'vm',
+            scope: $scope,
+            backdrop: "static",
         });
     }
-
+    vm.sendMessage = () => {
+        let messagePack = {
+            "leagueID": vm.league._id,
+            "userID": vm.currentUser._id,
+            "message": vm.newLeagueMessage
+        };
+        
+        return LeagueService.newLeagueMessage(messagePack)
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    }
+    vm.cancel = () => {
+        $scope.modalInstance.dismiss('cancel');
+    }
     vm.dismissError = () => {
         vm.message = "";
     }
-}).directive('modalBackdrop', ['$timeout', function ($timeout) {
-    return {
-        restrict: 'EA',
-        replace: true,
-        templateUrl: 'template/modal/backdrop.html',
-        link: function (scope) {
-
-            scope.animate = false;
-
-            //trigger CSS transitions
-            $timeout(function () {
-                scope.animate = true;
-            });
-        }
-    };
-}]).directive('modalWindow', ['$modalStack', '$timeout', function ($modalStack, $timeout) {
-    return {
-        restrict: 'EA',
-        scope: {
-            index: '@',
-            animate: '='
-        },
-        replace: true,
-        transclude: true,
-        templateUrl: function (tElement, tAttrs) {
-            return tAttrs.templateUrl || 'template/modal/window.html';
-        },
-        link: function (scope, element, attrs) {
-            element.addClass(attrs.windowClass || '');
-            scope.size = attrs.size;
-
-            $timeout(function () {
-                // trigger CSS transitions
-                scope.animate = true;
-                // focus a freshly-opened modal
-                element[0].focus();
-            });
-
-            scope.close = function (evt) {
-                var modal = $modalStack.getTop();
-                if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                    $modalStack.dismiss(modal.key, 'backdrop click');
-                }
-            };
-        }
-    };
-}])
-;
+});

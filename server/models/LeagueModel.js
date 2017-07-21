@@ -29,22 +29,23 @@ var LeagueSchema = new mongoose.Schema({
         _user: {
             type: Schema.Types.ObjectId,
             ref: "User"
-        }
+        },
+        _id: false
     }],
     token: String
 });
 LeagueSchema.methods.populateLeague = function (leagueId, callback) {
     this.model("League").findOne({_id: leagueId})
-        // .populate({
-        //     path: "teams.user_id",
-        //     model: "User",
-        //     select: "_id"
-        // })
-        // .populate({
-        //     path: "commish",
-        //     model: "User",
-        //     select: "_id"
-        // })
+        .populate({
+            path: "teams._user",
+            model: "User",
+            // select: "_id"
+        })
+        .populate({
+            path: "messages._user",
+            model: "User",
+            select: "userName"
+        })
         // .populate({
         //     path: "chat",
         //     model: "Chat",

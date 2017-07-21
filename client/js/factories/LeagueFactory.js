@@ -27,6 +27,15 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http) {
                 console.log(error);
             });
     };
+    
+    factory.newLeagueMessage = (messagePack) => {
+        return $http.post('/league/newMessage', messagePack)
+            .then((response) => {
+                return response
+            }, (error) => {
+                console.log(error);
+            });
+    };
 
     return factory;
 });
