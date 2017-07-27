@@ -9,14 +9,25 @@ var DraftSchema = new mongoose.Schema({
         ref: "League"
     },
     draftOrder: [{
-        type: ObjectId,
-        ref: "User"
+        _user: {
+            type: ObjectId,
+            ref: "User"
+        },
+        pick: Number,
+        _id: false
     }],
     picks: [{
-        type: ObjectId,
-        ref: "Player",
+        _player: {
+            type: ObjectId,
+            ref: "Player",
+        },
+        _id: false
+        
     }],
-    onClock: ObjectId,
+    onClock: {
+        type: ObjectId,
+        ref: "User"
+    },
     started: Boolean,
     completed: Boolean,
     season: Number

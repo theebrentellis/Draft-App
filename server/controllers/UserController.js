@@ -97,7 +97,6 @@ module.exports = (function () {
       User.findById(id, function(err, user){
         if(user){
           user.populateUserLeague(function(data){
-            console.log(data);
             res.json(data);
           });
         }

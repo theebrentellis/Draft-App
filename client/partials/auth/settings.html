@@ -48,16 +48,22 @@
                             Profile
                         </div>
                         <div class="card-block">
-                            <h5 class="card-title">Update Name and Email</h5>
+                            <h5 class="card-title">Update Profile</h5>
                             <form>
                                 <div class="form-group row justify-content-md-center">
-                                    <label for="name" class="col-1 col-form-label">Name</label>
+                                    <label for="name" class="col-2 col-form-label">Name</label>
                                     <div class="col col-md-auto">
                                         <input type="text" id="name" name="name" class="form-control" placeholder="{{ vm.currentUser.firstName }}" value="">
                                     </div>
                                 </div>
                                 <div class="form-group row justify-content-md-center">
-                                    <label for="email" class="col-1 col-form-label">Email</label>
+                                    <label for="userName" class="col-2 col-form-label">User Name</label>
+                                    <div class="col col-md-auto">
+                                        <input type="text" id="userName" name="userName" class="form-control" placeholder="{{ vm.currentUser.userName }}" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-md-center">
+                                    <label for="email" class="col-2 col-form-label">Email</label>
                                     <div class="col col-md-auto">
                                         <input type="email" id="email" name="email" class="form-control" placeholder="{{ vm.currentUser.email }}" value="">
                                     </div>

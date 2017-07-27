@@ -88,15 +88,15 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
         else if (response.message) {
           return reponse.message;
         }
-        // else {
-        //   callback('Unknown Error!');
-        // }
+        else {
+          return "Unknown Error";
+        }
       }, (error) => {
         console.log(error);
       });
   };
 
-  service.login = function (user) {
+  service.login = (user) => {
     return UserFactory.login(user)
       .then(function (response) {
         if (response.data.token) {
@@ -119,18 +119,9 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
       });
   };
 
-  service.currentUserLogOut = function () {
+  service.currentUserLogOut =  () => {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
-    // $location.path("/");
-    console.log("Logout");
-  };
-
-  service.deleteAllUsers = function () {
-    UserFactory.deleteAllUsers();
-    $window.localStorage.clear();
-    $rootScope = $rootScope.$new(true);
-    $location.path("/login");
   };
 
   return service;

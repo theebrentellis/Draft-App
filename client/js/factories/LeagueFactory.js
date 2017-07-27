@@ -1,4 +1,4 @@
-angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http) {
+angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http, $stateParams) {
     let factory = {};
 
     factory.createLeague = (newLeagueInfo) => {
@@ -36,6 +36,15 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http) {
                 console.log(error);
             });
     };
+    
+    factory.updateTeamPick = (pickPack) => {
+        return $http.post('/league/' + $stateParams.leagueID, pickPack)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
+    }
 
     return factory;
 });

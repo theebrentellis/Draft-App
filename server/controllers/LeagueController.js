@@ -183,7 +183,7 @@ module.exports = (function () {
         });
     },
 
-    
+
     //Sets draft order
     //Start Draft
     startDraft: function (req, res) {
@@ -191,7 +191,6 @@ module.exports = (function () {
     },
 
     newLeagueMessage: (req, res) => {
-      console.log(req.body);
       League.findByIdAndUpdate(req.body.leagueID, {
         $addToSet: {
           messages: {
@@ -200,38 +199,34 @@ module.exports = (function () {
           }
         },
       }, {
-        new: true  
+          new: true
         }).then((league) => {
           league.populateLeague(req.body.leagueID, (league) => {
             res.json(league);
           });
-      })
+        })
     },
-
-    //Deletes All Saved Leagues
-    //For developement use only; Not for production
-    leaguesClearAll: function (req, res) {
-      League.remove({}, function (err, results) {
-        if (err) {
-          console.log('Error: ' + err);
-        } else {
-          console.log('All Leagues Cleared!');
-          res.json(results);
-        }
-      });
+    updateTeamPick: (req, res) => {
+      League.findOneAndUpdate({
+        _id: req.params.id,
+        'teams._id': req.body.team._id
+      }, {
+          $set: {
+            'teams.$.pick': req.body.pick
+          }
+        }, {
+          new: true
+        }).then((league) => {
+          league.populateLeague(req.params.id, (response) => {
+            console.log(response);
+            res.json(response);
+          }, (error) => {
+            console.log(error);
+          });
+        }, (error) => {
+          console.log("Error: " + error);
+        });
     },
-    //Deletes All Saved Drafts
-    //For development user only; Not for production
-    deleteAllDrafts: function (req, res) {
-      Draft.remove({}, function (err, results) {
-        if (err) {
-          console.log("Error: " + err);
-        }
-        if (results) {
-          console.log("All Drafts Cleared");
-        }
-      });
-    }
 
   };
 })();

@@ -47,6 +47,9 @@ module.exports = function (app, passport) {
     app.post('/league/newMessage', (req, res) => {
         League.newLeagueMessage(req, res);
     });
+    app.post('/league/:id', (req, res) => {
+        League.updateTeamPick(req, res);
+    });
     app.post("/createLeague", function(req, res){
         League.createLeague(req, res);
     });

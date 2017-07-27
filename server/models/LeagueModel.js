@@ -20,9 +20,7 @@ var LeagueSchema = new mongoose.Schema({
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        pick: Number,
-        name: String,
-        _id: false
+        pick: Number
     }],
     messages: [{
         message: String,
@@ -39,7 +37,7 @@ LeagueSchema.methods.populateLeague = function (leagueId, callback) {
         .populate({
             path: "teams._user",
             model: "User",
-            // select: "_id"
+            select: "userName"
         })
         .populate({
             path: "messages._user",
@@ -58,12 +56,10 @@ LeagueSchema.methods.populateLeague = function (leagueId, callback) {
         })
         .exec(function(err, league){
             if (league) {
-                console.log("League Model: " + league);
-                // return league;
                 callback(league);
             }
             if (err) {
-                console.log(err);
+                console.log("Error: " + err);
             }
         });
 };

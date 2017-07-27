@@ -1,11 +1,34 @@
 <div class="row justify-content-center">
-    <div class="col">
+    <div class="col-10">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-headline">League Commish Settings</h4>
+                <a href="#" ui-sref="league({ leagueID: vm.league._id })"><i class="fa fa-fw fa-btn fa-home"></i>League Home</a>
             </div>
             <div class="card-block">
-                <p class="card-text">{{ vm.league.token }}</p>
+                <p class="card-text"><strong>League Code:</strong> {{ vm.league.token }}</p>
+                <p class="card-text"><strong>Number of Teams:</strong> {{ vm.league.size }}</p>
+                <h5>Teams</h5>
+                <a href=""><i class="fa fa-fw fa-btn fa-pencil-square-o"></i>Edit Teams</a>
+                <div class="row">
+                    <div ng-repeat="list in vm.leaguePickMaker" class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-headline">{{ list.title }}</h5>
+                            </div>
+                            <div class="card-block">
+                                <ul dnd-list="list.teams" dnd-drop="callback({ targetList: list.teams, targetIndex: index })"> 
+                                    <li ng-repeat="team in list.teams"
+                                        dnd-draggable="team"
+                                        dnd-effect-allowed="move"
+                                        dnd-callback="onDrop(list.teams, $index, targetList, targetIndex)">
+                                        {{ team._user ? team._user.userName : "Pick " + ($index + 1) }}<i style="float: right;" class="fa fa-fw-fa-btn fa-bars" ng-if="team._user"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

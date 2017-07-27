@@ -1,4 +1,4 @@
-let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DashboardController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
+let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "dndLists", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DashboardController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
 angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) {
 
@@ -132,12 +132,38 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     },
                     controller: "LeagueController",
                     controllerAs: "vm",
+                    resolve: {
+                        league: function(LeagueService, $stateParams) {
+                            console.log("Start Resolve");
+                            return LeagueService.get();
+                        }
+                    }
+                }
+            }
+        })
+        .state('leagueCommish', {
+            url: "/league/:leagueID/commish",
+            authenticate: true,
+            views: {
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    controller: "AppController",
+                    controllerAs: 'vm'
+                },
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('league/league.commish.html');
+                    },
+                    controller: "LeagueController",
+                    controllerAs: "vm",
                     // resolve: {
                     //     league: (LeagueService, $stateParams) => {
                     //         console.log($stateParams)
                     //         // let theLeague = LeagueService.getLeague();
                     //         // theLeague.then((response) => {
-                                
+
                     //         // }, (error) => {
                     //         //     console.log(error);
                     //         // });

@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-8">
         <div ng-if="vm.message" class="alert alert-danger fade show">
             <button type="button" class="close" ng-click="vm.dismissError()">
                 <span aria-hidden="true">&times;</span>
@@ -12,7 +12,7 @@
             <div class="card-block">
                 <form class="" role="form" name="joinLeague">
                     <div class="form-group row justify-content-center">
-                        <label for="">League Access Code</label>
+                        <label for=""><strong>League Access Code</strong></label>
                     </div>
                     <div class="form-group row justify-content-center">
                         <input type="text" maxlength="1" class="form-control col-1 joinInput" id="field1" name="accessCode1" ng-model="vm.data.accessCode1" ng-keyup="vm.moveFocus('field2')">

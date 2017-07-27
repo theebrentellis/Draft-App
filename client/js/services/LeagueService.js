@@ -2,6 +2,8 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     let service = {};
     let vm = this;
 
+    let deferred = $q.defer();
+
     //Current User
     vm.currentUser = {};
     let getCurrentUser = AuthenticationService.currentUser();
@@ -12,11 +14,12 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     });
 
     //Current League
-    vm.league = {};
-    service.getLeague = function() {
+    let currentLeague = {};
+    service.getLeague = () => {
         return LeagueFactory.getLeague($stateParams.leagueID)
             .then((response) => {
                 if (response.data) {
+                    currentLeague = response.data;
                     return response.data;
                 }
             }, (error) => {
@@ -24,6 +27,10 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             });
     };
     
+    service.draftPositions = () => {
+        
+    };
+
     service.createNewLeague = function (newLeagueInfo) {
         return LeagueFactory.createLeague(newLeagueInfo)
             .then((response) => {
@@ -37,7 +44,7 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
                 console.log(error);
             });
     };
-    
+
     service.joinLeague = function (joinPac) {
         return LeagueFactory.joinLeague(joinPac)
             .then((response) => {
@@ -60,18 +67,19 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     service.newLeagueMessage = (messagePack) => {
         return LeagueFactory.newLeagueMessage(messagePack)
             .then((response) => {
-                console.log(response);
+                return response;
             }, (error) => {
                 console.log(error);
             });
     };
-
-    service.deleteAllLeagues = function () {
-        LeagueFactory.deleteAllLeagues();
-    };
-
-    service.deleteAllChat = function () {
-        ChatFactory.deleteAllChat();
+    
+    service.updateTeamPick = (pickPack) => {
+        return LeagueFactory.updateTeamPick(pickPack)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
     };
 
     return service;
