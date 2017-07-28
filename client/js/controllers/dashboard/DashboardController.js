@@ -1,4 +1,4 @@
-angular.module('DashboardController', []).controller('DashboardController', function ($scope, $q, $location, $view, $state, AuthenticationService) {
+angular.module('DashboardController', []).controller('DashboardController', function (AuthenticationService) {
     let vm = this;
 
     vm.currentUser = {};
@@ -9,4 +9,5 @@ angular.module('DashboardController', []).controller('DashboardController', func
         console.log(error);
     });
 
+    
 });

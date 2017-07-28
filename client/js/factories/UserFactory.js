@@ -1,5 +1,5 @@
-angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
-  var factory = {};
+angular.module('UserFactory', []).factory('UserFactory', function ($http) {
+  let factory = {};
 
   factory.register = (registerInfo) => {
     return $http.post("/register", registerInfo)
@@ -7,6 +7,7 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
         return response;
       }, (error) => {
         console.log(error);
+        return error;
     });
   };
 
@@ -16,6 +17,7 @@ angular.module('UserFactory', []).factory('UserFactory', function ($http, $q) {
         return response;
       }, (error) => {
         console.log(error);
+        return error;
       });
   };
 

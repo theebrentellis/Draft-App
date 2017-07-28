@@ -26,10 +26,6 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
                 console.log(error);
             });
     };
-    
-    service.draftPositions = () => {
-        
-    };
 
     service.createNewLeague = function (newLeagueInfo) {
         return LeagueFactory.createLeague(newLeagueInfo)

@@ -19,6 +19,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
     }
   }
 
+  //Is A User Logged In
   service.isLoggedIn = () => {
     return tokenStorage.getToken('user-token')
       .then((token) => {
@@ -36,10 +37,11 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
       });
   };
 
+  //Return The Current User
   service.currentUser = function () {
     return service.isLoggedIn()
       .then((response) => {
-        if (response){
+        if (response) {
           return tokenStorage.getToken('user-token')
             .then((token) => {
               let payload = token.split('.')[1];
@@ -62,7 +64,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
       });
   };
 
-  service.updateToken = function (token) {
+  service.updateToken = (token) => {
     return tokenStorage.removeToken('user-token')
       .then(() => {
         return tokenStorage.setToken('user-token', token)
@@ -98,7 +100,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
 
   service.login = (user) => {
     return UserFactory.login(user)
-      .then(function (response) {
+      .then((response) => {
         if (response.data.token) {
           return tokenStorage.setToken('user-token', response.data.token)
             .then(() => {
@@ -106,20 +108,19 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
             }, (error) => {
               console.log(error);
             });
-        } else {
-          if (response.status == 401) {
-            return "Incorrect Username or Password!";
-          }
-          else {
-            return "Unknown Error!"
-          }
         }
-      }, function (err) {
-        console.log(err);
+        if (response.status == 401) {
+          return "Incorrect Username or Password!";
+        }
+        else {
+          return "Unknown Error!"
+        }
+      }, (error) => {
+        console.log(error);
       });
   };
 
-  service.currentUserLogOut =  () => {
+  service.currentUserLogOut = () => {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
   };

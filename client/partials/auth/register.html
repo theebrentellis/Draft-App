@@ -5,29 +5,33 @@
                 <span aria-hidden="true">&times;</span>
             </button> {{vm.message}}
         </div>
-        <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+        <div ng-show="error" class="alert alert-danger">
+            <button type="button" class="close" ng-click="vm.dismissError()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorMessage}}
+        </div>
         <div class="card">
-            <h3 class="card-header">
-                Register
-            </h3>
+            <div class="card-header">
+                <h3 class="card-headline">Register</h3>
+            </div>
             <div class="card-block">
                 <form role="form">
                     <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="vm.registerInfo.email">
+                        <label for="email" class="form-label"><strong>Email</strong></label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="vm.registerInfo.email" required>
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
+                        <label for="username" class="form-label"><strong>Username</strong></label>
                         <input type="text" class="form-control" name="username" placeholder="Username" ng-model="vm.registerInfo.userName" required>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label"><strong>Name</strong></label>
                         <input type="text" class="form-control" name="name" placeholder="Name" ng-model="vm.registerInfo.firstName" required>
                     </div>
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.registerInfo.password"
-                            required>
+                        <label for="password" class="form-label"><strong>Password</strong></label>
+                        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.registerInfo.password" required>
                     </div>
                     <div class="form-group">
                         <button type="submit" ng-click="vm.registerNew()" class="btn btn-primary">Register</button>

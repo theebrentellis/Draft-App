@@ -1,17 +1,14 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($rootScope, $scope, $q, $view, $uibModal, $confirm, $location, $state, AuthenticationService, LeagueService) {
-
+angular.module('LeagueCommishController', []).controller('LeagueCommishController', function ($rootScope, $scope, $q, $state, AuthenticationService, LeagueService) {
     let vm = this;
 
     vm.message = "";
 
-    vm.leagueAvailablePicks = false;
-
     //Current User
-    // vm.currentUser = {};
+    vm.currentUser = {};
     let getCurrentUser = AuthenticationService.currentUser();
     getCurrentUser.then((response) => {
         vm.currentUser = response;
-        return response;
+        return;
     }, (error) => {
         console.log(error);
     });
@@ -42,7 +39,6 @@ angular.module('LeagueController', []).controller('LeagueController', function (
 
     vm.leaguePickMaker = [];
 
-    //League Teams
     let createPicksList = (league) => {
         if (league) {
             let draftOrder = { title: "Draft Order", teams: [] };
@@ -74,7 +70,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
             }
         }
     };
-    
+
     $scope.onDrop = function (srcList, srcIndex, targetList, targetIndex) {
         // Copy the item from source to target.
         targetList.splice(targetIndex, 0, srcList[srcIndex]);
@@ -82,7 +78,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         // We must do this immediately, otherwise ng-repeat complains about duplicates.
         if (srcList == targetList && targetIndex <= srcIndex) srcIndex++;
         srcList.splice(srcIndex, 1);
-        for (let x = 0; x < targetList.length; x++){
+        for (let x = 0; x < targetList.length; x++) {
             if (targetList[x]._id == this.team._id) {
                 let team = this.team;
                 let pick = x + 1;
@@ -111,87 +107,4 @@ angular.module('LeagueController', []).controller('LeagueController', function (
             });
     };
 
-    //Create New League
-    vm.createNewLeague = () => {
-        let newLeagueInfo = {
-            "leagueName": vm.newLeague.leagueName,
-            "leagueSize": vm.newLeague.leagueSize,
-            "user_id": vm.currentUser._id
-        };
-
-        return LeagueService.createNewLeague(newLeagueInfo)
-            .then((response) => {
-                $state.transitionTo('dashboard');
-            }, (error) => {
-                console.log(error);
-            });
-    };
-
-    //Join League
-    vm.joinLeague = () => {
-        let code = "";
-        for (var x in vm.data) {
-            code += vm.data[x];
-        }
-        let leaguePack = {
-            "user_id": vm.currentUser._id,
-            "league_code": code,
-        };
-        return LeagueService.joinLeague(leaguePack)
-            .then((response) => {
-                if (response == "League Joined") {
-                    $state.transitionTo('dashboard');
-                }
-                else {
-                    vm.message = response;
-                }
-
-            }, (error) => {
-                console.log(error);
-            });
-    };
-    vm.moveFocus = (nextId) => {
-        $('#' + nextId).focus();
-    };
-
-    //Open New League Message Modal
-    vm.newMessage = () => {
-        $scope.modalInstance = $uibModal.open({
-            animation: true,
-            size: "lg",
-            templateUrl: 'newMessageModal.html',
-            controller: 'LeagueController',
-            controllerAs: 'vm',
-            scope: $scope,
-            backdrop: "static",
-        });
-    };
-    vm.sendMessage = () => {
-        let messagePack = {
-            "leagueID": vm.league._id,
-            "userID": vm.currentUser._id,
-            "message": vm.newLeagueMessage
-        };
-
-        return LeagueService.newLeagueMessage(messagePack)
-            .then((response) => {
-                console.log(response);
-                if (response.statusText == "OK") {
-                    $state.reload();
-                }
-                console.log(response);
-            }, (error) => {
-                console.log(error);
-            });
-    };
-    vm.cancel = () => {
-        $scope.modalInstance.dismiss('cancel');
-    };
-    vm.dismissError = () => {
-        vm.message = "";
-    };
-
-    vm.startDraft = () => {
-        console.log("Start Draft");
-    }
 });

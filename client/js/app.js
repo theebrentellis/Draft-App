@@ -1,4 +1,8 @@
-let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate", "ui.router", "ui.bootstrap", "dndLists", "angular-confirm", "AppController", "AuthenticationService", "ChatController", "DashboardController", "DraftService", "LeagueController", "LeagueService", "PlayerController", "UserController", "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
+let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
+    "ui.router", "ui.bootstrap", "dndLists", "angular-confirm",
+    "AppController", "ChatController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "PlayerController", "UserSettingsController", "UserLoginController", "UserRegisterController",
+    "AuthenticationService", "DraftService", "LeagueService",
+    "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
 angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) {
 
@@ -31,7 +35,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('auth/login.html');
                     },
-                    controller: "UserController",
+                    controller: "UserLoginController",
                     controllerAs: "vm"
                 },
             }
@@ -50,8 +54,28 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('auth/register.html');
                     },
-                    controller: "UserController",
+                    controller: "UserRegisterController",
                     controllerAs: "vm"
+                }
+            }
+        })
+        .state("settings", {
+            url: "/settings",
+            authenticate: true,
+            views: {
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    controller: "AppController",
+                    controllerAs: 'vm',
+                },
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('auth/settings.html');
+                    },
+                    controller: "UserSettingsController",
+                    controllerAs: "vm",
                 }
             }
         })
@@ -90,7 +114,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('league/league.new.html');
                     },
-                    controller: "LeagueController",
+                    controller: "LeagueNewController",
                     controllerAs: "vm"
                 }
             }
@@ -110,7 +134,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('league/league.join.html');
                     },
-                    controller: "LeagueController",
+                    controller: "LeagueJoinController",
                     controllerAs: "vm"
                 }
             }
@@ -156,7 +180,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     templateProvider: ($templateCache) => {
                         return $templateCache.get('league/league.commish.html');
                     },
-                    controller: "LeagueController",
+                    controller: "LeagueCommishController",
                     controllerAs: "vm",
                     // resolve: {
                     //     league: (LeagueService, $stateParams) => {
@@ -169,46 +193,6 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     //         // });
                     //     }
                     // }
-                }
-            }
-        })
-        .state("settings", {
-            url: "/settings",
-            authenticate: true,
-            views: {
-                "header": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
-                    },
-                    controller: "AppController",
-                    controllerAs: 'vm',
-                },
-                "content": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('auth/settings.html');
-                    },
-                    controller: "UserController",
-                    controllerAs: "vm",
-                }
-            }
-        })
-        .state("commish", {
-            url: "/commish",
-            authenticate: true,
-            views: {
-                "header": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
-                    },
-                    controller: "AppController",
-                    controllerAs: "vm"
-                },
-                "content": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('commish.html');
-                    },
-                    controller: "LeagueController",
-                    controllerAs: "vm"
                 }
             }
         })
