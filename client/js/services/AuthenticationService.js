@@ -120,7 +120,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
       });
   };
 
-  service.currentUserLogOut = () => {
+  service.logOut = () => {
     $window.localStorage.clear();
     $rootScope = $rootScope.$new(true);
   };

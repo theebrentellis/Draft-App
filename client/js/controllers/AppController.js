@@ -36,7 +36,7 @@ angular.module('AppController', []).controller('AppController', function (Authen
       });
     };
   
-  vm.currentUserLogOut = () => {
+  vm.logOut = () => {
     AuthenticationService.logOut();
   };
 });
