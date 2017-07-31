@@ -7,12 +7,11 @@ var Draft = mongoose.model("Draft");
 
 //League Schema
 var LeagueSchema = new mongoose.Schema({
-    leagueName: {
+    name: {
         type: String,
         required: true
     },
-    draft_id: [ObjectId],
-    chat_id: ObjectId,
+    _drafts: [ObjectId],
     commish_id: [ObjectId],
     size: Number,
     teams: [{
@@ -32,8 +31,8 @@ var LeagueSchema = new mongoose.Schema({
     }],
     token: String
 });
-LeagueSchema.methods.populateLeague = function (leagueId, callback) {
-    this.model("League").findOne({_id: leagueId})
+LeagueSchema.methods.populateLeague = function (leagueId) {
+    return this.model("League").findOne({_id: leagueId})
         .populate({
             path: "teams._user",
             model: "User",
@@ -44,23 +43,23 @@ LeagueSchema.methods.populateLeague = function (leagueId, callback) {
             model: "User",
             select: "userName"
         })
-        // .populate({
-        //     path: "chat",
-        //     model: "Chat",
-        //     select: "_id"
-        // })
         .populate({
-            path: "draft_id",
+            path: "_drafts",
             model: "Draft",
-            // select: "_id"
+            select: ["season", "completed"]
         })
-        .exec(function(err, league){
-            if (league) {
-                callback(league);
-            }
-            if (err) {
-                console.log("Error: " + err);
-            }
+        .exec().then((league) => {
+            return league;
+        }, (error) => {
+            console.log(error);
         });
+        // .exec(function(err, league){
+        //     if (league) {
+        //         callback(league);
+        //     }
+        //     if (err) {
+        //         console.log("Error: " + err);
+        //     }
+        // });
 };
 mongoose.model("League", LeagueSchema);

@@ -1,4 +1,4 @@
-angular.module('LeagueNewController', []).controller('LeagueNewController', function ($q, AuthenticationService, LeagueService) {
+angular.module('LeagueNewController', []).controller('LeagueNewController', function ($q, $state, AuthenticationService, LeagueService) {
     let vm = this;
 
     vm.messsage = "";

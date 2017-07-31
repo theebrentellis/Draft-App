@@ -2,6 +2,7 @@ var Player = require("./../controllers/PlayerController.js");
 var League = require("./../controllers/LeagueController.js");
 var User = require("./../controllers/UserController.js");
 var Chat = require("./../controllers/ChatController.js");
+var Draft = require('./../controllers/DraftController.js');
 
 // var auth = jwt({
 //     secret: "Draft_Secret",
@@ -49,6 +50,9 @@ module.exports = function (app, passport) {
     });
     app.post('/league/:id', (req, res) => {
         League.updateTeamPick(req, res);
+    });
+    app.post('/league/:league_id/draft/new', (req, res) => {
+        Draft.startDraft(req, res);
     });
     app.post("/createLeague", function(req, res){
         League.createLeague(req, res);

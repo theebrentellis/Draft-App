@@ -37,7 +37,7 @@ angular.module('LeagueCommishController', []).controller('LeagueCommishControlle
         return commish;
     };
 
-    vm.leaguePickMaker = [];
+    vm.leagueField = [];
 
     let createPicksList = (league) => {
         if (league) {
@@ -60,13 +60,13 @@ angular.module('LeagueCommishController', []).controller('LeagueCommishControlle
                 });
                 draftOrder.teams.push(draftPick);
             }
-            vm.leaguePickMaker.push(draftOrder);
+            vm.leagueField.push(draftOrder);
             if (currentTeams.length > 0) {
                 let teams = { title: "Needs Pick", teams: [] };
                 currentTeams.forEach((team) => {
                     teams.teams.push(team);
                 });
-                vm.leaguePickMaker.push(teams);
+                vm.leagueField.push(teams);
             }
         }
     };
@@ -105,6 +105,12 @@ angular.module('LeagueCommishController', []).controller('LeagueCommishControlle
             }, (error) => {
                 console.log(error);
             });
+    };
+    
+    vm.deleteTeam = (id) => {
+        console.log("Delete Team");
+        console.log(vm.leagueField);
+        console.log(id);
     };
 
 });

@@ -1,14 +1,13 @@
 angular.module("LeagueService", []).service("LeagueService", function ($window, $state, $stateParams, $q, $location, LeagueFactory, ChatFactory, AuthenticationService) {
     let service = {};
-    let vm = this;
 
     let deferred = $q.defer();
 
     //Current User
-    vm.currentUser = {};
+    let currentUser = {};
     let getCurrentUser = AuthenticationService.currentUser();
     getCurrentUser.then((response) => {
-        vm.currentUser = response;
+        currentUser = response;
     }, (error) => {
         console.log(error);
     });
@@ -16,15 +15,18 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     //Current League
     let currentLeague = {};
     service.getLeague = () => {
-        return LeagueFactory.getLeague($stateParams.leagueID)
-            .then((response) => {
-                if (response.data) {
-                    currentLeague = response.data;
-                    return response.data;
-                }
-            }, (error) => {
-                console.log(error);
-            });
+        if ($stateParams.leagueID) {
+            return LeagueFactory.getLeague($stateParams.leagueID)
+                .then((response) => {
+                    if (response.data) {
+                        currentLeague = response.data;
+                        return response.data;
+                    }
+                }, (error) => {
+                    console.log(error);
+                });
+        }
+
     };
 
     service.createNewLeague = function (newLeagueInfo) {
@@ -68,7 +70,7 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
                 console.log(error);
             });
     };
-    
+
     service.updateTeamPick = (pickPack) => {
         return LeagueFactory.updateTeamPick(pickPack)
             .then((response) => {
@@ -76,6 +78,14 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             }, (error) => {
                 console.log(error);
             });
+    };
+
+    service.isCommish = (id) => {
+        
+    };
+
+    service.startDraft = () => {
+
     };
 
     return service;

@@ -13,24 +13,6 @@ module.exports = (function () {
     //Creates new chat, draft and league schemas; updates all new schemas with IDs
     //Updates User with new league and returns token
     createLeague: function (req, res) {
-      //Create and save new Chat schema
-      let chat = new Chat();
-      chat.save(function (err, chat) {
-        if (err) {
-          console.log("Chat Save Error: " + err);
-        }
-      });
-
-      //Create and save new Draft schema
-      let season = new Date().getFullYear();
-      let draft = new Draft({
-        season: season
-      });
-      draft.save(function (err, draft) {
-        if (err) {
-          console.log("Draft Save Error: " + err);
-        }
-      });
 
       //Generate League Code
       let accessToken = randomstring.generate({
@@ -52,9 +34,7 @@ module.exports = (function () {
 
       //Create and save new League schema
       let league = new League({
-        leagueName: req.body.leagueName,
-        draft_id: draft._id,
-        chat_id: chat._id,
+        name: req.body.leagueName,
         commish_id: [req.body.user_id],
         teams: [{ _user: req.body.user_id }],
         token: accessToken,
@@ -66,33 +46,6 @@ module.exports = (function () {
           console.log('League Save Error: ' + err);
         }
         if (league) {
-          //If new league is successfully created update Chat schema with League ID
-          Chat.findByIdAndUpdate(league.chat_id, {
-            $set: {
-              league_id: league._id
-            }
-          }, {
-              new: true
-            }, function (err, chat) {
-              if (err) {
-                console.log(err);
-              }
-            });
-
-          //If new League is successfully created update Draft schema with League ID
-          Draft.findByIdAndUpdate(league.draft_id[0], {
-            $set: {
-              league_id: league._id,
-              started: false
-            }
-          }, {
-              new: true
-            }, function (err, draft) {
-              if (err) {
-                console.log(err);
-              }
-            });
-
           //If new League is successfully created update User with League ID
           User.findByIdAndUpdate(req.body.user_id, {
             $push: {
@@ -121,19 +74,26 @@ module.exports = (function () {
         }
       });
     },
+
     //Gets League after user sets current league
     getLeague: function (req, res) {
       League.findById(req.query._id)
         .then((league) => {
           if (league !== null) {
-            league.populateLeague(req.query._id, function (league) {
+            league.populateLeague(req.query._id).then((league) => {
               res.json(league);
+            }, (error) => {
+              console.log(error);
             });
+            // league.populateLeague(req.query._id, function (league) {
+            //   res.json(league);
+            // });
           }
         }, (error) => {
           console.log(error);
         });
     },
+
     //Lets User join league
     joinLeague: function (req, res) {
       League.findOneAndUpdate({
@@ -183,13 +143,6 @@ module.exports = (function () {
         });
     },
 
-
-    //Sets draft order
-    //Start Draft
-    startDraft: function (req, res) {
-
-    },
-
     newLeagueMessage: (req, res) => {
       League.findByIdAndUpdate(req.body.leagueID, {
         $addToSet: {
@@ -201,11 +154,14 @@ module.exports = (function () {
       }, {
           new: true
         }).then((league) => {
-          league.populateLeague(req.body.leagueID, (league) => {
+          league.populateLeague(req.body.leagueID).then((league) => {
             res.json(league);
+          }, (error) => {
+            console.log(error);
           });
         })
     },
+
     updateTeamPick: (req, res) => {
       League.findOneAndUpdate({
         _id: req.params.id,
@@ -217,12 +173,12 @@ module.exports = (function () {
         }, {
           new: true
         }).then((league) => {
-          league.populateLeague(req.params.id, (response) => {
-            console.log(response);
-            res.json(response);
-          }, (error) => {
-            console.log(error);
-          });
+          league.populateLeague(req.params.id)
+            .then((response) => {
+              res.json(response);
+            }, (error) => {
+              console.log(error);
+            });
         }, (error) => {
           console.log("Error: " + error);
         });

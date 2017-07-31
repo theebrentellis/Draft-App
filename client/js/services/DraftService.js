@@ -1,70 +1,78 @@
 angular.module('DraftService', []).service('DraftService', function ($window, $state, $q, DraftFactory, AuthenticationService, LeagueService) {
-    var service = {};
+    let service = {};
 
-    var vm = this;
+    service.startDraft = () => {
 
-    // vm.currentUser = AuthenticationService.currentUser();
+        //Gets League from LeagueService
+        return LeagueService.getLeague().then((response) => {
 
-    // vm.isLoggedIn = AuthenticationService.isLoggedIn();
+            //Checks if any teams have not been assigned a draft pick
+            for (let x = 0; x < response.teams.length; x++) {
+                if (!response.teams[x].pick) {
+                    return { error: "Please Assign All Picks" };
+                }
+            }
 
-    // vm.currentLeague = LeagueService.currentLeague();
+            //Sets the field for a new draft
+            let draftField = [];
+            for (let x = 1; x <= response.size; x++) {
+                let position = { position: x };
+                response.teams.forEach((team) => {
+                    if (team.pick == x) {
+                        position._user = team._user._id;
+                    }
+                });
+                draftField.push(position);
+            }
 
-    service.startDraft = function(draftPackage){
-        return DraftFactory.startDraft(draftPackage)
-            .then(function(reponse){
-                console.log(response);
-            }, function(error){
-                console.log(error);
-            });
+            let newDraftObject = {};
+            newDraftObject.teams = draftField;
+
+            return DraftFactory.startDraft(newDraftObject)
+                .then((response) => {
+                    return LeagueService.getLeague()
+                        .then((response) => {
+                            return response;
+                        }, (error) => {
+                            console.log(error);
+                        });
+                    // return response;
+                    // console.log(response);
+                }, (error) => {
+                    console.log(error);
+                });
+        }, (error) => {
+            console.log(error);
+        });
     };
 
-    service.isOnClock = function(){
-        if(vm.currentLeague.onClock === vm.currentUser._id){
-            return true;
-        }
-        else{
-            return false;
-        }
+    service.joinDraft = () => {
+        let getCurrentLeague = LeagueService.getLeague();
+        getCurrentLeague.then((response) => {
+            //Get draft object from league.draft_id
+        })
     };
 
-    service.draftPlayer = function(draftPackage){
+    service.onClock = () => {
+
+    };
+
+    service.draftPlayer = function (draftPackage) {
         return DraftFactory.draftPlayer(draftPackage)
-            .then(function(response){
-                if(response.statusText === "OK"){
+            .then(function (response) {
+                if (response.statusText === "OK") {
                     return true;
                 }
-                else{
+                else {
                     return false;
                 }
-            }, function(error){
+            }, function (error) {
                 console.log(error);
             });
     };
 
-    service.undraftedPlayers = function () {
-
-    };
-
-    service.draftedPlayers = function () {
-
-    };
-
-    service.downloadPlayers = function(){
+    service.downloadPlayers = function () {
         DraftFactory.downloadPlayers();
-    };
-
-    service.deleteAllChat = function(){
-        ChatFactory.deleteAllChat();
-    };
-
-    service.deleteAllDrafts = function(){
-        DraftFactory.deleteAllDrafts();
-    };
-
-    service.deleteAllPlayers = function(callback){
-        DraftFactory.deleteAllPlayers(function(data){
-            callback(data);
-        });
     };
 
     return service;

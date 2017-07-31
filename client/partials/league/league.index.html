@@ -1,8 +1,17 @@
 <div class="row justify-content-center">
+    <div class="col-6">
+        <div ng-if="vm.message" class="alert alert-danger">
+            <button type="button" class="close" ng-click="vm.dismissError()">
+                <span aria-hidden="true">&times;</span>
+            </button> {{ vm.message }}
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-headline">Welcome to {{ vm.league.leagueName }} League!</h2>
+                <h2 class="card-headline">Welcome to {{ vm.league.name }} League!</h2>
                 <a href="#" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ui-sref="leagueCommish({ leagueID: vm.league._id })"><i class="fa fa-fw fa-btn fa-cog"></i>Commish Settings</a>
             </div>
             <div class="card-block">
@@ -11,16 +20,20 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-headline">Drafts</h3>
+                                <button class="btn btn-sm btn-outline-danger" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ng-click="vm.startDraft()">New Draft</button>
                             </div>
                             <div class="card-block">
-                                <h5 class="card-title">Seasons</h5>
+                                <!-- <button class="btn btn-outline-danger" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)"
+                                    ng-click="vm.startDraft()">Start Draft!</button> -->
+                                <h5 class="card-title">Season</h5>
                                 <ul>
-                                    <li ng-repeat="draft in vm.league.draft_id">
-                                        <strong>{{ draft.season }}</strong> <p ng-if="draft.started === false && !vm.isCommish(vm.currentUser._id, vm.league.commish_id)" class="draftStatus"><i>Draft Not Started Yet!</i></p>
-                                        <button class="btn btn-sm btn-outline-success" ng-if="draft.started === true" ng-if="!vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ng-click="vm.joinDraft">Join Draft!</button>
-                                        <button class="btn btn-outline-danger" data-ng-app="draft.started === false" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ng-click="vm.startDraft()">Start Draft!</button>
+                                    <li ng-repeat="draft in vm.league._drafts">
+                                         <!-- <p ng-if="!draft && !vm.isCommish(vm.currentUser._id, vm.league.commish_id)" class="draftStatus"><i>Draft Not Started Yet!</i></p>  -->
+                                        <strong>{{ draft.season }}</strong>
+                                        <button class="btn btn-sm btn-outline-success" ng-if="!draft.completed" ng-click="vm.joinDraft(draft._id)">Join Draft!</button>
+                                        
                                     </li>
-                                </ul>
+                                </ul> 
                             </div>
                         </div>
                     </div>
@@ -39,6 +52,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            {{ vm.league }}
         </div>
     </div>
     <script type="text/ng-template" id="newMessageModal.html" class="modal">

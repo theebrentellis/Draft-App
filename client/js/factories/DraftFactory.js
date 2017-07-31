@@ -1,5 +1,15 @@
-angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
+angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stateParams){
     var factory = {};
+
+    factory.startDraft = (newDraftObject) => {
+        return $http.post("/league/" + $stateParams.leagueID + "/draft/new", newDraftObject)
+            .then((response) => {
+                return response;
+                // console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    };
 
     factory.downloadPlayers = function(){
         $http.post("/downloadPlayers").success(function(data){
@@ -17,15 +27,6 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $q){
         $http.post("/deleteAllPlayers").success(function(data){
             callback(data);
         });
-    };
-
-    factory.startDraft = function(draftPackage){
-        return $http.post("/startDraft", draftPackage)
-            .then(function(response){
-                console.log(response);
-            }, function(error){
-                console.log(error);
-            });
     };
 
     factory.draftPlayer = function(draftPackage){

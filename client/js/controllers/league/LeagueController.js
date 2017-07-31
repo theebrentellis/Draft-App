@@ -1,4 +1,4 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($rootScope, $scope, $q, $view, $uibModal, $confirm, $location, $state, AuthenticationService, LeagueService) {
+angular.module('LeagueController', []).controller('LeagueController', function ($rootScope, $scope, $q, $view, $uibModal, $confirm, $location, $state, AuthenticationService, LeagueService, DraftService) {
 
     let vm = this;
 
@@ -81,6 +81,21 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     };
 
     vm.startDraft = () => {
-        console.log("Start Draft");
-    }
+        // console.log("Start Draft");
+        let startLeagueDraft = DraftService.startDraft();
+        startLeagueDraft.then((response) => {
+            console.log(response);
+            if (response.error) {
+                vm.message = response.error;
+            }
+        }, (error) => {
+            console.log(error);
+        });
+        // return DraftService.startDraft()
+        //     .then((response) => {
+        //         console.log(response);
+        //     }, (error) => {
+        //         console.log(error);
+        //     });
+    };
 });

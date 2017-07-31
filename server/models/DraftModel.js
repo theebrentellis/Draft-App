@@ -4,31 +4,28 @@ var ObjectId = Schema.ObjectId;
 
 //Draft Schema
 var DraftSchema = new mongoose.Schema({
-    league_id: {
+    _league: {
         type: ObjectId,
         ref: "League"
     },
-    draftOrder: [{
+    field: [{
         _user: {
             type: ObjectId,
             ref: "User"
         },
-        pick: Number,
-        _id: false
+        position: Number,
+        picks: [{
+            _player: {
+                type: ObjectId,
+                ref: 'Player'
+            }
+        }]
+
     }],
-    picks: [{
-        _player: {
-            type: ObjectId,
-            ref: "Player",
-        },
-        _id: false
-        
-    }],
-    onClock: {
+    _chat: {
         type: ObjectId,
-        ref: "User"
+        ref: "Chat"
     },
-    started: Boolean,
     completed: Boolean,
     season: Number
 
