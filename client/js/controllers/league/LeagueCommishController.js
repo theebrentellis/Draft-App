@@ -108,9 +108,16 @@ angular.module('LeagueCommishController', []).controller('LeagueCommishControlle
     };
     
     vm.deleteTeam = (id) => {
-        console.log("Delete Team");
-        console.log(vm.leagueField);
-        console.log(id);
+        let team = {
+            team_id: id
+        };
+        return LeagueService.deleteLeagueTeam(team)
+            .then((response) => {
+                $state.reload();
+                return
+            }, (error) => {
+                console.log(error);
+            });
     };
 
 });

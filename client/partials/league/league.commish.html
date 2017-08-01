@@ -22,7 +22,7 @@
                                         dnd-draggable="team"
                                         dnd-effect-allowed="move"
                                         dnd-callback="onDrop(list.teams, $index, targetList, targetIndex)">
-                                        {{ team._user ? team._user.userName : "Pick " + ($index + 1) }}<i ng-if="team._user" ng-show="!editLeagueTeam" class="fa fa-fw-fa-btn fa-bars" style="float: right;"></i><i ng-if="team._user" ng-show="editLeagueTeam" ng-click="vm.deleteTeam(team._id)" class="fa fa-fw-fa-btn fa-times" style="float: right;"></i>
+                                        {{ team._user ? team._user.userName : "Pick " + ($index + 1) }}<i ng-if="team._user" ng-show="!editLeagueTeam" class="fa fa-fw-fa-btn fa-bars" style="float: right;"></i><i ng-if="team._user" ng-show="editLeagueTeam && team._user._id !== vm.currentUser._id" ng-click="vm.deleteTeam(team._id)" class="fa fa-fw-fa-btn fa-times" style="float: right;"></i>
                                     </li>
                                 </ul>
                             </div>

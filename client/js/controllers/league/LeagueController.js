@@ -9,7 +9,7 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     let getCurrentUser = AuthenticationService.currentUser();
     getCurrentUser.then((response) => {
         vm.currentUser = response;
-        return response;
+        return;
     }, (error) => {
         console.log(error);
     });
@@ -20,7 +20,6 @@ angular.module('LeagueController', []).controller('LeagueController', function (
     getLeague.then((response) => {
         vm.league = response;
         return;
-        // createPicksList(response);
     }, (error) => {
         console.log(error);
     });
@@ -91,11 +90,5 @@ angular.module('LeagueController', []).controller('LeagueController', function (
         }, (error) => {
             console.log(error);
         });
-        // return DraftService.startDraft()
-        //     .then((response) => {
-        //         console.log(response);
-        //     }, (error) => {
-        //         console.log(error);
-        //     });
     };
 });

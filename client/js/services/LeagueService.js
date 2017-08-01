@@ -80,8 +80,17 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             });
     };
 
+    service.deleteLeagueTeam = (team) => {
+        return LeagueFactory.deleteLeagueTeam(team)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
+    }
+
     service.isCommish = (id) => {
-        
+
     };
 
     service.startDraft = () => {

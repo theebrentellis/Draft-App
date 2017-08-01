@@ -5,7 +5,6 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
         return $http.post("/league/" + $stateParams.leagueID + "/draft/new", newDraftObject)
             .then((response) => {
                 return response;
-                // console.log(response);
             }, (error) => {
                 console.log(error);
             });

@@ -44,6 +44,16 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http, $s
             }, (error) => {
                 console.log(error);
             });
+    };
+    
+    factory.deleteLeagueTeam = (team) => {
+        console.log(team);
+        return $http.post("/league/" + $stateParams.leagueID + "/deleteLeagueTeam", team)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     return factory;

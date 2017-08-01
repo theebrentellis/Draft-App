@@ -51,6 +51,12 @@ module.exports = function (app, passport) {
     app.post('/league/:id', (req, res) => {
         League.updateTeamPick(req, res);
     });
+    app.post('/league/:id', (req, res) => {
+        League.updateTeamPick(req, res);
+    });
+    app.post('/league/:league_id/deleteLeagueTeam', (req, res) => {
+        League.deleteLeagueTeam(req, res);
+    });
     app.post('/league/:league_id/draft/new', (req, res) => {
         Draft.startDraft(req, res);
     });

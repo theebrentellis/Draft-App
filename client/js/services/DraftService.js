@@ -36,8 +36,6 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
                         }, (error) => {
                             console.log(error);
                         });
-                    // return response;
-                    // console.log(response);
                 }, (error) => {
                     console.log(error);
                 });

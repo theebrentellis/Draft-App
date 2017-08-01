@@ -7,182 +7,209 @@ let Chat = mongoose.model("Chat");
 let Draft = mongoose.model("Draft");
 
 module.exports = (function () {
-  return {
+	return {
 
-    //Creates new League
-    //Creates new chat, draft and league schemas; updates all new schemas with IDs
-    //Updates User with new league and returns token
-    createLeague: function (req, res) {
+		//Creates new League
+		//Creates new chat, draft and league schemas; updates all new schemas with IDs
+		//Updates User with new league and returns token
+		createLeague: function (req, res) {
 
-      //Generate League Code
-      let accessToken = randomstring.generate({
-        length: 6,
-        charset: 'alphanumeric',
-        capitalization: 'lowercase'
-      });
+			//Generate League Code
+			let accessToken = randomstring.generate({
+				length: 6,
+				charset: 'alphanumeric',
+				capitalization: 'lowercase'
+			});
 
-      League.findOne({ 'token': accessToken }, (err, league) => {
-        if (err) {
-          console.log(err);
-        }
-        if (league) {
-          return res.json({
-            error: "Error generating unique access token"
-          });
-        }
-      });
+			League.findOne({ 'token': accessToken }, (err, league) => {
+				if (err) {
+					console.log(err);
+				}
+				if (league) {
+					return res.json({
+						error: "Error generating unique access token"
+					});
+				}
+			});
 
-      //Create and save new League schema
-      let league = new League({
-        name: req.body.leagueName,
-        commish_id: [req.body.user_id],
-        teams: [{ _user: req.body.user_id }],
-        token: accessToken,
-        size: req.body.leagueSize
-      });
+			//Create and save new League schema
+			let league = new League({
+				name: req.body.leagueName,
+				commish_id: [req.body.user_id],
+				teams: [{ _user: req.body.user_id }],
+				token: accessToken,
+				size: req.body.leagueSize
+			});
 
-      league.save(function (err, league) {
-        if (err) {
-          console.log('League Save Error: ' + err);
-        }
-        if (league) {
-          //If new League is successfully created update User with League ID
-          User.findByIdAndUpdate(req.body.user_id, {
-            $push: {
-              leagues: league._id
-            }
-          }, {
-              new: true
-            }, function (err, user) {
-              if (user) {
-                //If User is successfully updated populate User with Leagues and return token to client
-                user.populateUserLeagues(req.body.user_id, function (user) {
-                  let token = user.generateJwt();
-                  res.json({
-                    'token': token,
-                    message: 'Created New League!'
-                  });
-                });
-              }
-              if (err) {
-                console.log('Error: ' + err);
-                res.json({
-                  message: 'Error Updating User With New League'
-                });
-              }
-            });
-        }
-      });
-    },
+			league.save(function (err, league) {
+				if (err) {
+					console.log('League Save Error: ' + err);
+				}
+				if (league) {
+					//If new League is successfully created update User with League ID
+					User.findByIdAndUpdate(req.body.user_id, {
+						$push: {
+							leagues: league._id
+						}
+					}, {
+							new: true
+						}, function (err, user) {
+							if (user) {
+								//If User is successfully updated populate User with Leagues and return token to client
+								user.populateUserLeagues(req.body.user_id, function (user) {
+									let token = user.generateJwt();
+									res.json({
+										'token': token,
+										message: 'Created New League!'
+									});
+								});
+							}
+							if (err) {
+								console.log('Error: ' + err);
+								res.json({
+									message: 'Error Updating User With New League'
+								});
+							}
+						});
+				}
+			});
+		},
 
-    //Gets League after user sets current league
-    getLeague: function (req, res) {
-      League.findById(req.query._id)
-        .then((league) => {
-          if (league !== null) {
-            league.populateLeague(req.query._id).then((league) => {
-              res.json(league);
-            }, (error) => {
-              console.log(error);
-            });
-            // league.populateLeague(req.query._id, function (league) {
-            //   res.json(league);
-            // });
-          }
-        }, (error) => {
-          console.log(error);
-        });
-    },
+		//Gets League after user sets current league
+		getLeague: function (req, res) {
+			League.findById(req.query._id)
+				.then((league) => {
+					if (league !== null) {
+						league.populateLeague(req.query._id).then((league) => {
+							res.json(league);
+						}, (error) => {
+							console.log(error);
+						});
+						// league.populateLeague(req.query._id, function (league) {
+						//   res.json(league);
+						// });
+					}
+				}, (error) => {
+					console.log(error);
+				});
+		},
 
-    //Lets User join league
-    joinLeague: function (req, res) {
-      League.findOneAndUpdate({
-        token: req.body.league_code
-      }, {
-          $addToSet: {
-            teams: {
-              _user: req.body.user_id
-            }
-          }
-        }, {
-          new: true
-        }).then((league) => {
-          if (league == null) {
-            res.json({
-              message: "Incorrect League Code"
-            });
-          }
-          else {
-            User.findByIdAndUpdate(req.body.user_id, {
-              $push: {
-                leagues: league._id
-              }
-            }, {
-                new: true
-              }).then((user) => {
-                if (user !== null) {
-                  user.populateUserLeagues(req.body.user_id, function (user) {
-                    let token = user.generateJwt();
-                    res.json({
-                      token: token,
-                      message: 'Joined New League!'
-                    });
-                  });
-                }
-                else {
-                  res.json({
-                    message: 'Error Updating User With New League'
-                  });
-                }
-              }, (error) => {
-                console.log(error);
-              });
-          }
-        }, (error) => {
-          console.log("Error: " + error)
-        });
-    },
+		//Lets User join league
+		joinLeague: function (req, res) {
+			League.findOneAndUpdate({
+				token: req.body.league_code
+			}, {
+					$addToSet: {
+						teams: {
+							_user: req.body.user_id
+						}
+					}
+				}, {
+					new: true
+				}).then((league) => {
+					if (league == null) {
+						res.json({
+							message: "Incorrect League Code"
+						});
+					}
+					else {
+						User.findByIdAndUpdate(req.body.user_id, {
+							$push: {
+								leagues: league._id
+							}
+						}, {
+								new: true
+							}).then((user) => {
+								if (user !== null) {
+									user.populateUserLeagues(req.body.user_id, function (user) {
+										let token = user.generateJwt();
+										res.json({
+											token: token,
+											message: 'Joined New League!'
+										});
+									});
+								}
+								else {
+									res.json({
+										message: 'Error Updating User With New League'
+									});
+								}
+							}, (error) => {
+								console.log(error);
+							});
+					}
+				}, (error) => {
+					console.log("Error: " + error)
+				});
+		},
 
-    newLeagueMessage: (req, res) => {
-      League.findByIdAndUpdate(req.body.leagueID, {
-        $addToSet: {
-          messages: {
-            message: req.body.message,
-            _user: req.body.userID
-          }
-        },
-      }, {
-          new: true
-        }).then((league) => {
-          league.populateLeague(req.body.leagueID).then((league) => {
-            res.json(league);
-          }, (error) => {
-            console.log(error);
-          });
-        })
-    },
+		newLeagueMessage: (req, res) => {
+			League.findByIdAndUpdate(req.body.leagueID, {
+				$addToSet: {
+					messages: {
+						message: req.body.message,
+						_user: req.body.userID
+					}
+				},
+			}, {
+					new: true
+				}).then((league) => {
+					league.populateLeague(req.body.leagueID).then((league) => {
+						res.json(league);
+					}, (error) => {
+						console.log(error);
+					});
+				})
+		},
 
-    updateTeamPick: (req, res) => {
-      League.findOneAndUpdate({
-        _id: req.params.id,
-        'teams._id': req.body.team._id
-      }, {
-          $set: {
-            'teams.$.pick': req.body.pick
-          }
-        }, {
-          new: true
-        }).then((league) => {
-          league.populateLeague(req.params.id)
-            .then((response) => {
-              res.json(response);
-            }, (error) => {
-              console.log(error);
-            });
-        }, (error) => {
-          console.log("Error: " + error);
-        });
-    },
+		updateTeamPick: (req, res) => {
+			League.findOneAndUpdate({
+				_id: req.params.id,
+				'teams._id': req.body.team._id
+			}, {
+					$set: {
+						'teams.$.pick': req.body.pick
+					}
+				}, {
+					new: true
+				}).then((league) => {
+					league.populateLeague(req.params.id)
+						.then((response) => {
+							res.json(response);
+						}, (error) => {
+							console.log(error);
+						});
+				}, (error) => {
+					console.log("Error: " + error);
+				});
+		},
 
-  };
+		deleteLeagueTeam: (req, res) => {
+			console.log("Delete League Team");
+			// console.log(req.body);
+			// console.log(req.params);
+			League.findOneAndUpdate({ _id: req.params.league_id },
+				{
+					$pull: {
+						teams: {
+							_id: req.body.team_id
+						}
+					}
+				}, {
+					new: true
+				}).then((league) => {
+					console.log("League: " + league)
+				}, (error) => {
+					console.log(error);
+				})
+				// { "teams._id": req.body.team_id }, (err, res) => {
+			// 	console.log("Error: " + err);
+			// 	console.log("League: " + res);
+			// });
+			// let team = League.findById(req.body.team_id);
+			// team.exec().then((team))
+			// console.log(team.exec());
+		}
+
+	};
 })();
