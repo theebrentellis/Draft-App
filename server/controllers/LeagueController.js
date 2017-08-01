@@ -46,37 +46,14 @@ module.exports = (function () {
 					console.log('League Save Error: ' + err);
 				}
 				if (league) {
-					//If new League is successfully created update User with League ID
-					User.findByIdAndUpdate(req.body.user_id, {
-						$push: {
-							leagues: league._id
-						}
-					}, {
-							new: true
-						}, function (err, user) {
-							if (user) {
-								//If User is successfully updated populate User with Leagues and return token to client
-								user.populateUserLeagues(req.body.user_id, function (user) {
-									let token = user.generateJwt();
-									res.json({
-										'token': token,
-										message: 'Created New League!'
-									});
-								});
-							}
-							if (err) {
-								console.log('Error: ' + err);
-								res.json({
-									message: 'Error Updating User With New League'
-								});
-							}
-						});
+					return res.end();
 				}
 			});
 		},
 
 		//Gets League after user sets current league
 		getLeague: (req, res) => {
+			console.log("getLeague");
 			League.findById(req.query._id)
 				.then((league) => {
 					if (league !== null) {
@@ -113,30 +90,31 @@ module.exports = (function () {
 						});
 					}
 					else {
-						User.findByIdAndUpdate(req.body.user_id, {
-							$push: {
-								leagues: league._id
-							}
-						}, {
-								new: true
-							}).then((user) => {
-								if (user !== null) {
-									user.populateUserLeagues(req.body.user_id, function (user) {
-										let token = user.generateJwt();
-										res.json({
-											token: token,
-											message: 'Joined New League!'
-										});
-									});
-								}
-								else {
-									res.json({
-										message: 'Error Updating User With New League'
-									});
-								}
-							}, (error) => {
-								console.log(error);
-							});
+						return res.end();
+						// User.findByIdAndUpdate(req.body.user_id, {
+						// 	$push: {
+						// 		leagues: league._id
+						// 	}
+						// }, {
+						// 		new: true
+						// 	}).then((user) => {
+						// 		if (user !== null) {
+						// 			user.populateUserLeagues(req.body.user_id, function (user) {
+						// 				let token = user.generateJwt();
+						// 				res.json({
+						// 					token: token,
+						// 					message: 'Joined New League!'
+						// 				});
+						// 			});
+						// 		}
+						// 		else {
+						// 			res.json({
+						// 				message: 'Error Updating User With New League'
+						// 			});
+						// 		}
+						// 	}, (error) => {
+						// 		console.log(error);
+						// 	});
 					}
 				}, (error) => {
 					console.log("Error: " + error)
@@ -185,9 +163,6 @@ module.exports = (function () {
 		},
 
 		deleteLeagueTeam: (req, res) => {
-			console.log("Delete League Team");
-			// console.log(req.body);
-			// console.log(req.params);
 			League.findOneAndUpdate({ _id: req.params.league_id },
 				{
 					$pull: {

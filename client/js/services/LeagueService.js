@@ -32,12 +32,13 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     service.createNewLeague = function (newLeagueInfo) {
         return LeagueFactory.createLeague(newLeagueInfo)
             .then((response) => {
-                return AuthenticationService.updateToken(response.data.token)
-                    .then(() => {
-                        $state.transitionTo('dashboard');
-                    }, (error) => {
-                        console.log(error);
-                    });
+                return response;
+                // return AuthenticationService.updateToken(response.data.token)
+                //     .then(() => {
+                //         $state.transitionTo('dashboard');
+                //     }, (error) => {
+                //         console.log(error);
+                //     });
             }, (error) => {
                 console.log(error);
             });
