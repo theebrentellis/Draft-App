@@ -1,4 +1,6 @@
 let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
+let ObjectId = Schema.Types.ObjectId;
 const randomstring = require('randomstring');
 
 let League = mongoose.model('League');
@@ -73,6 +75,7 @@ module.exports = (function () {
 
 		//Lets User join league
 		joinLeague: function (req, res) {
+			console.log(req.body);
 			League.findOneAndUpdate({
 				token: req.body.league_code
 			}, {
@@ -90,31 +93,8 @@ module.exports = (function () {
 						});
 					}
 					else {
+						console.log(league);
 						return res.end();
-						// User.findByIdAndUpdate(req.body.user_id, {
-						// 	$push: {
-						// 		leagues: league._id
-						// 	}
-						// }, {
-						// 		new: true
-						// 	}).then((user) => {
-						// 		if (user !== null) {
-						// 			user.populateUserLeagues(req.body.user_id, function (user) {
-						// 				let token = user.generateJwt();
-						// 				res.json({
-						// 					token: token,
-						// 					message: 'Joined New League!'
-						// 				});
-						// 			});
-						// 		}
-						// 		else {
-						// 			res.json({
-						// 				message: 'Error Updating User With New League'
-						// 			});
-						// 		}
-						// 	}, (error) => {
-						// 		console.log(error);
-						// 	});
 					}
 				}, (error) => {
 					console.log("Error: " + error)
@@ -178,14 +158,15 @@ module.exports = (function () {
 					console.log(error);
 				});
 		},
-		
+
 		getUserLeagues: (req, res) => {
-			League.find({ "teams.$._id": req.body.id }, 'name').exec((error, league) => {
-				if (error) {
+			console.log(req.params.id);
+			return League.aggregate({ $match: { "teams._user": mongoose.Types.ObjectId(req.params.id)}})
+				.exec().then((leagues) => {
+					res.json(leagues);
+				}, (error) => {
 					console.log(error);
-				}
-				res.json(league);
-			});
+				});
 		},
 	};
 })();

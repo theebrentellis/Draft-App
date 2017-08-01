@@ -2,7 +2,7 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http, $s
     let factory = {};
 
     factory.createLeague = (newLeagueInfo) => {
-        return $http.post("/createLeague", newLeagueInfo)
+        return $http.post("/league/create", newLeagueInfo)
             .then((response) => {
                 return response;
             }, (error) => {
@@ -11,7 +11,7 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http, $s
     };
 
     factory.joinLeague = (leaguePack) => {
-        return $http.patch("/joinLeague/", leaguePack)
+        return $http.patch("/league/join", leaguePack)
             .then(function (response) {
                 return response;
             }, function (error) {

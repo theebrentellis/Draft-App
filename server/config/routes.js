@@ -46,8 +46,11 @@ module.exports = function (app, passport) {
     app.post('/league/newMessage', (req, res) => {
         League.newLeagueMessage(req, res);
     });
-    app.post('/league/:id', (req, res) => {
-        League.updateTeamPick(req, res);
+    app.post("/league/create", function (req, res) {
+        League.createLeague(req, res);
+    });
+    app.patch("/league/join", function (req, res) {
+        League.joinLeague(req, res);
     });
     app.post('/league/:id', (req, res) => {
         League.updateTeamPick(req, res);
@@ -58,18 +61,11 @@ module.exports = function (app, passport) {
     app.post('/league/:league_id/draft/new', (req, res) => {
         Draft.startDraft(req, res);
     });
-    app.post("/createLeague", function(req, res){
-        League.createLeague(req, res);
-    });
+    
     app.get("/getLeague", function(req, res){
         League.getLeague(req, res);
     });
-    app.get("/getAllLeagues", function(req, res){
-        League.getAllLeagues(req, res);
-    });
-    app.patch("/joinLeague", function(req, res){
-        League.joinLeague(req, res);
-    });
+    
     
 
 

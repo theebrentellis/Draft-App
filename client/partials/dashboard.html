@@ -4,13 +4,11 @@
             <div class="card-header">
                 <h3 class="card-headline">My Leagues</h3>
             </div>
-            
             <div class="card-block">
-                <!-- <p class="card-text">{{ vm.currentLeague }}</p>  -->
-                <!-- <p class="card-text">{{ vm.currentUser }}</p>     -->
-                <p ng-if="!vm.currentUser.leagues[0]">No Leagues Yet!</p>
+                <p ng-if="vm.currentLeagues.length == 0">No Leagues Yet!</p>
                 <ul>
-                    <li ng-repeat="league in vm.currentLeague">
+                    <li ng-repeat="league in vm.currentLeagues">
+                        <p ng-if="!league">No Leagues Yet!</p>
                         <a href="#" ui-sref="league({ leagueID: league._id })">{{ league.name }}</a>
                     </li>
                 </ul>
@@ -18,7 +16,6 @@
                 <a href="#" ui-sref="newLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>New League</a>
                 <a href="#" ui-sref="joinLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>Join League</a>
             </div>
-            
         </div>
     </div>
 </div>

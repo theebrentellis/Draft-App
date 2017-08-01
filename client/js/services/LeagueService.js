@@ -33,12 +33,6 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
         return LeagueFactory.createLeague(newLeagueInfo)
             .then((response) => {
                 return response;
-                // return AuthenticationService.updateToken(response.data.token)
-                //     .then(() => {
-                //         $state.transitionTo('dashboard');
-                //     }, (error) => {
-                //         console.log(error);
-                //     });
             }, (error) => {
                 console.log(error);
             });
@@ -47,17 +41,7 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
     service.joinLeague = function (joinPac) {
         return LeagueFactory.joinLeague(joinPac)
             .then((response) => {
-                if (response.data.token) {
-                    return AuthenticationService.updateToken(response.data.token)
-                        .then(() => {
-                            return "League Joined";
-                        }, (error) => {
-                            console.log(error);
-                        });
-                }
-                else {
-                    return response.data.message;
-                }
+                return response;
             }, (error) => {
                 console.log(error);
             });
@@ -88,10 +72,6 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
             }, (error) => {
                 console.log(error);
             });
-    }
-
-    service.isCommish = (id) => {
-
     };
 
     service.getUserLeagues = (id) => {

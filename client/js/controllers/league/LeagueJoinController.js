@@ -25,11 +25,12 @@ angular.module('LeagueJoinController', []).controller('LeagueJoinController', fu
         };
         return LeagueService.joinLeague(leaguePack)
             .then((response) => {
-                if (response == "League Joined") {
-                    $state.transitionTo('dashboard');
+                if (response.data.message) {
+                    vm.message = response.data.message;
+                    
                 }
                 else {
-                    vm.message = response;
+                    $state.transitionTo('dashboard');
                 }
 
             }, (error) => {
@@ -40,5 +41,9 @@ angular.module('LeagueJoinController', []).controller('LeagueJoinController', fu
     //Moves Focus After Input
     vm.moveFocus = (nextId) => {
         $('#' + nextId).focus();
+    };
+
+    vm.dismissError = () => {
+        vm.message = "";
     };
 });

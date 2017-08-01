@@ -23,7 +23,7 @@ module.exports = (function () {
         if (err) {
           console.log(err);
           res.json({
-            message: "Username already exists!"
+            message: "Email already exists!"
           });
         }
         else{
