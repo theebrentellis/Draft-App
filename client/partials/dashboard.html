@@ -6,11 +6,11 @@
             </div>
             
             <div class="card-block">
-                <!-- <p class="card-text">{{ vm.currentLeague }}</p> -->
-                <!-- <p class="card-text">{{ vm.currentUser }}</p>    -->
+                <!-- <p class="card-text">{{ vm.currentLeague }}</p>  -->
+                <!-- <p class="card-text">{{ vm.currentUser }}</p>     -->
                 <p ng-if="!vm.currentUser.leagues[0]">No Leagues Yet!</p>
                 <ul>
-                    <li ng-repeat="league in vm.currentUser.leagues">
+                    <li ng-repeat="league in vm.currentLeague">
                         <a href="#" ui-sref="league({ leagueID: league._id })">{{ league.name }}</a>
                     </li>
                 </ul>

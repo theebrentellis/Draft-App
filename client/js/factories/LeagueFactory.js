@@ -54,7 +54,16 @@ angular.module("LeagueFactory", []).factory("LeagueFactory", function ($http, $s
             }, (error) => {
                 console.log(error);
             });
-    }
+    };
+    
+    factory.getUserLeagues = (user_id) => {
+        return $http.get('/leagues/user/' + user_id)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
+    };
 
     return factory;
 });

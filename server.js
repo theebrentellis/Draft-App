@@ -20,7 +20,7 @@ app.use(bodyParser.json({
 }));
 app.use(bodyParser.urlencoded({
     limit: "50mb",
-    extended: false
+    extended: true
 }));
 
 app.use(passport.initialize());

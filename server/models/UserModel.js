@@ -51,10 +51,6 @@ userSchema.methods.populateUserLeagues = function (userId, callback) {
     .populate({
         path: "leagues",
         model: "League",
-        // populate: {
-        //     path: "commish",
-        //     model: "League"
-        // },
     })
     .exec(function(err, user){
         if(user){

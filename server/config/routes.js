@@ -20,12 +20,10 @@ module.exports = function (app, passport) {
     }), (req, res) => {
         return res.json({ "token": req.user });
     });
-    app.post("/deleteAllUsers", function(req, res){
-        User.deleteAllUsers(req, res);
+    
+    app.get("/leagues/user/:id", function(req, res){
+        League.getUserLeagues(req, res);
     });
-    // app.get("/getUserLeagues", function(req, res){
-    //     User.getUserLeagues(req, res);
-    // });
 
     //Player Calls
     app.post("/downloadPlayers", function(req, res){
@@ -72,24 +70,10 @@ module.exports = function (app, passport) {
     app.patch("/joinLeague", function(req, res){
         League.joinLeague(req, res);
     });
-    app.post("/leaguesClearAll", function(req, res){
-        League.leaguesClearAll(req, res);
-    });
+    
 
-    //Chat Calls
-    app.post("/message", function(req, res){
-        Chat.postMessage(req, res);
-    });
-    app.post("/deleteAllChat", function(req, res){
-        Chat.deleteAllChat(req, res);
-    });
 
-    //DraftCalls
-    app.post("/deleteAllDrafts", function(req, res){
-        League.deleteAllDrafts(req, res);
-    });
-    app.post("/startDraft", function(req, res){
-        League.startDraft(req, res);
-    });
+
+
 };
 

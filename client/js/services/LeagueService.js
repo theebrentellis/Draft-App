@@ -1,4 +1,4 @@
-angular.module("LeagueService", []).service("LeagueService", function ($window, $state, $stateParams, $q, $location, LeagueFactory, ChatFactory, AuthenticationService) {
+angular.module("LeagueService", []).service("LeagueService", function ($window, $state, $stateParams, $q, $location, LeagueFactory, AuthenticationService) {
     let service = {};
 
     let deferred = $q.defer();
@@ -93,8 +93,13 @@ angular.module("LeagueService", []).service("LeagueService", function ($window, 
 
     };
 
-    service.startDraft = () => {
-
+    service.getUserLeagues = (id) => {
+        return LeagueFactory.getUserLeagues(id)
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
     };
 
     return service;

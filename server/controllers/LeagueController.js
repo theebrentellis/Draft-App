@@ -12,7 +12,7 @@ module.exports = (function () {
 		//Creates new League
 		//Creates new chat, draft and league schemas; updates all new schemas with IDs
 		//Updates User with new league and returns token
-		createLeague: function (req, res) {
+		createLeague: (req, res) => {
 
 			//Generate League Code
 			let accessToken = randomstring.generate({
@@ -21,13 +21,13 @@ module.exports = (function () {
 				capitalization: 'lowercase'
 			});
 
-			League.findOne({ 'token': accessToken }, (err, league) => {
+			League.findOne({ 'token': accessToken }).exec((err, league) => {
 				if (err) {
 					console.log(err);
 				}
 				if (league) {
 					return res.json({
-						error: "Error generating unique access token"
+						error: "Error generating unique access code."
 					});
 				}
 			});
@@ -76,7 +76,7 @@ module.exports = (function () {
 		},
 
 		//Gets League after user sets current league
-		getLeague: function (req, res) {
+		getLeague: (req, res) => {
 			League.findById(req.query._id)
 				.then((league) => {
 					if (league !== null) {
@@ -201,15 +201,16 @@ module.exports = (function () {
 					console.log("League: " + league)
 				}, (error) => {
 					console.log(error);
-				})
-				// { "teams._id": req.body.team_id }, (err, res) => {
-			// 	console.log("Error: " + err);
-			// 	console.log("League: " + res);
-			// });
-			// let team = League.findById(req.body.team_id);
-			// team.exec().then((team))
-			// console.log(team.exec());
-		}
-
+				});
+		},
+		
+		getUserLeagues: (req, res) => {
+			League.find({ "teams.$._id": req.body.id }, 'name').exec((error, league) => {
+				if (error) {
+					console.log(error);
+				}
+				res.json(league);
+			});
+		},
 	};
 })();
