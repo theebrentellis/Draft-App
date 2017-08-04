@@ -61,6 +61,14 @@ module.exports = function (app, passport) {
     app.post('/league/:league_id/draft/new', (req, res) => {
         Draft.startDraft(req, res);
     });
+
+    app.get('/league/:league_id/draft/:draft_id/get', (req, res) => {
+        Draft.getDraft(req, res);
+    });
+
+    app.post("/league/:league_id/draft/:draft_id/position/:position/player/:player_id", (req, res) => {
+        Draft.draftPlayer(req, res);
+    });
     
     app.get("/getLeague", function(req, res){
         League.getLeague(req, res);

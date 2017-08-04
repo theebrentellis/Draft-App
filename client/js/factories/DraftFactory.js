@@ -9,10 +9,16 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
                 console.log(error);
             });
     };
+    
+    factory.getDraft = () => {
+        return $http.get("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/get")
+    };
 
-    factory.downloadPlayers = function(){
-        $http.post("/downloadPlayers").success(function(data){
-            console.log(data);
+    factory.downloadPlayers = () => {
+        return $http.post("/downloadPlayers").then((response)=>{
+            console.log(response);
+        }, (error) => {
+            console.log(error);
         });
     };
 
@@ -28,9 +34,10 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
         });
     };
 
-    factory.draftPlayer = function(draftPackage){
-        return $http.post("/draftPlayer", draftPackage)
-            .then(function(response){
+    factory.draftPlayer = function (draftPick) {
+        return $http.post("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/position/" + draftPick.position + "/player/" + draftPick.player_id)
+            .then(function (response) {
+                console.log(response);
                 return response;
             }, function(error){
                 console.log(error);
@@ -41,10 +48,6 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
         $http.get("/getDraftedPlayers").success(function(output){
             callback(output);
         });
-    };
-
-    factory.deleteAllDrafts = function(){
-        return $http.post("/deleteAllDrafts");
     };
 
     return factory;

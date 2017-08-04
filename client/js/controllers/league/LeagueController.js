@@ -1,8 +1,10 @@
-angular.module('LeagueController', []).controller('LeagueController', function ($rootScope, $scope, $q, $uibModal, $confirm, $state, AuthenticationService, LeagueService, DraftService) {
+angular.module('LeagueController', []).controller('LeagueController', function ($scope, $q, $uibModal, $confirm, $state, $stateParams, AuthenticationService, LeagueService, DraftService) {
 
     let vm = this;
 
     vm.message = "";
+
+    vm.params = $stateParams;
 
     //Current User
     vm.currentUser = {};

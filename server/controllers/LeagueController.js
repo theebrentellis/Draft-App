@@ -55,7 +55,6 @@ module.exports = (function () {
 
 		//Gets League after user sets current league
 		getLeague: (req, res) => {
-			console.log("getLeague");
 			League.findById(req.query._id)
 				.then((league) => {
 					if (league !== null) {
@@ -64,9 +63,6 @@ module.exports = (function () {
 						}, (error) => {
 							console.log(error);
 						});
-						// league.populateLeague(req.query._id, function (league) {
-						//   res.json(league);
-						// });
 					}
 				}, (error) => {
 					console.log(error);
@@ -75,7 +71,6 @@ module.exports = (function () {
 
 		//Lets User join league
 		joinLeague: function (req, res) {
-			console.log(req.body);
 			League.findOneAndUpdate({
 				token: req.body.league_code
 			}, {

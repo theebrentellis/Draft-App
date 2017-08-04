@@ -22,13 +22,13 @@ angular.module('UserLoginController', []).controller('UserLoginController', func
             });
     };
     
-    vm.onSignIn = (googleUser) => {
-        console.log("Fired onSign In");
-        if (googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log("Email: " + profile.getEmail());
-        }
-    };
+    // vm.onSignIn = (googleUser) => {
+    //     console.log("Fired onSign In");
+    //     if (googleUser) {
+    //         var profile = googleUser.getBasicProfile();
+    //         console.log("Email: " + profile.getEmail());
+    //     }
+    // };
 
     vm.dismissError = () => {
         vm.message = "";

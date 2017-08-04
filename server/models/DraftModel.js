@@ -14,11 +14,13 @@ var DraftSchema = new mongoose.Schema({
             ref: "User"
         },
         position: Number,
+        _id: false,
         picks: [{
             _player: {
                 type: ObjectId,
                 ref: 'Player'
-            }
+            },
+            _id: false
         }]
 
     }],

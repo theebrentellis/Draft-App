@@ -1,6 +1,6 @@
 let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
     "ui.router", "ui.bootstrap", "dndLists", "angular-confirm",
-    "AppController", "ChatController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "PlayerController", "UserSettingsController", "UserLoginController", "UserRegisterController",
+    "AppController", "ChatController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "PlayerController", "UserSettingsController", "UserLoginController", "UserRegisterController", "DraftController",
     "AuthenticationService", "DraftService", "LeagueService",
     "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
@@ -158,7 +158,6 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     controllerAs: "vm",
                     resolve: {
                         league: function(LeagueService, $stateParams) {
-                            console.log("Start Resolve");
                             return LeagueService.get();
                         }
                     }
@@ -196,6 +195,26 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
+        .state("draft", {
+            url: "/league/:leagueID/draft/:draftID/index",
+            // authenticate: true,
+            views: {
+                "header": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('app.html');
+                    },
+                    controller: "AppController",
+                    controllerAs: "vm"
+                },
+                "content": {
+                    templateProvider: ($templateCache) => {
+                        return $templateCache.get('draft/draft.index.html');
+                    },
+                    controller: "DraftController",
+                    controllerAs: "vm"
+                }
+            }
+        })
         .state("availablePlayers", {
             url: "/availablePlayers",
             authenticate: true,
@@ -213,26 +232,6 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     },
                     controller: "PlayerController",
                     controllerAs: "vm",
-                }
-            }
-        })
-        .state("draftboard", {
-            url: "/draftboard",
-            authenticate: true,
-            views: {
-                "header": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
-                    },
-                    controller: "AppController",
-                    controllerAs: "vm"
-                },
-                "content": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('draftBoard.html');
-                    },
-                    controller: "PlayerController",
-                    controllerAs: "vm"
                 }
             }
         })

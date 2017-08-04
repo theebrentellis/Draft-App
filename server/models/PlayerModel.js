@@ -7,8 +7,5 @@ var PlayerSchema = new mongoose.Schema({
     displayName: String,
     position: String,
     team: String,
-    drafted: Boolean,
-    draftedBy: ObjectId,
-    
 });
 mongoose.model("Player", PlayerSchema);

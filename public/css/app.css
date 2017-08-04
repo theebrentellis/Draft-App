@@ -96,3 +96,6 @@ ul[dnd-list] li {
 ul[dnd-list] li.selected {
   background-color: #dff0d8;
   color: #3c763d; }
+
+.draftPickRow {
+  cursor: pointer; }

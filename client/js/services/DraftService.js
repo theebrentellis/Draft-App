@@ -12,7 +12,6 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
                     return { error: "Please Assign All Picks" };
                 }
             }
-
             //Sets the field for a new draft
             let draftField = [];
             for (let x = 1; x <= response.size; x++) {
@@ -51,20 +50,24 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
         })
     };
 
+    service.getDraft = () => {
+        return DraftFactory.getDraft()
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
+    };
+
     service.onClock = () => {
 
     };
 
-    service.draftPlayer = function (draftPackage) {
-        return DraftFactory.draftPlayer(draftPackage)
-            .then(function (response) {
-                if (response.statusText === "OK") {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }, function (error) {
+    service.draftPlayer = function (draftPick) {
+        return DraftFactory.draftPlayer(draftPick)
+            .then((response) => {
+                return response;
+            }, (error) => {
                 console.log(error);
             });
     };
