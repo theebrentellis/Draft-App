@@ -1,4 +1,4 @@
-angular.module('UserLoginController', []).controller('UserLoginController', function ($state, AuthenticationService) {
+angular.module('UserLoginController', []).controller('UserLoginController', function ($state, $location, $stateParams, AuthenticationService) {
     let vm = this;
 
     vm.message = "";
@@ -12,7 +12,7 @@ angular.module('UserLoginController', []).controller('UserLoginController', func
         return AuthenticationService.login(vm.loginInfo)
             .then((response) => {
                 if (response == "Token Set!") {
-                    $state.transitionTo('dashboard');
+                    $state.go('dashboard');
                 }
                 else {
                     vm.message = response;

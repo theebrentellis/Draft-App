@@ -5,12 +5,13 @@ angular.module('AppController', []).controller('AppController', function (Authen
   vm.isLoggedIn = false;
   let getLoginStatus = AuthenticationService.isLoggedIn();
   getLoginStatus.then((response) => {
-    if (response == true) {
-      vm.isLoggedIn = true;
-    }
-    if (response == false) {
-      vm.isLoggedIn = false;
-    }
+    vm.isLoggedIn = response;
+    // if (response == true) {
+    //   vm.isLoggedIn = true;
+    // }
+    // if (response == false) {
+    //   vm.isLoggedIn = false;
+    // }
   }, (error) => {
     console.log(error);
   });

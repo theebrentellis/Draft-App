@@ -157,7 +157,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                     controller: "LeagueController",
                     controllerAs: "vm",
                     resolve: {
-                        league: function(LeagueService, $stateParams) {
+                        league: function (LeagueService, $stateParams) {
                             return LeagueService.get();
                         }
                     }
@@ -257,11 +257,24 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
         });
 });
 
-angular.module('DraftApp').run(function ($transitions, $location, $state, $q, AuthenticationService) {
-    $transitions.onStart({ to: '*' }, function (trans) {
-        let AuthService = trans.injector().get('AuthenticationService');
-        if (trans.to().authenticate && !AuthService.isLoggedIn()) {
-            $state.transitionTo('login');
-        }
+angular.module('DraftApp').run(function ($transitions, $state, $location, AuthenticationService) {
+
+    $transitions.onStart({ to: '*' }, (trans) => {
+        return AuthenticationService.isLoggedIn().then((response) => {
+            if (trans.to().authenticate && response == false) {
+                $state.transitionTo('login');
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    });
+    $transitions.onStart({ to: 'login' }, (trans) => {
+        return  AuthenticationService.isLoggedIn().then((response) => {
+            if (response == true) {
+                $state.transitionTo('dashboard');
+            }
+        }, (error) => {
+            console.log(error);
+        });
     });
 });
