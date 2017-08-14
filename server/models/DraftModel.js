@@ -32,4 +32,15 @@ var DraftSchema = new mongoose.Schema({
     season: Number
 
 });
+DraftSchema.methods.populateDraft = function (draftID) {
+    return this.model("Draft").findOne({ _id: draftID })
+        .populate({
+            path: "field.picks._player",
+            model: "Player"
+        }).exec().then((draft) => {
+            return draft;
+        }, (error) => {
+            console.log(error);
+        });
+}
 mongoose.model("Draft", DraftSchema);

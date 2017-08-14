@@ -43,10 +43,48 @@ module.exports = (() => {
 
         getDraft: (req, res) => {
             return Draft.findById(req.params.draft_id).then((draft) => {
-                return Players.find({}).limit(100).then((players) => {
-                    console.log(draft);
-                    console.log(players);
-                    return res.status(200).json({ draft: draft, players: players });
+                let sortedDraft = [];
+                let sorted = false;
+                let onClock = {};
+                let x = 0;
+                while (sorted == false) {
+                    for (let y = 0; y < draft.field.length; y++) {
+                        if (draft.field[y].picks[x]) {
+                            sortedDraft.push(draft.field[y].picks[x]._player);
+                        }
+                        else {
+                            onClock = draft.field[y].position;
+                            sorted = true;
+                            break;
+                        }
+                    }
+                    x++;
+                    if (sorted == false) {
+                        for (let z = 9; z >= 0; z--) {
+                            if (draft.field[z].picks[x]) {
+                                sortedDraft.push(draft.field[z].picks[x]._player);
+                            }
+                            else {
+                                onClock.position = draft.field[z].position;
+                                sorted = true;
+                                break;
+                            }
+                        }
+                        x++;
+                    }
+                }
+                
+                draft.populateDraft(draft._id).then((response) => {
+                    return Players.find({ _id: { $nin: sortedDraft } }).limit(100).then((players) => {
+                        let draft = {
+                            onClock: onClock,
+                            draft: response,
+                            availablePlayers: players
+                        }
+                        return res.status(200).json(draft);
+                    }, (error) => {
+                        console.log(error);
+                    });
                 }, (error) => {
                     console.log(error);
                 });

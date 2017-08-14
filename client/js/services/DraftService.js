@@ -1,5 +1,38 @@
-angular.module('DraftService', []).service('DraftService', function ($window, $state, $q, DraftFactory, AuthenticationService, LeagueService) {
+angular.module('DraftService', []).service('DraftService', function ($window, $state, DraftFactory, AuthenticationService, LeagueService) {
     let service = {};
+
+    const draftStorage = {
+        setDraft: (id, draft) => {
+            return Promise.resolve().then(() => {
+                $window.sessionStorage.setItem(id, draft);
+            });
+        },
+        getDraft: (id) => {
+            return Promise.resolve().then(() => {
+                return $window.sessionStorage.getItem(id);
+            });
+        },
+        removeDraft: () => {
+            return Promise.resolve().then(() => {
+                $window.sessionStorage.removeItem(id);
+            });
+        }
+    };
+
+    service.getDraft = ($stateParams) => {
+        return DraftFactory.getDraft($stateParams)
+            .then((response) => {
+                return draftStorage.setDraft("draft", JSON.stringify(response.data))
+                    .then(() => {
+                        return
+                        // console.log("Done");
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }, (error) => {
+                console.log(error);
+            });
+    };
 
     service.startDraft = () => {
 
@@ -47,23 +80,64 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
         let getCurrentLeague = LeagueService.getLeague();
         getCurrentLeague.then((response) => {
             //Get draft object from league.draft_id
-        })
-    };
-
-    service.getDraft = () => {
-        return DraftFactory.getDraft()
-            .then((response) => {
-                return response;
-            }, (error) => {
-                console.log(error);
-            });
+        });
     };
 
     service.onClock = () => {
-
+        return draftStorage.getDraft('draft').then((draft) => {
+            let pDraft = JSON.parse(draft);
+            return pDraft.onClock;
+        }, (error) => {
+            console.log(error);
+        });
     };
 
-    service.draftPlayer = function (draftPick) {
+    service.availablePlayers = () => {
+        return draftStorage.getDraft('draft').then((draft) => {
+            let pDraft = JSON.parse(draft);
+            return pDraft.availablePlayers;
+        }, (error) => {
+            console.log(error);
+        });
+    };
+
+    service.draftList = () => {
+        return draftStorage.getDraft('draft').then((draft) => {
+            let pDraft = JSON.parse(draft);
+            let sortedDraft = [];
+            let sorted = false;
+            let x = 0;
+            while (sorted == false) {
+                for (let y = 0; y < pDraft.draft.field.length; y++) {
+                    if (pDraft.draft.field[y].picks[x]) {
+                        sortedDraft.push(pDraft.draft.field[y].picks[x]._player);
+                    }
+                    else {
+                        sorted = true;
+                        break;
+                    }
+                }
+                x++;
+                if (sorted == false) {
+                    for (let z = pDraft.draft.field.length - 1; z >= 0; z--) {
+                        if (pDraft.draft.field[z].picks[x]) {
+                            sortedDraft.push(pDraft.draft.field[z].picks[x]._player);
+                        }
+                        else {
+                            sorted = true;
+                            break;
+                        }
+                    }
+                    x++;
+                }
+            }
+            return sortedDraft;
+        }, (error) => {
+            console.log(error);
+        });
+    };
+
+    service.draftPlayer = (draftPick) => {
         return DraftFactory.draftPlayer(draftPick)
             .then((response) => {
                 return response;
@@ -75,6 +149,8 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
     service.downloadPlayers = function () {
         DraftFactory.downloadPlayers();
     };
+
+    
 
     return service;
 });

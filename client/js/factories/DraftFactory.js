@@ -10,8 +10,13 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
             });
     };
     
-    factory.getDraft = () => {
+    factory.getDraft = ($stateParams) => {
         return $http.get("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/get")
+            .then((response) => {
+                return response;
+            }, (error) => {
+                console.log(error);
+            });
     };
 
     factory.downloadPlayers = () => {
@@ -19,18 +24,6 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
             console.log(response);
         }, (error) => {
             console.log(error);
-        });
-    };
-
-    factory.getPlayers = function(position, callback){
-        $http.get("/getPlayers/", {params: {position: position}}).success(function(output){
-            callback(output);
-        });
-    };
-
-    factory.deleteAllPlayers = function(callback){
-        $http.post("/deleteAllPlayers").success(function(data){
-            callback(data);
         });
     };
 

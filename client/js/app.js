@@ -180,24 +180,18 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                         return $templateCache.get('league/league.commish.html');
                     },
                     controller: "LeagueCommishController",
-                    controllerAs: "vm",
-                    // resolve: {
-                    //     league: (LeagueService, $stateParams) => {
-                    //         console.log($stateParams)
-                    //         // let theLeague = LeagueService.getLeague();
-                    //         // theLeague.then((response) => {
-
-                    //         // }, (error) => {
-                    //         //     console.log(error);
-                    //         // });
-                    //     }
-                    // }
+                    controllerAs: "vm"
                 }
             }
         })
         .state("draft", {
             url: "/league/:leagueID/draft/:draftID/index",
-            // authenticate: true,
+            authenticate: true,
+            resolve: {
+                _draft: function (DraftService, $stateParams) {
+                    return DraftService.getDraft($stateParams);
+                }
+            },
             views: {
                 "header": {
                     templateProvider: ($templateCache) => {
@@ -215,9 +209,14 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
-        .state("availablePlayers", {
-            url: "/availablePlayers",
+        .state("draftBoard", {
+            url: "/league/:leagueID/draft/:draftID/draftBoard",
             authenticate: true,
+            resolve: {
+                _draft: function (DraftService, $stateParams) {
+                    return DraftService.getDraft($stateParams);
+                }
+            },
             views: {
                 "header": {
                     templateProvider: ($templateCache) => {
@@ -228,9 +227,9 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                 },
                 "content": {
                     templateProvider: ($templateCache) => {
-                        return $templateCache.get('availablePlayers.html');
+                        return $templateCache.get('draft/draftBoard.html');
                     },
-                    controller: "PlayerController",
+                    controller: "DraftBoardController",
                     controllerAs: "vm",
                 }
             }
