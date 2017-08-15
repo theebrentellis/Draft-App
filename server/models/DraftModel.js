@@ -14,6 +14,7 @@ var DraftSchema = new mongoose.Schema({
             ref: "User"
         },
         position: Number,
+        placeholder: String,
         _id: false,
         picks: [{
             _player: {
@@ -37,7 +38,13 @@ DraftSchema.methods.populateDraft = function (draftID) {
         .populate({
             path: "field.picks._player",
             model: "Player"
+        })
+        .populate({
+            path: "field._user",
+            model: "User",
+            select: "userName"
         }).exec().then((draft) => {
+            // console.log(draft);
             return draft;
         }, (error) => {
             console.log(error);

@@ -4,7 +4,7 @@
             {{ vm.message }}
         </div>
         <div ng-if="vm.onClock" class="alert alert-success" role="alert">
-            <strong>On The Clock:</strong> Team {{ vm.onClock.position }}
+            <strong>On The Clock:</strong> {{ vm.onClock._user ? vm.onClock._user.userName : "Team " + vm.onClock.position }}
         </div>
         <!-- <button class="btn btn-lg btn-danger" ng-click="vm.downloadPlayers()">Download Players!</button> -->
     </div>

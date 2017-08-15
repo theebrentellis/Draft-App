@@ -1,6 +1,8 @@
 angular.module('DraftService', []).service('DraftService', function ($window, $state, DraftFactory, AuthenticationService, LeagueService) {
     let service = {};
 
+    let socket = io.connect();
+
     const draftStorage = {
         setDraft: (id, draft) => {
             return Promise.resolve().then(() => {
@@ -138,8 +140,10 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
     };
 
     service.draftPlayer = (draftPick) => {
+        
         return DraftFactory.draftPlayer(draftPick)
             .then((response) => {
+                socket.emit("successfulPick");
                 return response;
             }, (error) => {
                 console.log(error);
@@ -150,7 +154,9 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
         DraftFactory.downloadPlayers();
     };
 
-    
+    socket.on("updateDraft", function() {
+        $state.reload();
+    });
 
     return service;
 });

@@ -42,7 +42,7 @@ module.exports = (() => {
         },
 
         getDraft: (req, res) => {
-            return Draft.findById(req.params.draft_id).then((draft) => {
+            return Draft.findById(req.params.draft_id).populate("field._user", "userName").then((draft) => {
                 let sortedDraft = [];
                 let sorted = false;
                 let onClock = {};
@@ -53,7 +53,10 @@ module.exports = (() => {
                             sortedDraft.push(draft.field[y].picks[x]._player);
                         }
                         else {
-                            onClock = draft.field[y].position;
+                            onClock.position = draft.field[y].position;
+                            if (draft.field[y]._user) {
+                                onClock._user = draft.field[y]._user
+                            } 
                             sorted = true;
                             break;
                         }
@@ -74,11 +77,11 @@ module.exports = (() => {
                     }
                 }
                 
-                draft.populateDraft(draft._id).then((response) => {
+                draft.populateDraft(draft._id).then((populatedDraft) => {
                     return Players.find({ _id: { $nin: sortedDraft } }).limit(100).then((players) => {
                         let draft = {
                             onClock: onClock,
-                            draft: response,
+                            draft: populatedDraft,
                             availablePlayers: players
                         }
                         return res.status(200).json(draft);

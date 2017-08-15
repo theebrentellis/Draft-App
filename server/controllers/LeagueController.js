@@ -155,7 +155,6 @@ module.exports = (function () {
 		},
 
 		getUserLeagues: (req, res) => {
-			console.log(req.params.id);
 			return League.aggregate({ $match: { "teams._user": mongoose.Types.ObjectId(req.params.id)}})
 				.exec().then((leagues) => {
 					res.json(leagues);

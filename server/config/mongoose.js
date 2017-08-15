@@ -2,7 +2,7 @@ let mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 let bluebird = require('bluebird');
-let MongoClient = require('mongodb').MongoClient;
+// let MongoClient = require('mongodb').MongoClient;
 
 let options = {
 	useMongoClient: true,
@@ -12,8 +12,6 @@ mongoose.Promise = bluebird;
 mongoose.connect("mongodb://brentellis:DraftApp4$@ds153785.mlab.com:53785/draftapp", options).then((db) => {
 	console.log("Hot Dog!");
 });
-
-
 
 var models_path = __dirname + "/../models";
 

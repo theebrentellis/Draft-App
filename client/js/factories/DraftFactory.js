@@ -1,4 +1,4 @@
-angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stateParams){
+angular.module("DraftFactory", []).factory("DraftFactory", function ($http, $stateParams) {
     var factory = {};
 
     factory.startDraft = (newDraftObject) => {
@@ -9,7 +9,7 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
                 console.log(error);
             });
     };
-    
+
     factory.getDraft = ($stateParams) => {
         return $http.get("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/get")
             .then((response) => {
@@ -20,27 +20,20 @@ angular.module("DraftFactory", []).factory("DraftFactory", function($http, $stat
     };
 
     factory.downloadPlayers = () => {
-        return $http.post("/downloadPlayers").then((response)=>{
+        return $http.post("/downloadPlayers").then((response) => {
             console.log(response);
         }, (error) => {
             console.log(error);
         });
     };
 
-    factory.draftPlayer = function (draftPick) {
+    factory.draftPlayer = (draftPick) => {
         return $http.post("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/position/" + draftPick.position + "/player/" + draftPick.player_id)
-            .then(function (response) {
-                console.log(response);
+            .then((response) => {
                 return response;
-            }, function(error){
+            }, (error) => {
                 console.log(error);
             });
-    };
-
-    factory.getDraftedPlayers = function(callback){
-        $http.get("/getDraftedPlayers").success(function(output){
-            callback(output);
-        });
     };
 
     return factory;

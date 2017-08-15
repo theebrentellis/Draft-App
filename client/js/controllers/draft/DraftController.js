@@ -19,8 +19,8 @@ angular.module("DraftController", []).controller("DraftController", function ($s
     });
 
     let getOnClock = DraftService.onClock();
-    getOnClock.then((position) => {
-        vm.onClock = position;
+    getOnClock.then((team) => {
+        vm.onClock = team;
     }, (error) => {
         console.log(error);
     });
@@ -38,11 +38,13 @@ angular.module("DraftController", []).controller("DraftController", function ($s
             player_id: player_id
         };
         return DraftService.draftPlayer(draftPick).then((response) => {
-            $state.reload();
+            return;
+            // $state.reload();
         }, (error) => {
             console.log(error);
         });
     };
+
 
 
 });
