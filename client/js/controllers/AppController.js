@@ -1,4 +1,4 @@
-angular.module('AppController', []).controller('AppController', function (AuthenticationService, DraftService, LeagueService) {
+angular.module('AppController', []).controller('AppController', function ($rootScope, $state, AuthenticationService, DraftService, LeagueService) {
 
     let vm = this;
 

@@ -78,7 +78,7 @@ module.exports = (() => {
                 }
                 
                 draft.populateDraft(draft._id).then((populatedDraft) => {
-                    return Players.find({ _id: { $nin: sortedDraft } }).limit(100).then((players) => {
+                    return Players.find({ _id: { $nin: sortedDraft } }).then((players) => {
                         let draft = {
                             onClock: onClock,
                             draft: populatedDraft,

@@ -1,0 +1,98 @@
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-headline">Draft Picks</h1>
+                <a href="#" ui-sref="draft.draftBoard"><i class="fa fa-fw fa-btn fa-table"></i>Draft Board</a>
+                <a href="#" ui-sref="draft.chat"><i class="fa fa-fw fa-btn fa-comments-o"></i>Chat</a>
+            </div>
+            <div class="card-block">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-headline">Available Players</h2>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="">
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'QB'">QB</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'WR'">WR</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'RB'">RB</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'TE'">TE</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'K'">K</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'DEF'">Def</button>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input class="form-control" type="text" placeholder="Search..." ng-model="vm.searchPlayer">
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <a href="" ng-click="vm.sortType = 'displayName'; vm.sortReverse = !vm.sortReverse">Name<i ng-show="vm.sortType == 'displayName'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
+                                            </th>
+                                            <th>
+                                                <a href="" ng-click="vm.sortType = 'position'; vm.sortReverse = !vm.sortReverse">Position<i ng-show="vm.sortType == 'position'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
+                                            </th>
+                                            <th>
+                                                <a href="" ng-click="vm.sortType = 'team'; vm.sortReverse = !vm.sortReverse">Team<i ng-show="vm.sortType == 'team'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <tr class="availablePickRow {{ player.position }}" 
+                                            ng-repeat="player in vm.availablePlayers | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchPlayer | filter: {position: vm.filterPosition}"
+                                            ng-click="vm.draftPlayer(player._id)" 
+                                            confirm="Draft {{ player.displayName }}" 
+                                            confirm-settings="{size: 'sm'}">
+                                            <td>{{ player.displayName }}</td>
+                                            <td>{{ player.position }}</td>
+                                            <td>{{ player.team }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-headline">Draft Picks</h4>
+                            </div>
+                            <div class="card-block">
+                                <table class="table" style="height: 25%;">
+                                    <thead>
+                                        <tr class="draftPickRow">
+                                            <th>
+                                                Pick
+                                            </th>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Position
+                                            </th>
+                                            <th>
+                                                Team
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <tr ng-repeat="player in vm.draft" class="draftPickRow {{ player.position }}">
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ player.displayName }}</td>
+                                            <td>{{ player.position }}</td>
+                                            <td>{{ player.team }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

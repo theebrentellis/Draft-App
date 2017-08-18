@@ -103,6 +103,13 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
         });
     };
 
+    service.draftField = () => {
+        return draftStorage.getDraft('draft').then((draft) => {
+            let pDraft = JSON.parse(draft);
+            return pDraft.draft.field;
+        });
+    };
+
     service.draftList = () => {
         return draftStorage.getDraft('draft').then((draft) => {
             let pDraft = JSON.parse(draft);

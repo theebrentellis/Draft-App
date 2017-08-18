@@ -1,5 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 1300px;
 }
 
 #welcomeLogo {
@@ -105,32 +106,81 @@ ul[dnd-list] li.selected {
     color: #3c763d;
 }
 
-.draftPickRow{
+tr.availablePickRow{
     cursor: pointer;
+    td{
+        border-top: none;
+        border-radius: 2px;
+    }
+    th{
+        border: none !important;
+        border-bottom: none !important;
+    }
+}
+tr.draftPickRow{
+    td{
+        border-top: none;
+        border-radius: 2px;
+    }
+    th{
+        border: none !important;
+    }
 }
 
 .K {
     background-color: rgba(102, 51, 153, 0.2);
-    border-color: black;
-    border-radius: 10px;
+    color: rgba(102, 51, 153, 1);
+    border: 1px solid #663399 !important;
 }
 
 .RB {
-    background-color: rgba(192, 192, 192, 0.2);
+    background-color: rgba(217, 207, 207, 0.20);
+    color: rgba(78, 71, 71, 1);
+    border: 1px solid #4e4747 !important;
 }
 
 .QB {
-    background-color: rgba(92, 218, 92, 0.2)
+    background-color: rgba(60, 118, 61, 0.2);
+    color: rgba(37, 78, 38, 1);
+    border: 1px solid #254e26 !important;
 }
 
 .WR {
     background-color: rgba(153, 0, 0, 0.2);
+    color: rgba(153, 0, 0, 1);
+    border: 1px solid #990000;
 }
 
 .DEF {
     background-color: rgba(255, 215, 0, 0.2);
+    color: rgba(134, 112, 1, 1);
+    border: 1px solid #867001;
 }
 
 .TE {
-    background-color: rgba(255, 165, 0, 0.2);
+    background-color: rgba(63, 127, 191, 0.2);
+    color: rgba(19, 70, 146, 1);
+    border: 1px solid #134692;
+}
+
+
+.table.boardHead{
+    width: auto;
+    th{
+        width: 125px;
+        height: 75px;
+        text-align: center;
+        border: 3px solid black !important;
+    }
+}
+.draftBoardPick{
+    padding: 1px !important;
+    width: 125px;
+    height: 125px;
+    // border: 1px solid black !important;
+    text-align: center;
+    span{
+        display: block;
+        height: auto;
+    }
 }

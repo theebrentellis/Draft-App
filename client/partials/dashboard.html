@@ -1,20 +1,22 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-headline">My Leagues</h3>
-            </div>
-            <div class="card-block">
-                <p ng-if="vm.currentLeagues.length == 0">No Leagues Yet!</p>
-                <ul>
-                    <li ng-repeat="league in vm.currentLeagues">
-                        <p ng-if="!league">No Leagues Yet!</p>
-                        <a href="#" ui-sref="league({ leagueID: league._id })">{{ league.name }}</a>
-                    </li>
-                </ul>
-                <hr>
-                <a href="#" ui-sref="newLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>New League</a>
-                <a href="#" ui-sref="joinLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>Join League</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-headline">My Leagues</h3>
+                </div>
+                <div class="card-block">
+                    <p ng-if="vm.currentLeagues.length == 0">No Leagues Yet!</p>
+                    <ul>
+                        <li ng-repeat="league in vm.currentLeagues">
+                            <p ng-if="!league">No Leagues Yet!</p>
+                            <a href="#" ui-sref="league({ leagueID: league._id })">{{ league.name }}</a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <a href="#" ui-sref="newLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>New League</a>
+                    <a href="#" ui-sref="joinLeague"><i class="fa fa-btn fa-fw fa-plus-circle"></i>Join League</a>
+                </div>
             </div>
         </div>
     </div>

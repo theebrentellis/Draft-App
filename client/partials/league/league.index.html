@@ -1,73 +1,75 @@
-<div class="row justify-content-center">
-    <div class="col-6">
-        <div ng-if="vm.message" class="alert alert-danger">
-            <button type="button" class="close" ng-click="vm.dismissError()">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div ng-if="vm.message" class="alert alert-danger">
+                <button type="button" class="close" ng-click="vm.dismissError()">
                 <span aria-hidden="true">&times;</span>
             </button> {{ vm.message }}
+            </div>
         </div>
     </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-headline">Welcome to {{ vm.league.name }} League!</h2>
-                <a href="#" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ui-sref="leagueCommish({ leagueID: vm.league._id })"><i class="fa fa-fw fa-btn fa-cog"></i>Commish Settings</a>
-            </div>
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-headline">Drafts</h3>
-                                <button class="btn btn-sm btn-outline-danger" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ng-click="vm.startDraft()">New Draft</button>
-                            </div>
-                            <div class="card-block">
-                                <h5 class="card-title">Season</h5>
-                                <ul>
-                                    <li ng-repeat="draft in vm.league._drafts">
-                                        <strong>{{ draft.season }}</strong>
-                                        <a href="#" ui-sref="draft({ leagueID: vm.params.leagueID, draftID: draft._id })"><button class="btn btn-sm btn-outline-success" ng-if="!draft.completed">Join Draft!</button></a>
-                                    </li>
-                                </ul>
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-headline">Welcome to {{ vm.league.name }} League!</h2>
+                    <a href="#" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ui-sref="leagueCommish({ leagueID: vm.league._id })"><i class="fa fa-fw fa-btn fa-cog"></i>Commish Settings</a>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-headline">Drafts</h3>
+                                    <button class="btn btn-sm btn-outline-danger" ng-if="vm.isCommish(vm.currentUser._id, vm.league.commish_id)" ng-click="vm.startDraft()">New Draft</button>
+                                </div>
+                                <div class="card-block">
+                                    <h5 class="card-title">Season</h5>
+                                    <ul>
+                                        <li ng-repeat="draft in vm.league._drafts">
+                                            <strong>{{ draft.season }}</strong>
+                                            <a href="#" ui-sref="draft.pick({ leagueID: vm.params.leagueID, draftID: draft._id })"><button class="btn btn-sm btn-outline-success" ng-if="!draft.completed">Join Draft!</button></a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-headline">League Messages</h3>
-                                <a href="" ng-click="vm.newMessage()"><i class="fa fa-fw fa-btn fa-plus"></i>New Message</a>
-                            </div>
-                            <div class="card-block">
-                                <ul>
-                                    <li ng-repeat="message in vm.league.messages"><span class="leagueMessageFrom">{{ message._user.userName }}:</span> <span class="leagueMessage">{{ message.message }}</span></li>
-                                </ul>
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-headline">League Messages</h3>
+                                    <a href="" ng-click="vm.newMessage()"><i class="fa fa-fw fa-btn fa-plus"></i>New Message</a>
+                                </div>
+                                <div class="card-block">
+                                    <ul>
+                                        <li ng-repeat="message in vm.league.messages"><span class="leagueMessageFrom">{{ message._user.userName }}:</span> <span class="leagueMessage">{{ message.message }}</span></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/ng-template" id="newMessageModal.html" class="modal">
-        <div class="modal-header">
-            <h3 class="modal-title" id="modal-title">New League Message</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.cancel()">
+        <script type="text/ng-template" id="newMessageModal.html" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">New League Message</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.cancel()">
                 <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        <div class="modal-body" id="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="">Message</label>
-                    <textarea class="form-control" name="" id="" rows="3" ng-model="vm.newLeagueMessage"></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline-primary" type="button" ng-click="vm.sendMessage()">Send</button>
-            <!-- <button class="btn btn-warning" type="button" ng-click="vm.cancelMessage()">Cancel</button> -->
-        </div>
-    </script>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="">Message</label>
+                        <textarea class="form-control" name="" id="" rows="3" ng-model="vm.newLeagueMessage"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-primary" type="button" ng-click="vm.sendMessage()">Send</button>
+                <!-- <button class="btn btn-warning" type="button" ng-click="vm.cancelMessage()">Cancel</button> -->
+            </div>
+        </script>
+    </div>
 </div>

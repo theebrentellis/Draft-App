@@ -1,6 +1,6 @@
 let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
     "ui.router", "ui.bootstrap", "dndLists", "angular-confirm",
-    "AppController", "ChatController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "UserSettingsController", "UserLoginController", "UserRegisterController", "DraftController",
+    "AppController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "UserSettingsController", "UserLoginController", "UserRegisterController", "DraftController", "DraftPickController", "DraftBoardController", "DraftChatController",
     "AuthenticationService", "DraftService", "LeagueService",
     "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
@@ -185,7 +185,7 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
             }
         })
         .state("draft", {
-            url: "/league/:leagueID/draft/:draftID/index",
+            url: "/league/:leagueID/draft/:draftID",
             authenticate: true,
             resolve: {
                 _draft: function (DraftService, $stateParams) {
@@ -209,47 +209,41 @@ angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
-        .state("draftBoard", {
-            url: "/league/:leagueID/draft/:draftID/draftBoard",
+        .state("draft.pick", {
+            url: "/pick",
             authenticate: true,
-            resolve: {
-                _draft: function (DraftService, $stateParams) {
-                    return DraftService.getDraft($stateParams);
-                }
-            },
             views: {
-                "header": {
+                "draftPick": {
                     templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
+                        return $templateCache.get('draft/draft.pick.html')
                     },
-                    controller: "AppController",
-                    controllerAs: "vm",
-                },
-                "content": {
+                    controller: "DraftPickController",
+                    controllerAs: "vm"
+                }
+            }
+        })
+        .state("draft.draftBoard", {
+            url: "/draftBoard",
+            authenticate: true,
+            views: {
+                "draftBoard": {
                     templateProvider: ($templateCache) => {
-                        return $templateCache.get('draft/draftBoard.html');
+                        return $templateCache.get('draft/draft.draftBoard.html');
                     },
                     controller: "DraftBoardController",
                     controllerAs: "vm",
                 }
             }
         })
-        .state("chat", {
+        .state("draft.chat", {
             url: "/chat",
             authenticate: true,
             views: {
-                "header": {
+                "draftChat": {
                     templateProvider: ($templateCache) => {
-                        return $templateCache.get('app.html');
+                        return $templateCache.get('draft/draft.chat.html');
                     },
-                    controller: "AppController",
-                    controllerAs: "vm"
-                },
-                "content": {
-                    templateProvider: ($templateCache) => {
-                        return $templateCache.get('chat.html');
-                    },
-                    controller: "ChatController",
+                    controller: "DraftChatController",
                     controllerAs: "vm"
                 }
             }
@@ -267,8 +261,9 @@ angular.module('DraftApp').run(function ($transitions, $state, $location, Authen
             console.log(error);
         });
     });
+
     $transitions.onStart({ to: 'login' }, (trans) => {
-        return  AuthenticationService.isLoggedIn().then((response) => {
+        return AuthenticationService.isLoggedIn().then((response) => {
             if (response == true) {
                 $state.transitionTo('dashboard');
             }
@@ -276,4 +271,5 @@ angular.module('DraftApp').run(function ($transitions, $state, $location, Authen
             console.log(error);
         });
     });
+
 });

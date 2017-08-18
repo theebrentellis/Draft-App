@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-headline">Draft Chat</h2>
+                <a href="#" ui-sref="draft.pick"><i class="fa fa-fw fa-btn fa-list"></i>Draft Picks</a>
+                <a href="#" ui-sref="draft.draftBoard"><i class="fa fa-fw fa-btn fa-table"></i>Draft Board</a>
+            </div>
+            <div class="card-block">
+                <ul>
+                    <li ng-repeat="text in vm.messages | filter: vm.filterText">
+                        <p><b>{{text.userName}}</b> - {{text.message}}</p>
+                    </li>
+                </ul>
+                <input type="text" placeholder="Enter Text Here" ng-model="vm.message" ng-enter="sendMessage()" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-success btn-md" ng-click="vm.sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    <!--<input type="text" ng-model="filterText">-->
+    
+</div>

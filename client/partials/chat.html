@@ -1,9 +1,0 @@
-<div>
-    <!--<input type="text" ng-model="filterText">-->
-    <ul>
-        <li ng-repeat="text in vm.messages | filter: vm.filterText"><p><b>{{text.userName}}</b> - {{text.message}}</p></li>
-    </ul>
-    <input type="text" placeholder="Enter Text Here" ng-model="vm.message" ng-enter="sendMessage()" class="form-control" required>
-    <br>
-    <button type="submit" class="btn btn-success btn-md" ng-click="vm.sendMessage()">Send</button>
-</div>

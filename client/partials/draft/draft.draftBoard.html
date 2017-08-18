@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div ng-if="vm.message" class="alert alert-danger">
+            {{ vm.message }}
+        </div>
+        <div ng-if="vm.onClock" class="alert alert-success" role="alert">
+            <strong>On The Clock:</strong> {{ vm.onClock._user ? vm.onClock._user.userName : "Team " + vm.onClock.position
+            }}
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-headline">Draft Board</h2>
+            <a href="#" ui-sref="draft.pick"><i class="fa fa-fw fa-btn fa-list"></i>Picks</a>
+            <a href="#" ui-sref="draft.chat"><i class="fa fa-fw fa-btn fa-comments-o"></i>Chat</a>
+        </div>
+        <div class="card-block">
+            <div class="row justify-content-center">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table ng-repeat="team in vm.draftField" class="table boardHead">
+                    <thead>
+                        <tr>
+                            <th>
+                                {{ team._user ? team._user.userName : "Team: " + team.position }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pick in team.picks">
+                            <td class="draftBoardPick {{ pick._player.position }}">
+                                <span>{{ pick._player.displayName }}</span>
+                                <span>{{ pick._player.position }}</span>
+                                <span>{{ pick._player.team }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,94 +1,20 @@
-<div class="row justify-content-center">
-    <div class="col-6">
-        <div ng-if="vm.message" class="alert alert-danger">
-            {{ vm.message }}
-        </div>
-        <div ng-if="vm.onClock" class="alert alert-success" role="alert">
-            <strong>On The Clock:</strong> {{ vm.onClock._user ? vm.onClock._user.userName : "Team " + vm.onClock.position }}
-        </div>
-        <!-- <button class="btn btn-lg btn-danger" ng-click="vm.downloadPlayers()">Download Players!</button> -->
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-headline">Draft</h2>
-            </div>
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-headline">Available Players</h4>
-                            </div>
-                            <div class="card-block">
-                                <div class="input-group margin-bottom-sm">
-                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                    <input class="form-control" type="text" placeholder="Search..." ng-model="vm.searchPlayer">
-                                </div>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <a href="" ng-click="vm.sortType = 'displayName'; vm.sortReverse = !vm.sortReverse">Name<i ng-show="vm.sortType == 'displayName'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
-                                            </th>
-                                            <th>
-                                                <a href="" ng-click="vm.sortType = 'position'; vm.sortReverse = !vm.sortReverse">Position<i ng-show="vm.sortType == 'position'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
-                                            </th>
-                                            <th>
-                                                <a href="" ng-click="vm.sortType = 'team'; vm.sortReverse = !vm.sortReverse">Team<i ng-show="vm.sortType == 'team'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="">
-                                        <tr class="draftPickRow {{ player.position }}" ng-repeat="player in vm.availablePlayers | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchPlayer" ng-click="vm.draftPlayer(player._id)">
-                                            <td>{{ player.displayName }}</td>
-                                            <td>{{ player.position }}</td>
-                                            <td>{{ player.team }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-headline">Draft Picks</h4>
-                            </div>
-                            <div class="card-block">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Pick
-                                            </th>
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Position
-                                            </th>
-                                            <th>
-                                                Team
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="">
-                                        <tr ng-repeat="player in vm.draft" class="{{ player.position }}">
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ player.displayName }}</td>
-                                            <td>{{ player.position }}</td>
-                                            <td>{{ player.team }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+<div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div ng-if="vm.message" class="alert alert-danger">
+                    {{ vm.message }}
                 </div>
+                <div ng-if="vm.onClock" class="alert alert-success" role="alert">
+                    <strong>On The Clock:</strong> {{ vm.onClock._user ? vm.onClock._user.userName : "Team " + vm.onClock.position
+                    }}
+                </div>
+                <!-- <button class="btn btn-lg btn-danger" ng-click="vm.downloadPlayers()">Download Players!</button> -->
             </div>
         </div>
     </div>
+    <div ui-view="draftPick" class="container"></div>
+    <div ui-view="draftBoard" class="container-fluid"></div>
+    <div ui-view="draftChat" class="container"></div>
 </div>
+

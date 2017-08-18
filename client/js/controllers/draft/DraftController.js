@@ -1,21 +1,17 @@
-angular.module("DraftController", []).controller("DraftController", function ($state, _draft, $stateParams, AuthenticationService, LeagueService, DraftService, DraftFactory) {
+angular.module("DraftController", []).controller("DraftController", function ($rootScope, $state, _draft, $stateParams, AuthenticationService, LeagueService, DraftService) {
     let vm = this;
+
+    vm.params = $stateParams;
 
     vm.message = "";
 
     vm.sortType = 'displayName';
     vm.sortReverse = false;
     vm.searchPlayer = "";
+    vm.filterPosition = "";
 
     vm.currentUser = AuthenticationService.currentUser().then((response) => {
         vm.currentUser = response;
-    });
-
-    let getAvailablePlayers = DraftService.availablePlayers();
-    getAvailablePlayers.then((players) => {
-        vm.availablePlayers = players;
-    }, (error) => {
-        console.log(error);
     });
 
     let getOnClock = DraftService.onClock();
@@ -24,27 +20,4 @@ angular.module("DraftController", []).controller("DraftController", function ($s
     }, (error) => {
         console.log(error);
     });
-
-    let getDraftList = DraftService.draftList();
-    getDraftList.then((draft) => {
-        vm.draft = draft;
-    }, (error) => {
-        console.log(error);
-    });
-
-    vm.draftPlayer = (player_id) => {
-        let draftPick = {
-            position: vm.onClock.position,
-            player_id: player_id
-        };
-        return DraftService.draftPlayer(draftPick).then((response) => {
-            return;
-            // $state.reload();
-        }, (error) => {
-            console.log(error);
-        });
-    };
-
-
-
 });
