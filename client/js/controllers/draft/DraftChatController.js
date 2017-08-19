@@ -1,3 +1,15 @@
+angular.module('ngEnter', []).directive('ngEnter', function ($scope, element, attrs) {
+
+    element.bind("keypress", function (event) {
+        console.log(this);
+        if (event.which === 13) {
+            $scope.$apply(function () {
+                $scope.$eval(attrs.ngEnter);
+            });
+            event.preventDefault();
+        }
+    });
+});
 angular.module('DraftChatController', []).controller('DraftChatController', function ($scope, AuthenticationService, LeagueService, DraftService) {
 
     var vm = this;
@@ -23,11 +35,12 @@ angular.module('DraftChatController', []).controller('DraftChatController', func
     // });
 
     vm.sendMessage = () => {
-        // var chatMessage = {
-        //     "_id": vm.currentLeague.chat._id,
-        //     "userName": vm.currentUser.firstName,
-        //     "message": vm.message
-        // };
+        var chatMessage = {
+            "_id": vm.currentLeague.chat._id,
+            "userName": vm.currentUser.firstName,
+            "message": vm.message
+        };
+        console.log(chatMessage);
         // LeagueService.postMessage(vm.message, function (result, err) {
         //     if (err) {
         //         window.alert("Error!");
@@ -39,15 +52,3 @@ angular.module('DraftChatController', []).controller('DraftChatController', func
         // });
     };
 });
-
-// angular.module('ngEnter', []).directive('ngEnter', function ($scope, element, attrs) {
-
-//     element.bind("keypress", function (event) {
-//         if (event.which === 13) {
-//             $scope.$apply(function () {
-//                 $scope.$eval(attrs.ngEnter);
-//             });
-//             event.preventDefault();
-//         }
-//     });
-// });

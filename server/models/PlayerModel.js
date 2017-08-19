@@ -7,5 +7,8 @@ var PlayerSchema = new mongoose.Schema({
     displayName: String,
     position: String,
     team: String,
+    overallRank: Number,
+    positionRank: Number,
+    byeWeek: Number
 });
 mongoose.model("Player", PlayerSchema);

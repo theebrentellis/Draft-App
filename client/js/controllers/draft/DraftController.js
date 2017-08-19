@@ -1,14 +1,14 @@
-angular.module("DraftController", []).controller("DraftController", function ($rootScope, $state, _draft, $stateParams, AuthenticationService, LeagueService, DraftService) {
+angular.module("DraftController", []).controller("DraftController", function ($state, _draft, $stateParams, AuthenticationService, LeagueService, DraftService) {
     let vm = this;
 
     vm.params = $stateParams;
 
     vm.message = "";
 
-    vm.sortType = 'displayName';
-    vm.sortReverse = false;
-    vm.searchPlayer = "";
-    vm.filterPosition = "";
+    // vm.sortType = 'displayName';
+    // vm.sortReverse = false;
+    // vm.searchPlayer = "";
+    // vm.filterPosition = "";
 
     vm.currentUser = AuthenticationService.currentUser().then((response) => {
         vm.currentUser = response;
@@ -19,5 +19,9 @@ angular.module("DraftController", []).controller("DraftController", function ($r
         vm.onClock = team;
     }, (error) => {
         console.log(error);
-    });
+        });
+    
+    vm.downloadPlayers = () => {
+        DraftService.downloadPlayers();
+    }
 });

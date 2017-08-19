@@ -7,19 +7,18 @@
                 <a href="#" ui-sref="draft.chat"><i class="fa fa-fw fa-btn fa-comments-o"></i>Chat</a>
             </div>
             <div class="card-block">
-
                 <div class="row">
                     <div class="col-6">
                         <div class="card">
                             <div class="card-header">
                                 <h2 class="card-headline">Available Players</h2>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="">
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'QB'">QB</button>
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'WR'">WR</button>
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'RB'">RB</button>
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'TE'">TE</button>
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'K'">K</button>
-                                    <button type="button" class="btn btn-secondary" ng-click="vm.filterPosition = 'DEF'">Def</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('QB')" ng-class="{ active: vm.filterPosition == 'QB'}">QB</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('WR')" ng-class="{ active: vm.filterPosition == 'WR'}">WR</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('RB')" ng-class="{ active: vm.filterPosition == 'RB'}">RB</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('TE')" ng-class="{ active: vm.filterPosition == 'TE'}">TE</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('K')" ng-class="{ active: vm.filterPosition == 'K'}">K</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="vm.positionFilter('DEF')" ng-class="{ active: vm.filterPosition == 'DEF'}">Def</button>
                                 </div>
                             </div>
                             <div class="card-block">
@@ -34,7 +33,7 @@
                                                 <a href="" ng-click="vm.sortType = 'displayName'; vm.sortReverse = !vm.sortReverse">Name<i ng-show="vm.sortType == 'displayName'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
                                             </th>
                                             <th>
-                                                <a href="" ng-click="vm.sortType = 'position'; vm.sortReverse = !vm.sortReverse">Position<i ng-show="vm.sortType == 'position'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
+                                                Position
                                             </th>
                                             <th>
                                                 <a href="" ng-click="vm.sortType = 'team'; vm.sortReverse = !vm.sortReverse">Team<i ng-show="vm.sortType == 'team'" ng-class="{ 'fa fa-fw fa-btn fa-caret-down': vm.sortReverse, 'fa fa-fw fa-btn fa-caret-up': !vm.sortReverse }"></i></a>
@@ -43,10 +42,8 @@
                                     </thead>
                                     <tbody class="">
                                         <tr class="availablePickRow {{ player.position }}" 
-                                            ng-repeat="player in vm.availablePlayers | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchPlayer | filter: {position: vm.filterPosition}"
-                                            ng-click="vm.draftPlayer(player._id)" 
-                                            confirm="Draft {{ player.displayName }}" 
-                                            confirm-settings="{size: 'sm'}">
+                                            ng-repeat="player in vm.availablePlayers | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchPlayer | filter: {position: vm.filterPosition} track by player.overallRank"
+                                            ng-click="vm.draftPlayer(player)">
                                             <td>{{ player.displayName }}</td>
                                             <td>{{ player.position }}</td>
                                             <td>{{ player.team }}</td>

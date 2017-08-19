@@ -4,17 +4,17 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   const tokenStorage = {
     setToken: (key, token) => {
       return Promise.resolve().then(() => {
-        $window.localStorage.setItem(key, token);
+        $window.sessionStorage.setItem(key, token);
       });
     },
     getToken: (key) => {
       return Promise.resolve().then(() => {
-        return $window.localStorage.getItem(key);
+        return $window.sessionStorage.getItem(key);
       });
     },
     removeToken: (key) => {
       return Promise.resolve().then(() => {
-        $window.localStorage.removeItem(key);
+        $window.sessionStorage.removeItem(key);
       });
     }
   }
@@ -121,7 +121,7 @@ angular.module('AuthenticationService', []).service('AuthenticationService', fun
   };
 
   service.logOut = () => {
-    $window.localStorage.clear();
+    $window.sessionStorage.clear();
     $rootScope = $rootScope.$new(true);
   };
 
