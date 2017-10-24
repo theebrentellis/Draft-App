@@ -1,7 +1,7 @@
 let DraftApp = angular.module("DraftApp", ["ngRoute", "ngMessages", "ngAnimate",
     "ui.router", "ui.bootstrap", "dndLists", "angular-confirm",
     "AppController", "DashboardController", "LeagueController", "LeagueCommishController", "LeagueJoinController", "LeagueNewController", "UserSettingsController", "UserLoginController", "UserRegisterController", "DraftController", "DraftPickController", "DraftBoardController", "DraftChatController",
-    "AuthenticationService", "DraftService", "LeagueService",
+    "AuthenticationService", "ChatService", "DraftService", "LeagueService",
     "ChatFactory", "DraftFactory", "LeagueFactory", "UserFactory"]);
 
 angular.module('DraftApp').config(function ($stateProvider, $urlRouterProvider) {

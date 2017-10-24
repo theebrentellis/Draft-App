@@ -1,4 +1,4 @@
-angular.module('DraftService', []).service('DraftService', function ($window, $state, DraftFactory, AuthenticationService, LeagueService) {
+angular.module('DraftService', []).service('DraftService', function ($window, $state, $stateParams, DraftFactory, AuthenticationService, LeagueService) {
     let service = {};
 
     let socket = io.connect();
@@ -147,7 +147,6 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
     };
 
     service.draftPlayer = (draftPick) => {
-        
         return DraftFactory.draftPlayer(draftPick)
             .then((response) => {
                 socket.emit("successfulPick");
@@ -162,7 +161,8 @@ angular.module('DraftService', []).service('DraftService', function ($window, $s
     };
 
     socket.on("updateDraft", function() {
-        $state.reload();
+        // $state.reload();
+        service.getDraft($stateParams);
     });
 
     return service;

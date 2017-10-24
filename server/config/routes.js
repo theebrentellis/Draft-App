@@ -69,6 +69,10 @@ module.exports = function (app, passport) {
     app.post("/league/:league_id/draft/:draft_id/position/:position/player/:player_id", (req, res) => {
         Draft.draftPlayer(req, res);
     });
+
+    app.post("/league/:league_id/draft/:draft_id/chat", (req, res) => {
+        Chat.newMessage(req, res);
+    });
     
     app.get("/getLeague", function(req, res){
         League.getLeague(req, res);

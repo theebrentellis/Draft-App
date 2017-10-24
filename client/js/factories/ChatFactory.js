@@ -1,20 +1,13 @@
-angular.module("ChatFactory", []).factory("ChatFactory", function($http){
+angular.module("ChatFactory", []).factory("ChatFactory", function ($http, $stateParams) {
 
     var factory = {};
 
-    factory.postMessage = function(message, callback){
-        $http.post("/message", message).success(function(data, status){
-            callback(data, false);
-        })
-        .error(function(data, status){
-            callback(data, true);
-        });
+    factory.getChat = ($stateParams) => {
+
     };
 
-    factory.deleteAllChat = function(){
-        $http.post("/deleteAllChat").success(function(data){
-            console.log(data);
-        });
+    factory.sendMessage = (message) => {
+        $http.post("/league/" + $stateParams.leagueID + "/draft/" + $stateParams.draftID + "/chat", message);
     };
 
     return factory;

@@ -4,19 +4,20 @@ var Chat = mongoose.model("Chat");
 
 var io = require("socket.io");
 
-module.exports = (function(){
+module.exports = (function () {
     return {
-        postMessage: function(req, res){
+        newMessage: (req, res) => {
 
-            console.log(req.body._id, req.body.message, req.body.userName);
+            console.log(req.body);
+            console.log(req.params);
 
-            var chat = new Chat();
+            // var chat = new Chat();
 
-            chat.leagueId = req.body._id;
-            chat.chat.message = req.body.message;
-            chat.chat.user = req.body.userName;
+            // chat.leagueId = req.body._id;
+            // chat.chat.message = req.body.message;
+            // chat.chat.user = req.body.userName;
 
-            console.log(chat);
+            // console.log(chat);
 
             // chat.save(function(err, results){
             //     if(err){
@@ -30,27 +31,27 @@ module.exports = (function(){
             // });
         },
 
-        getAllMessages: function(req, res){
+        getAllMessages: function (req, res) {
             console.log("Get All Messages");
 
-            Chat.find({}, function(err, results){
-                if(err){
+            Chat.find({}, function (err, results) {
+                if (err) {
                     return res.json({
                         message: "Error Getting All Messages"
                     });
                 }
-                else{
+                else {
                     return res.json(results);
                 }
             });
         },
 
-        deleteAllChat: function(req, res){
-            Chat.remove({}, function(err, results){
-                if(err){
+        deleteAllChat: function (req, res) {
+            Chat.remove({}, function (err, results) {
+                if (err) {
                     console.log(err);
                 }
-                else{
+                else {
                     console.log("Chat Log Cleared!");
                 }
             });

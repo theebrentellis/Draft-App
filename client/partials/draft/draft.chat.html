@@ -8,7 +8,7 @@
             </div>
             <div class="card-block">
                 <div class="input-group">
-                    <input type="text" placeholder="New Message..." ng-model="vm.message" ng-enter="sendMessage()" class="form-control" required>
+                    <input type="text" placeholder="New Message..." ng-model="vm.message" ng-enter="vm.sendMessage()" class="form-control" required>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-outline-success" ng-click="vm.sendMessage()">Send</button>
                     </span>

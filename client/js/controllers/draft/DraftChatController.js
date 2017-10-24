@@ -10,7 +10,7 @@ angular.module('ngEnter', []).directive('ngEnter', function ($scope, element, at
         }
     });
 });
-angular.module('DraftChatController', []).controller('DraftChatController', function ($scope, AuthenticationService, LeagueService, DraftService) {
+angular.module('DraftChatController', []).controller('DraftChatController', function ($scope, AuthenticationService, LeagueService, DraftService, ChatService) {
 
     var vm = this;
 
@@ -19,6 +19,10 @@ angular.module('DraftChatController', []).controller('DraftChatController', func
     vm.message = "";
     vm.filterText = "";
 
+    let getCurrentUser = AuthenticationService.currentUser();
+    getCurrentUser.then((user) => {
+        vm.currentUser = user;
+    });
     
     // var socket = io.connect();
 
@@ -36,19 +40,9 @@ angular.module('DraftChatController', []).controller('DraftChatController', func
 
     vm.sendMessage = () => {
         var chatMessage = {
-            "_id": vm.currentLeague.chat._id,
-            "userName": vm.currentUser.firstName,
+            "user_id": vm.currentUser._id,
             "message": vm.message
         };
-        console.log(chatMessage);
-        // LeagueService.postMessage(vm.message, function (result, err) {
-        //     if (err) {
-        //         window.alert("Error!");
-        //     }
-        //     // else{
-        //     //     socket.emit("receiveMessage", result);
-        //     //     vm.message = "";
-        //     // }
-        // });
+        ChatService.sendMessage(chatMessage);
     };
 });
